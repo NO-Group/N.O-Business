@@ -1,0 +1,20 @@
+# Applies `dart format` to the app and commits the result to the branch it
+# was started from. Run it from the Actions tab (or `gh workflow run`) when
+# the CI format check fails and no local Flutter SDK is at hand.
+
+name: Apply formatting
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Format and commit
+        run: bash ci/apply-format.sh

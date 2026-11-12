@@ -1,75 +1,29 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
+# Build outputs
+/dist/
+
+# OS / editor noise
 .DS_Store
-.atom/
-.build/
-.buildlog/
-.history
-.svn/
-.swiftpm/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
+Thumbs.db
 .idea/
+.vscode/
+*.iml
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# Python (database test runner)
+__pycache__/
+*.pyc
+.venv/
 
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
-.flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
-/coverage/
-
-# Symbolication related
-app.*.symbols
-
-# Obfuscation related
-app.*.map.json
-
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
-app/android/app/debug
-app/android/app/profile
-app/android/app/release
-
-previous_chat.txt
-
-# Secrets — never commit
+# Local configuration and secrets. Backend settings are passed at build time
+# with --dart-define and stored as CI secrets; they are never committed.
 .env
 .env.*
 !.env.example
-*.pem
-*.key
-
-# Flutter build settings (contains the anon key)
-app/build_env.txt
-app/M-TEK-windows.zip
-
-# Misc tooling / local data dirs that must never be committed
-image-search/
-node_modules/
-backend/data/
-
-# Local production signing material — distribute out of band, never commit
-signing-output/
 *.jks
+*.keystore
 *.p12
 *.pfx
-*.cer
-android/key.properties
-app/android/key.properties
+key.properties
+
+# Supabase CLI local state
+supabase/.branches/
+supabase/.temp/
