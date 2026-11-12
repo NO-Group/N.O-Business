@@ -29,6 +29,14 @@ abstract final class Money {
     return format.format(minor / _factor(currencyCode));
   }
 
+  /// "NGN 12,500.00" — for printed documents, where the ISO code is
+  /// unambiguous and never depends on a font having the currency glyph.
+  static String formatIso(int minor, String currencyCode) {
+    final digits = fractionDigits(currencyCode);
+    final number = NumberFormat.decimalPatternDigits(decimalDigits: digits);
+    return '$currencyCode ${number.format(minor / _factor(currencyCode))}';
+  }
+
   /// Plain editable text for a form field: "12500.00".
   static String toInput(int minor, String currencyCode) {
     final digits = fractionDigits(currencyCode);

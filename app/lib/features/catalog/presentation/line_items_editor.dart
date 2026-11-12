@@ -129,6 +129,41 @@ class LineItemsEditor extends StatelessWidget {
   }
 }
 
+/// Read-only line of a stored document.
+class LineItemRow extends StatelessWidget {
+  const LineItemRow({super.key, required this.item, required this.currencyCode});
+
+  final LineItem item;
+  final String currencyCode;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: NobSpace.md),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(item.description, style: NobText.subtitle),
+                const SizedBox(height: NobSpace.xxs),
+                Text(
+                  '${formatQuantity(item.quantity)} × ${Money.format(item.unitPriceMinor, currencyCode)}'
+                  '${item.taxRate > 0 ? ' · tax ${formatQuantity(item.taxRate)}%' : ''}',
+                  style: NobText.bodySmall.copyWith(color: NobColors.textSecondary),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(width: NobSpace.md),
+          Text(Money.format(item.lineTotalMinor, currencyCode), style: NobText.numeric),
+        ],
+      ),
+    );
+  }
+}
+
 /// Subtotal / discount / tax / total block shown under the lines.
 class TotalsSummary extends StatelessWidget {
   const TotalsSummary({super.key, required this.totals, required this.currencyCode, this.extra = const []});
@@ -256,6 +291,7 @@ class _ProductPickerState extends ConsumerState<_ProductPicker> {
                       final Product product = items[index];
                       return ListRow(
                         dense: true,
+                        inset: NobSpace.sm,
                         title: product.name,
                         subtitle: [
                           ?product.sku,

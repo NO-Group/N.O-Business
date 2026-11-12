@@ -70,6 +70,7 @@ class SectionCard extends StatelessWidget {
     this.subtitle,
     this.trailing,
     this.padding = const EdgeInsets.all(NobSpace.xl),
+    this.flush = false,
   });
 
   final String title;
@@ -78,16 +79,37 @@ class SectionCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
 
+  /// Lets [child] run edge to edge (for lists of tappable rows); only the
+  /// header keeps the card padding.
+  final bool flush;
+
   @override
   Widget build(BuildContext context) {
     final sub = subtitle;
     final end = trailing;
+    final header = _header(sub, end);
     return NobCard(
-      padding: padding,
+      padding: flush ? EdgeInsets.zero : padding,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
+          if (flush)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(NobSpace.xl, NobSpace.xl, NobSpace.xl, 0),
+              child: header,
+            )
+          else
+            header,
+          SizedBox(height: flush ? NobSpace.md : NobSpace.lg),
+          child,
+          if (flush) const SizedBox(height: NobSpace.md),
+        ],
+      ),
+    );
+  }
+
+  Widget _header(String? sub, Widget? end) {
+    return Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
@@ -102,13 +124,8 @@ class SectionCard extends StatelessWidget {
                   ],
                 ),
               ),
-              if (end != null) end,
+              ?end,
             ],
-          ),
-          const SizedBox(height: NobSpace.lg),
-          child,
-        ],
-      ),
-    );
+          );
   }
 }

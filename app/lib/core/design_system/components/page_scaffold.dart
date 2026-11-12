@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../errors/app_failure.dart';
+import 'state_views.dart';
 
 import '../tokens.dart';
 
@@ -133,13 +137,85 @@ class ResponsiveGrid extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final columns = ((constraints.maxWidth + spacing) / (minItemWidth + spacing)).floor().clamp(1, 6);
-        final width = (constraints.maxWidth - spacing * (columns - 1)) / columns;
+        // Rounded down so accumulated fractions never push the last item to a new row.
+        final width = ((constraints.maxWidth - spacing * (columns - 1)) / columns).floorToDouble();
         return Wrap(
           spacing: spacing,
           runSpacing: spacing,
           children: [for (final child in children) SizedBox(width: width, child: child)],
         );
       },
+    );
+  }
+}
+
+/// Main content with a side panel on wide windows; stacked on narrow ones.
+class TwoPane extends StatelessWidget {
+  const TwoPane({super.key, required this.primary, required this.secondary});
+
+  final Widget primary;
+  final Widget secondary;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth < 860) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [primary, const SizedBox(height: NobSpace.lg), secondary],
+          );
+        }
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(flex: 3, child: primary),
+            const SizedBox(width: NobSpace.lg),
+            Expanded(flex: 2, child: secondary),
+          ],
+        );
+      },
+    );
+  }
+}
+
+/// Page for a single record: shows loading, failure and "not found" inside
+/// the standard page frame and hands the loaded record to [builder].
+class DetailLoader<T> extends StatelessWidget {
+  const DetailLoader({
+    super.key,
+    required this.value,
+    required this.title,
+    required this.onBack,
+    required this.onRetry,
+    required this.builder,
+  });
+
+  final AsyncValue<T?> value;
+
+  /// Page title while there is no record to take one from.
+  final String title;
+  final VoidCallback onBack;
+  final VoidCallback onRetry;
+  final Widget Function(T record) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget frame(Widget child) =>
+        PageScaffold(title: title, onBack: onBack, scrollable: false, child: child);
+
+    return value.when(
+      loading: () => frame(const LoadingView()),
+      error: (error, _) => frame(ErrorState(message: AppFailure.from(error).message, onRetry: onRetry)),
+      data: (record) => record == null
+          ? frame(
+              EmptyState(
+                icon: Icons.search_off_rounded,
+                title: '$title not found',
+                message: 'It may have been deleted, or it belongs to another organization.',
+              ),
+            )
+          : builder(record),
     );
   }
 }

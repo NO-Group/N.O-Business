@@ -24,7 +24,7 @@ class ListPanel extends StatelessWidget {
         separatorBuilder: (_, _) => const Divider(),
         itemBuilder: (context, index) {
           if (index >= itemCount) {
-            return Padding(padding: const EdgeInsets.all(NobSpace.lg), child: note);
+            return Padding(padding: const EdgeInsets.all(NobSpace.xl), child: note);
           }
           return itemBuilder(context, index);
         },
@@ -65,6 +65,7 @@ class ListRow extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.dense = false,
+    this.inset = NobSpace.xl,
   });
 
   final String title;
@@ -74,13 +75,17 @@ class ListRow extends StatelessWidget {
   final VoidCallback? onTap;
   final bool dense;
 
+  /// Horizontal padding; matches the card padding by default so rows line
+  /// up with card headers.
+  final double inset;
+
   @override
   Widget build(BuildContext context) {
     final sub = subtitle;
     final start = leading;
     final end = trailing;
     final content = Padding(
-      padding: EdgeInsets.symmetric(horizontal: NobSpace.lg, vertical: dense ? NobSpace.sm : NobSpace.md),
+      padding: EdgeInsets.symmetric(horizontal: inset, vertical: dense ? NobSpace.sm : NobSpace.md),
       child: Row(
         children: [
           if (start != null) ...[start, const SizedBox(width: NobSpace.md)],

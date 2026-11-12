@@ -15,7 +15,7 @@ dependencies:
   go_router: ^17.0.0              # declarative routing with auth-aware redirects
   intl: ^0.20.2                   # currency, number and date formatting
   flutter_secure_storage: ^11.0.0 # session + preferences in the OS credential store
-  file_picker: ^13.0.0            # choose files to upload / where to save downloads
+  file_picker: ^13.3.0            # choose files to upload / where to save downloads
   pdf: ^3.11.0                    # quotation and invoice PDFs
   printing: ^5.14.0               # print / share generated PDFs
 

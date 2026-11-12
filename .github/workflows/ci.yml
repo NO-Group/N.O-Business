@@ -35,8 +35,16 @@ jobs:
     name: App format, analysis and tests
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    permissions:
+      contents: write # used only by the formatting step below
     steps:
       - uses: actions/checkout@v6
+      # Agent working branches are written without a local Flutter SDK, so the
+      # formatter runs here and its result is committed back. Every other
+      # branch and every pull request gets the strict check only.
+      - name: Apply formatting (working branches)
+        if: ${{ github.event_name == 'push' && startsWith(github.ref_name, 'arena/') }}
+        run: bash ci/apply-format.sh
       - name: Formatting
         run: bash ci/check-app.sh format
       - name: Static analysis

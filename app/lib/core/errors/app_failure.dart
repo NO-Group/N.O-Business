@@ -102,13 +102,13 @@ class AppFailure implements Exception {
       case '401':
         return AppFailure(_forbidden, kind: FailureKind.forbidden, code: error.statusCode);
       case '404':
-        return AppFailure('That file no longer exists.', kind: FailureKind.notFound, code: '404');
+        return const AppFailure('That file no longer exists.', kind: FailureKind.notFound, code: '404');
       case '409':
-        return AppFailure('A file with that name already exists.', kind: FailureKind.conflict, code: '409');
+        return const AppFailure('A file with that name already exists.', kind: FailureKind.conflict, code: '409');
       case '413':
-        return AppFailure('That file is too large.', kind: FailureKind.validation, code: '413');
+        return const AppFailure('That file is too large.', kind: FailureKind.validation, code: '413');
       case '415':
-        return AppFailure('That file type is not supported.', kind: FailureKind.validation, code: '415');
+        return const AppFailure('That file type is not supported.', kind: FailureKind.validation, code: '415');
     }
     return AppFailure(_generic, code: error.statusCode);
   }

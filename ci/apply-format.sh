@@ -25,5 +25,10 @@ git config user.name "github-actions[bot]"
 git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 git add app/lib app/test app/pubspec.lock
 git commit --quiet -m "style(app): apply dart format and refresh the lockfile"
-git push --quiet origin "HEAD:${GITHUB_REF_NAME}"
-echo "Pushed formatting commit to ${GITHUB_REF_NAME}."
+# The branch may have moved on while this job ran. That is not a failure of
+# the code under test: the next run formats the newer commit instead.
+if git push --quiet origin "HEAD:${GITHUB_REF_NAME}"; then
+  echo "Pushed formatting commit to ${GITHUB_REF_NAME}."
+else
+  echo "::warning::Formatting was applied for this run but could not be pushed (the branch moved on)."
+fi

@@ -29,7 +29,9 @@ class _CustomerPickerState extends ConsumerState<_CustomerPicker> {
   Future<void> _create() async {
     final id = await showCustomerForm(context);
     if (id == null || !mounted) return;
-    final customer = await ref.read(customerProvider(id).future);
+    final organizationId = ref.read(activeOrganizationIdProvider);
+    if (organizationId == null) return;
+    final customer = await ref.read(customerRepositoryProvider).find(organizationId, id);
     if (customer != null && mounted) Navigator.of(context).pop(customer);
   }
 
@@ -77,6 +79,8 @@ class _CustomerPickerState extends ConsumerState<_CustomerPicker> {
                           final customer = items[index];
                           return ListRow(
                             dense: true,
+                        inset: NobSpace.sm,
+                            inset: NobSpace.sm,
                             leading: RowIcon(
                               customer.isCompany ? Icons.apartment_outlined : Icons.person_outline_rounded,
                             ),
@@ -90,6 +94,50 @@ class _CustomerPickerState extends ConsumerState<_CustomerPicker> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Form row showing the chosen customer with change/clear actions.
+class CustomerField extends StatelessWidget {
+  const CustomerField({
+    super.key,
+    required this.customer,
+    required this.onPick,
+    this.onClear,
+    this.optional = false,
+  });
+
+  final Customer? customer;
+  final VoidCallback onPick;
+
+  /// Offered only when the customer is optional.
+  final VoidCallback? onClear;
+  final bool optional;
+
+  @override
+  Widget build(BuildContext context) {
+    final chosen = customer;
+    final clear = onClear;
+    return InkWell(
+      onTap: onPick,
+      borderRadius: NobRadius.medium,
+      child: InputDecorator(
+        decoration: InputDecoration(
+          labelText: optional ? 'Customer (optional)' : 'Customer',
+          suffixIcon: chosen != null && optional && clear != null
+              ? IconButton(
+                  tooltip: 'Remove customer',
+                  icon: const Icon(Icons.close_rounded, size: 18),
+                  onPressed: clear,
+                )
+              : const Icon(Icons.expand_more_rounded),
+        ),
+        isEmpty: chosen == null,
+        child: chosen == null
+            ? null
+            : Text(chosen.name, style: NobText.body, maxLines: 1, overflow: TextOverflow.ellipsis),
       ),
     );
   }
