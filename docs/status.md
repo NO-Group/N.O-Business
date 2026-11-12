@@ -51,6 +51,11 @@ while this version was written. Everything below follows from that.
 - Release signing has not been exercised: no signing secrets were available,
   so CI builds are signed with a debug key (Android) and a test certificate
   (Windows).
+- The repository has no backend secrets set either, so the APK and Windows
+  packages that CI currently produces open on the "not configured" screen.
+  They prove the app compiles and packages, nothing more. Add
+  `NOB_SUPABASE_URL` and `NOB_SUPABASE_ANON_KEY` as repository secrets to get
+  usable builds.
 
 ## First live run: suggested order
 

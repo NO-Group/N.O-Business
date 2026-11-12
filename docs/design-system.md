@@ -84,8 +84,8 @@ as ₦ that many fonts lack.
 
 The same destination list drives all three, so a module is never reachable
 on one form factor and missing on another. Destinations a role cannot open
-are not shown, and the routes themselves show a "no access" state if reached
-anyway.
+are not shown, and a module page reached anyway shows a "no access" state
+(a record page shows "not found", because the database returns nothing).
 
 ## Components
 
