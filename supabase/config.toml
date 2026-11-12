@@ -1,0 +1,18 @@
+# Supabase CLI config for deploying the data-api edge function
+# (.github/workflows/deploy-edge.yml runs `supabase functions deploy data-api
+# --project-ref ...`).
+#
+# verify_jwt = false is REQUIRED: the public auth routes
+#   POST /api/auth/login, /api/auth/signup, /api/auth/refresh,
+#        /api/auth/reset-password, /api/auth/reset-recovery
+# and the public GET /health probe are called by the apps WITHOUT a bearer
+# token (see app/lib/data/api_client.dart → postPublic, and the health check).
+# With the gateway JWT gate left on, those calls return "Missing bearer
+# token" — exactly the stale-function symptom seen in production. The
+# function still verifies every PROTECTED call's JWT itself against GoTrue
+# (/auth/v1/user) with the service-role key inside auth(), so disabling the
+# gateway gate does not weaken any authenticated endpoint.
+project_id = "kshuadjcflwlidupnqly"
+
+[functions.data-api]
+verify_jwt = false

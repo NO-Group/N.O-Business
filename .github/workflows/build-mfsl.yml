@@ -1,0 +1,75 @@
+## MFSL Office - cloud build (APK + Windows installer)
+##
+## This file is intentionally MINIMAL and should never need editing again:
+## ALL build logic lives in ci/build-android.sh and ci/build-windows.ps1
+## (normal git-push files). Editing anything under .github/workflows/ needs a
+## token with the special GitHub "workflows" permission, which is exactly what
+## broke pushes before - so keep this file small and stable on purpose.
+##
+## Outputs (no artifacts, no zip wrappers, no passwords):
+##   A rolling pre-release tagged "ci" on the Releases page with RAW assets:
+##     - MFSL.Inventory.apk
+##     - MFSL.Inventory.Setup.msix
+##     - MFSL-Office-portable.zip (portable Release folder, zipped by us)
+##   GitHub NEVER re-zips or encrypts release assets (unlike Actions
+##   artifacts), so downloads are exactly these files - nothing to extract.
+##   (Dot names: GitHub replaces spaces in release asset names with dots.)
+##
+## Runs: manually (Actions tab), or automatically on pushes to main or to the
+## working branch that touch app/, ci/ or this file.
+
+name: Build MFSL Office (APK + EXE)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, arena/**]
+    paths: ['app/**', 'ci/**', '.github/workflows/build-mfsl.yml']
+
+# Serialize runs so two builds never fight over the rolling "ci" release.
+concurrency:
+  group: mfsl-inventory-build
+  cancel-in-progress: false
+
+permissions:
+  contents: write # required to create/update the "ci" release; manual builds use a harmless workflow commit
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build APK & publish to rolling release
+        run: bash ci/build-android.sh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MFSL_ANDROID_KEYSTORE_BASE64: ${{ secrets.MFSL_ANDROID_KEYSTORE_BASE64 }}
+          MFSL_SIGNING_PASSWORD: ${{ secrets.MFSL_SIGNING_PASSWORD }}
+      - name: Attach APK to this run (Artifacts box)
+        continue-on-error: true # rolling Release asset above remains authoritative if quota is full
+        uses: actions/upload-artifact@v4
+        with:
+          name: MFSL-Office-Android-APK
+          path: app/build/app/outputs/flutter-apk/app-release.apk
+          if-no-files-found: error
+
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build EXE/MSIX & publish to rolling release
+        run: ./ci/build-windows.ps1
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MFSL_WINDOWS_PFX_BASE64: ${{ secrets.MFSL_WINDOWS_PFX_BASE64 }}
+          MFSL_SIGNING_PASSWORD: ${{ secrets.MFSL_SIGNING_PASSWORD }}
+      - name: Attach Windows installer + portable zip to this run (Artifacts box)
+        continue-on-error: true # rolling Release assets above remain authoritative if quota is full
+        uses: actions/upload-artifact@v4
+        with:
+          name: MFSL-Office-Windows
+          path: |
+            app/build/windows/x64/runner/Release/MFSL.Inventory.Setup.msix
+            ${{ runner.temp }}/MFSL-Office-portable.zip
+          if-no-files-found: error

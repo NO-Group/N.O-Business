@@ -1,0 +1,504 @@
+{
+  "schema": "mtek-api-contract-v1",
+  "routes": [
+    {
+      "route": "POST /api/auth/login",
+      "auth": "public",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": false,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/auth/refresh",
+      "auth": "public",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": false,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/auth/signup",
+      "auth": "public",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/auth/reset-password",
+      "auth": "public",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": false,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/auth/reset-recovery",
+      "auth": "public",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/me",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "user"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "GET /api/changes",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "stamp"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "GET /api/bootstrap",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "adjustments",
+        "customers",
+        "docs",
+        "invoices",
+        "mils",
+        "products",
+        "receipts",
+        "sales",
+        "serials",
+        "settings",
+        "transactions",
+        "user"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/auth/change-password",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/customers",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "customers"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "GET /api/products",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "products"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "GET /api/history",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "more",
+        "rows"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": true,
+      "query": "?kind=sales&limit=5"
+    },
+    {
+      "route": "POST /api/customers",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/products/upsert",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/products/images",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": false,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/products/delete",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/customers/delete",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/stock/adjust",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/sales",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/invoices/pay",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/payment-vouchers",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [
+        "rows"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/payment-vouchers",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/payment-vouchers/approve",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/stock-receipts",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [
+        "rows"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/stock-receipts",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/stock-receipts/approve",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/settings",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "skip",
+      "writes": true,
+      "guarded": false,
+      "reason": "Writes an unconditional audit event even for an empty body. Skipped so the live sweep is strictly read-only; the CEO settings path is covered by the contract gate and the app build."
+    },
+    {
+      "route": "GET /api/office-files",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "files"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": true,
+      "query": "?kind=sheet"
+    },
+    {
+      "route": "POST /api/office-files/save",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/office-files/delete",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/office-documents",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "documents"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/office-documents/save",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/office-documents/restore",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/office-documents/delete",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/cloud-documents",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "documents"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/cloud-documents/upload",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/cloud-documents/download",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": false,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/docs/issue",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/sync/import",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/docs/history",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "docs"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "GET /api/mils",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "logs"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/mils",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "skip",
+      "writes": true,
+      "guarded": false,
+      "reason": "No validation on an empty body: it calls nextSerial(mils), inserts a MILS job, audits and notifies. Skipping avoids consuming a real document serial and creating phantom rows. Covered by the shim harness."
+    },
+    {
+      "route": "GET /api/audit",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "events"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/notifications",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [
+        "notifications"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/notifications/read",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/notifications/read-all",
+      "auth": "jwt",
+      "role": "any",
+      "keys": [],
+      "probe": "skip",
+      "writes": true,
+      "guarded": false,
+      "reason": "No request body and mutates EVERY notification (updateMany with $push). Covered exhaustively by tools/pg_shim_test.mjs; dispatching it live would mark real notifications read."
+    },
+    {
+      "route": "POST /api/announcements",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "GET /api/staff",
+      "auth": "jwt",
+      "role": "ceo, admin",
+      "keys": [
+        "staff"
+      ],
+      "probe": "get",
+      "writes": false,
+      "guarded": false
+    },
+    {
+      "route": "POST /api/staff/delete",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    },
+    {
+      "route": "POST /api/staff/role",
+      "auth": "jwt",
+      "role": "ceo",
+      "keys": [],
+      "probe": "empty",
+      "writes": true,
+      "guarded": true
+    }
+  ]
+}

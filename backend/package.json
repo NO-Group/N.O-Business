@@ -1,0 +1,10 @@
+{
+  "name": "mtek-backend-ops",
+  "version": "1.0.0",
+  "private": true,
+  "description": "M-TEK Supabase-only ops tooling. The production backend is the Supabase Edge Function at supabase/functions/data-api/index.ts; nothing here is deployed.",
+  "scripts": {
+    "verify": "node scripts/verify-supabase.js"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,2 @@
+DejaVu fonts — Bitstream Vera license (public permissive, https://dejavu-fonts.github.io/License.html)
+bundled for Naira (U+20A6) glyph support in PDF generation.

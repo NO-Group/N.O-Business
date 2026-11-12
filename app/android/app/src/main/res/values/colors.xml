@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Mirrors the M-Tek brand tokens from app/lib/core/theme.dart. -->
+    <color name="mtek_navy">#0A1220</color>
+    <color name="mtek_navy700">#1A2A4A</color>
+    <color name="mtek_gold">#F0A92E</color>
+    <color name="mtek_white">#FFFFFF</color>
+    <color name="mtek_muted">#94A3B8</color>
+    <color name="mtek_brand">#C8102E</color>
+</resources>
