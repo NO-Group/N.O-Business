@@ -29,7 +29,10 @@ CommercialPdfData invoice({int lineCount = 2, String? brandColorHex = '#075BFF',
   return CommercialPdfData(
     title: 'INVOICE',
     number: 'INV-000042',
-    seller: const PdfParty(name: 'Acme Trading Ltd', lines: ['12 Market Road, Jos', '+2348012345678']),
+    seller: const PdfParty(
+      name: 'Acme Trading Ltd',
+      lines: ['12 Market Road, Jos', '+2348012345678'],
+    ),
     buyer: const PdfParty(name: 'Bola Stores', lines: ['bola@example.com']),
     meta: const [('Issued', '12 Nov 2026'), ('Due', '26 Nov 2026')],
     items: items,
@@ -68,7 +71,10 @@ void main() {
 
   test('accepts a missing or malformed accent colour and a stamp', () async {
     for (final colour in [null, 'blue', '#12']) {
-      final bytes = await buildCommercialPdf(invoice(brandColorHex: colour, stamp: 'DRAFT'), fonts: fonts);
+      final bytes = await buildCommercialPdf(
+        invoice(brandColorHex: colour, stamp: 'DRAFT'),
+        fonts: fonts,
+      );
       expect(bytes.length, greaterThan(1000), reason: '$colour');
     }
   });

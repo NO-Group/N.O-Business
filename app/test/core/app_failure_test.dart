@@ -29,7 +29,10 @@ void main() {
 
     test('keeps readable refusals raised with the permission code', () {
       final failure = AppFailure.from(
-        const PostgrestException(message: 'The last owner cannot leave the organization.', code: '42501'),
+        const PostgrestException(
+          message: 'The last owner cannot leave the organization.',
+          code: '42501',
+        ),
       );
       expect(failure.message, 'The last owner cannot leave the organization.');
       expect(failure.kind, FailureKind.forbidden);
@@ -46,12 +49,17 @@ void main() {
       expect(unique.message, isNot(contains('products_sku_key')));
 
       final check = AppFailure.from(
-        const PostgrestException(message: 'violates check constraint "customers_phone_check"', code: '23514'),
+        const PostgrestException(
+          message: 'violates check constraint "customers_phone_check"',
+          code: '23514',
+        ),
       );
       expect(check.kind, FailureKind.validation);
       expect(check.message, isNot(contains('customers_phone_check')));
 
-      final unknown = AppFailure.from(const PostgrestException(message: 'relation "x" does not exist', code: '42P01'));
+      final unknown = AppFailure.from(
+        const PostgrestException(message: 'relation "x" does not exist', code: '42P01'),
+      );
       expect(unknown.kind, FailureKind.unknown);
       expect(unknown.message, isNot(contains('relation')));
     });
@@ -65,8 +73,10 @@ void main() {
         AppFailure.from(const StorageException('new row violates policy', statusCode: '403')).kind,
         FailureKind.forbidden,
       );
-      expect(AppFailure.from(const StorageException('Payload too large', statusCode: '413')).message,
-          'That file is too large.');
+      expect(
+        AppFailure.from(const StorageException('Payload too large', statusCode: '413')).message,
+        'That file is too large.',
+      );
     });
 
     test('returns an existing failure unchanged and hides unknown errors', () {

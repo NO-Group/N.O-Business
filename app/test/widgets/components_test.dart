@@ -13,7 +13,12 @@ Future<void> pump(WidgetTester tester, Widget child, {Size size = const Size(120
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  await tester.pumpWidget(MaterialApp(theme: buildNobTheme(), home: Scaffold(body: child)));
+  await tester.pumpWidget(
+    MaterialApp(
+      theme: buildNobTheme(),
+      home: Scaffold(body: child),
+    ),
+  );
   await tester.pump();
 }
 
@@ -103,7 +108,8 @@ void main() {
       ListRow(
         leading: const RowIcon(Icons.receipt_long_outlined),
         title: 'A very long customer name that would never fit on a narrow phone display at all',
-        subtitle: 'INV-000001 · due 12 Nov 2026 · a similarly long secondary line of supporting text',
+        subtitle:
+            'INV-000001 · due 12 Nov 2026 · a similarly long secondary line of supporting text',
         trailing: const TrailingAmount(amount: '₦12,345,678.00', below: Text('Overdue')),
         onTap: () {},
       ),
@@ -114,22 +120,27 @@ void main() {
 
   testWidgets('ResponsiveGrid collapses to one column when narrow', (tester) async {
     Widget grid() => const SingleChildScrollView(
-          child: ResponsiveGrid(
-            minItemWidth: 240,
-            children: [
-              SizedBox(key: Key('a'), height: 40),
-              SizedBox(key: Key('b'), height: 40),
-              SizedBox(key: Key('c'), height: 40),
-            ],
-          ),
-        );
+      child: ResponsiveGrid(
+        minItemWidth: 240,
+        children: [
+          SizedBox(key: Key('a'), height: 40),
+          SizedBox(key: Key('b'), height: 40),
+          SizedBox(key: Key('c'), height: 40),
+        ],
+      ),
+    );
 
     await pump(tester, grid());
-    expect(tester.getTopLeft(find.byKey(const Key('a'))).dy, tester.getTopLeft(find.byKey(const Key('c'))).dy);
+    expect(
+      tester.getTopLeft(find.byKey(const Key('a'))).dy,
+      tester.getTopLeft(find.byKey(const Key('c'))).dy,
+    );
 
     await pump(tester, grid(), size: const Size(320, 600));
-    expect(tester.getTopLeft(find.byKey(const Key('b'))).dy,
-        greaterThan(tester.getTopLeft(find.byKey(const Key('a'))).dy));
+    expect(
+      tester.getTopLeft(find.byKey(const Key('b'))).dy,
+      greaterThan(tester.getTopLeft(find.byKey(const Key('a'))).dy),
+    );
     expect(tester.getSize(find.byKey(const Key('a'))).width, 320);
     expect(tester.takeException(), isNull);
   });
@@ -137,7 +148,11 @@ void main() {
   testWidgets('RevenueChart draws and reports the touched day', (tester) async {
     final points = [
       for (var day = 1; day <= 7; day++)
-        DailyPoint(day: DateTime(2026, 11, day), salesMinor: day * 100000, paymentsMinor: day.isEven ? 50000 : 0),
+        DailyPoint(
+          day: DateTime(2026, 11, day),
+          salesMinor: day * 100000,
+          paymentsMinor: day.isEven ? 50000 : 0,
+        ),
     ];
     await pump(
       tester,

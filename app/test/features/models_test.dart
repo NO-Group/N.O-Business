@@ -6,22 +6,26 @@ import 'package:no_business/features/team/domain/team_models.dart';
 
 void main() {
   group('Invoice', () {
-    Map<String, dynamic> row({String status = 'issued', String? dueDate = '2026-11-10', int paid = 0}) => {
-          'id': 'inv-1',
-          'number': status == 'draft' ? null : 'INV-000007',
-          'workspace_id': 'ws-1',
-          'customer_id': 'c-1',
-          'customer': {'name': 'Acme Ltd'},
-          'status': status,
-          'issue_date': '2026-11-01',
-          'due_date': dueDate,
-          'currency_code': 'NGN',
-          'subtotal_minor': 100000,
-          'discount_minor': 0,
-          'tax_minor': 7500,
-          'total_minor': 107500,
-          'amount_paid_minor': paid,
-        };
+    Map<String, dynamic> row({
+      String status = 'issued',
+      String? dueDate = '2026-11-10',
+      int paid = 0,
+    }) => {
+      'id': 'inv-1',
+      'number': status == 'draft' ? null : 'INV-000007',
+      'workspace_id': 'ws-1',
+      'customer_id': 'c-1',
+      'customer': {'name': 'Acme Ltd'},
+      'status': status,
+      'issue_date': '2026-11-01',
+      'due_date': dueDate,
+      'currency_code': 'NGN',
+      'subtotal_minor': 100000,
+      'discount_minor': 0,
+      'tax_minor': 7500,
+      'total_minor': 107500,
+      'amount_paid_minor': paid,
+    };
 
     test('reads a list row that carries no lines or payments', () {
       final invoice = Invoice.fromJson(row());
@@ -59,8 +63,20 @@ void main() {
       final invoice = Invoice.fromJson({
         ...row(status: 'partially_paid', paid: 3000),
         'items': [
-          {'description': 'B', 'position': 2, 'quantity': 1, 'unit_price_minor': 1, 'line_total_minor': 1},
-          {'description': 'A', 'position': 1, 'quantity': 1, 'unit_price_minor': 1, 'line_total_minor': 1},
+          {
+            'description': 'B',
+            'position': 2,
+            'quantity': 1,
+            'unit_price_minor': 1,
+            'line_total_minor': 1,
+          },
+          {
+            'description': 'A',
+            'position': 1,
+            'quantity': 1,
+            'unit_price_minor': 1,
+            'line_total_minor': 1,
+          },
         ],
         'payments': [
           {'id': 'p1', 'amount_minor': 1000, 'method': 'cash', 'paid_at': '2026-11-02T10:00:00Z'},
@@ -74,14 +90,14 @@ void main() {
 
   group('Quotation', () {
     Quotation withStatus(String status) => Quotation.fromJson({
-          'id': 'q-1',
-          'number': 'QUO-000001',
-          'workspace_id': 'ws-1',
-          'customer_id': 'c-1',
-          'status': status,
-          'currency_code': 'NGN',
-          'total_minor': 5000,
-        });
+      'id': 'q-1',
+      'number': 'QUO-000001',
+      'workspace_id': 'ws-1',
+      'customer_id': 'c-1',
+      'status': status,
+      'currency_code': 'NGN',
+      'total_minor': 5000,
+    });
 
     test('can be edited while draft or sent', () {
       expect(withStatus('draft').isEditable, isTrue);

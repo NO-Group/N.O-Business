@@ -2,8 +2,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:no_business/core/commerce/line_item.dart';
 
 void main() {
-  const widget = DraftLine(description: 'Widget', quantity: 2, unitPriceMinor: 100000, taxRate: 7.5);
-  const service = DraftLine(description: 'Delivery', quantity: 1, unitPriceMinor: 50000, taxRate: 0);
+  const widget = DraftLine(
+    description: 'Widget',
+    quantity: 2,
+    unitPriceMinor: 100000,
+    taxRate: 7.5,
+  );
+  const service = DraftLine(
+    description: 'Delivery',
+    quantity: 1,
+    unitPriceMinor: 50000,
+    taxRate: 0,
+  );
 
   group('DocumentTotals.preview', () {
     test('adds exclusive tax per line', () {
@@ -39,7 +49,12 @@ void main() {
     });
 
     test('rounds fractional quantities to whole minor units', () {
-      const line = DraftLine(description: 'Rice (kg)', quantity: 1.333, unitPriceMinor: 999, taxRate: 0);
+      const line = DraftLine(
+        description: 'Rice (kg)',
+        quantity: 1.333,
+        unitPriceMinor: 999,
+        taxRate: 0,
+      );
       expect(line.lineTotalMinor, 1332);
     });
   });

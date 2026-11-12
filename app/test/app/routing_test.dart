@@ -12,14 +12,23 @@ void main() {
 
     test('sends signed-out visitors to sign-in but leaves auth pages alone', () {
       expect(resolveRedirect(gate: AppGate.signedOut, location: Routes.dashboard), Routes.signIn);
-      expect(resolveRedirect(gate: AppGate.signedOut, location: '${Routes.invoices}/abc'), Routes.signIn);
+      expect(
+        resolveRedirect(gate: AppGate.signedOut, location: '${Routes.invoices}/abc'),
+        Routes.signIn,
+      );
       expect(resolveRedirect(gate: AppGate.signedOut, location: Routes.signUp), isNull);
       expect(resolveRedirect(gate: AppGate.signedOut, location: Routes.resetPassword), isNull);
     });
 
     test('keeps a user without an organization on onboarding', () {
-      expect(resolveRedirect(gate: AppGate.needsOrganization, location: Routes.sales), Routes.onboarding);
-      expect(resolveRedirect(gate: AppGate.needsOrganization, location: Routes.signIn), Routes.onboarding);
+      expect(
+        resolveRedirect(gate: AppGate.needsOrganization, location: Routes.sales),
+        Routes.onboarding,
+      );
+      expect(
+        resolveRedirect(gate: AppGate.needsOrganization, location: Routes.signIn),
+        Routes.onboarding,
+      );
       expect(resolveRedirect(gate: AppGate.needsOrganization, location: Routes.onboarding), isNull);
     });
 
@@ -29,8 +38,18 @@ void main() {
     });
 
     test('moves a ready user off transitional pages and nowhere else', () {
-      for (final location in ['/', Routes.loading, Routes.failed, Routes.onboarding, Routes.signIn]) {
-        expect(resolveRedirect(gate: AppGate.ready, location: location), Routes.dashboard, reason: location);
+      for (final location in [
+        '/',
+        Routes.loading,
+        Routes.failed,
+        Routes.onboarding,
+        Routes.signIn,
+      ]) {
+        expect(
+          resolveRedirect(gate: AppGate.ready, location: location),
+          Routes.dashboard,
+          reason: location,
+        );
       }
       expect(resolveRedirect(gate: AppGate.ready, location: Routes.dashboard), isNull);
       expect(resolveRedirect(gate: AppGate.ready, location: '${Routes.customers}/42'), isNull);
@@ -44,9 +63,10 @@ void main() {
     });
 
     test('each module appears only with its read permission', () {
-      final paths = visibleDestinations(const {Permissions.invoicesRead, Permissions.membersRead})
-          .map((destination) => destination.path)
-          .toList();
+      final paths = visibleDestinations(const {
+        Permissions.invoicesRead,
+        Permissions.membersRead,
+      }).map((destination) => destination.path).toList();
       expect(paths, [Routes.dashboard, Routes.invoices, Routes.team, Routes.settings]);
     });
 
@@ -56,7 +76,9 @@ void main() {
     });
 
     test('sub-routes belong to their module', () {
-      final all = visibleDestinations(navDestinations.map((d) => d.permission).whereType<String>().toSet());
+      final all = visibleDestinations(
+        navDestinations.map((d) => d.permission).whereType<String>().toSet(),
+      );
       expect(all.length, navDestinations.length);
       int indexOf(String path) => all.indexWhere((destination) => destination.path == path);
 
