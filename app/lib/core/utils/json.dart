@@ -7,8 +7,9 @@ typedef JsonMap = Map<String, dynamic>;
 JsonMap asJsonMap(Object? value) =>
     value is Map ? Map<String, dynamic>.from(value) : <String, dynamic>{};
 
+/// Always a new, modifiable list, so callers may sort the result.
 List<JsonMap> asJsonList(Object? value) {
-  if (value is! List) return const [];
+  if (value is! List) return [];
   return [
     for (final item in value)
       if (item is Map) Map<String, dynamic>.from(item),
