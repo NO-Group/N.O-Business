@@ -18,13 +18,39 @@ $repoRoot = Split-Path $PSScriptRoot -Parent
 $workDir = if ($env:RUNNER_TEMP) { $env:RUNNER_TEMP } else { [IO.Path]::GetTempPath() }
 $flutterVersion = (Get-Content (Join-Path $PSScriptRoot "flutter-version") -Raw).Trim()
 
+# Emits the end of a step's log as GitHub error annotations (in chunks,
+# because one annotation is truncated at a few kilobytes), so the cause of a
+# failure is visible on the run summary page.
+function Write-FailureAnnotation {
+  param([string]$Title, [string]$LogPath)
+  $text = if (Test-Path $LogPath) { Get-Content $LogPath -Raw } else { "" }
+  if (-not $text) { $text = "(no output)" }
+  $chunk = 3800
+  $max = 9
+  if ($text.Length -gt $chunk * $max) { $text = $text.Substring($text.Length - $chunk * $max) }
+  $count = [int][Math]::Ceiling($text.Length / $chunk)
+  for ($i = 0; $i -lt $count; $i++) {
+    $part = $text.Substring($i * $chunk, [Math]::Min($chunk, $text.Length - $i * $chunk))
+    $body = $part.Replace("%", "%25").Replace("`r", "").Replace("`n", "%0A")
+    Write-Host "::error title=$Title [$($i + 1)/$count]::$body"
+  }
+}
+
 function Invoke-Checked {
   param([string]$Name, [scriptblock]$Command)
+  $log = Join-Path $workDir (($Name -replace '[^A-Za-z0-9]', '-') + ".log")
   Write-Host "::group::$Name"
-  & $Command
+  # Native tools write progress to stderr; that must not abort the script.
+  $previous = $ErrorActionPreference
+  $ErrorActionPreference = "Continue"
+  & $Command 2>&1 | ForEach-Object { "$_" } | Tee-Object -FilePath $log | Out-Host
   $code = $LASTEXITCODE
+  $ErrorActionPreference = $previous
   Write-Host "::endgroup::"
-  if ($code -ne 0) { throw "$Name failed with exit code $code" }
+  if ($code -ne 0) {
+    if ($env:GITHUB_ACTIONS) { Write-FailureAnnotation $Name $log }
+    throw "$Name failed with exit code $code"
+  }
   Write-Host "ok: $Name"
 }
 

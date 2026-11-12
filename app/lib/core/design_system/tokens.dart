@@ -22,10 +22,11 @@ abstract final class NobColors {
   static const magenta = Color(0xFFF000E8);
   static const emerald = Color(0xFF00E9A8);
 
-  // Text. Contrast on [background]: primary 18:1, secondary 7.2:1, muted 4.6:1.
+  // Text. Contrast against the lightest surface it sits on ([surfaceHigh]):
+  // primary 15.8:1, secondary 7.5:1, muted 4.7:1. All pass WCAG AA for body text.
   static const textPrimary = Color(0xFFF5F7FF);
-  static const textSecondary = Color(0xFF929DB8);
-  static const textMuted = Color(0xFF6F7B9C);
+  static const textSecondary = Color(0xFFA3ADC6);
+  static const textMuted = Color(0xFF7A86A8);
   static const onAccent = Color(0xFFFFFFFF);
   static const onCyan = Color(0xFF00141A);
 
