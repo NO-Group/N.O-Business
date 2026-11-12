@@ -24,7 +24,10 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
       - name: Apply migrations and run the SQL suite
         run: bash ci/check-db.sh
 
@@ -33,9 +36,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
-      - name: Format, analyze, test
-        run: bash ci/check-app.sh
+      - uses: actions/checkout@v6
+      - name: Formatting
+        run: bash ci/check-app.sh format
+      - name: Static analysis
+        if: ${{ !cancelled() }}
+        run: bash ci/check-app.sh analyze
+      - name: Tests
+        if: ${{ !cancelled() }}
+        run: bash ci/check-app.sh test
 
   android:
     name: Android build
@@ -43,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build APK
         run: bash ci/build-android.sh
         env:
@@ -51,7 +60,7 @@ jobs:
           NOB_SUPABASE_ANON_KEY: ${{ secrets.NOB_SUPABASE_ANON_KEY }}
           NOB_ANDROID_KEYSTORE_BASE64: ${{ secrets.NOB_ANDROID_KEYSTORE_BASE64 }}
           NOB_SIGNING_PASSWORD: ${{ secrets.NOB_SIGNING_PASSWORD }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: no-business-android
           path: dist/*.apk
@@ -63,7 +72,7 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 40
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Build portable folder and installer
         shell: pwsh
         run: ./ci/build-windows.ps1
@@ -72,7 +81,7 @@ jobs:
           NOB_SUPABASE_ANON_KEY: ${{ secrets.NOB_SUPABASE_ANON_KEY }}
           NOB_WINDOWS_PFX_BASE64: ${{ secrets.NOB_WINDOWS_PFX_BASE64 }}
           NOB_SIGNING_PASSWORD: ${{ secrets.NOB_SIGNING_PASSWORD }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: no-business-windows
           path: |
