@@ -1,2 +1,12 @@
-DejaVu fonts — Bitstream Vera license (public permissive, https://dejavu-fonts.github.io/License.html)
-bundled for Naira (U+20A6) glyph support in PDF generation.
+Bundled fonts
+=============
+
+Manrope (Regular, Medium, SemiBold, Bold, ExtraBold)
+  Static instances cut from the upstream variable font (google/fonts, ofl/manrope).
+  SIL Open Font License 1.1 — see Manrope-OFL.txt.
+  Used for the whole application interface.
+
+DejaVu Sans (Regular, Bold)
+  Bitstream Vera / DejaVu license — https://dejavu-fonts.github.io/License.html
+  Used only inside generated PDFs, because it carries the currency glyphs
+  (for example U+20A6 NAIRA SIGN) that most UI fonts lack.

@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "N.O Group" "\0"
-            VALUE "FileDescription", "MFSL Office" "\0"
+            VALUE "FileDescription", "N.O Business" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "MFSL Office" "\0"
+            VALUE "InternalName", "no_business" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2026 N.O Group. All rights reserved." "\0"
-            VALUE "OriginalFilename", "mtek_inventory.exe" "\0"
-            VALUE "ProductName", "MFSL Office" "\0"
+            VALUE "OriginalFilename", "no_business.exe" "\0"
+            VALUE "ProductName", "N.O Business" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

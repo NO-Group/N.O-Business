@@ -1,71 +1,61 @@
-name: mtek_inventory
-description: "MFSL Office for M-Tek Fire & Safety Ltd, designed by N.O Group."
+name: no_business
+description: "N.O Business — business management and revenue operations platform by N.O Group."
 publish_to: "none"
-version: 0.4.0+7
+version: 1.0.0+1
 
 environment:
-  sdk: ">=3.5.0 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
+  flutter: ">=3.38.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.19.0            # ₦ currency + date formatting
-  fl_chart: ^0.68.0        # Insights & Summary charts
-  pdf: ^3.10.8             # document generation (MILS/Receipt/Invoice)
-  printing: ^5.12.0        # print/preview of generated PDFs
-  path_provider: ^2.1.3    # local PDF cache (export pipeline)
-  share_plus: ^12.0.2      # WhatsApp/email share sheet
-  file_picker: ^8.1.2      # real device picks: TXT stock import + MILS photos
-  url_launcher: ^6.2.5     # wa.me / mailto deep links (customer directory)
-  permission_handler: ^12.0.1 # mandatory Android camera/notification guards
-  flutter_local_notifications: ^22.3.0 # native Android + Windows business alerts
-  local_auth: ^2.3.0         # Android biometrics / Windows Hello
-  flutter_secure_storage: ^9.2.2 # biometric-unlocked saved credentials
-
-  # Planned for M2/M3 (offline DB, state, backend):
-  # drift: ^2.20.0         # local SQLite cache + sync queue
-  # flutter_riverpod: ^2.5.1
-  # supabase_flutter: ^2.5.0
+  supabase_flutter: ^2.18.0       # Auth, Data API (PostgREST) and Storage client
+  flutter_riverpod: ^3.0.0        # state management + dependency injection
+  go_router: ^17.0.0              # declarative routing with auth-aware redirects
+  intl: ^0.20.2                   # currency, number and date formatting
+  flutter_secure_storage: ^11.0.0 # session + preferences in the OS credential store
+  file_picker: ^13.0.0            # choose files to upload / where to save downloads
+  pdf: ^3.11.0                    # quotation and invoice PDFs
+  printing: ^5.14.0               # print / share generated PDFs
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
-  msix: ^3.16.7
+  flutter_lints: ^6.0.0
+  msix: ^3.16.7                   # Windows installer packaging (CI)
 
 flutter:
   uses-material-design: true
   assets:
-    - assets/branding/logo.png
-    - assets/branding/logo_watermark.svg
-    - assets/branding/app_icon.png
+    - assets/brand/logo.png
     - assets/fonts/DejaVuSans.ttf
     - assets/fonts/DejaVuSans-Bold.ttf
+  fonts:
+    - family: Manrope
+      fonts:
+        - asset: assets/fonts/Manrope-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Manrope-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Manrope-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Manrope-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Manrope-ExtraBold.ttf
+          weight: 800
 
+# Windows installer. CI builds the Release folder first (with the backend
+# --dart-define values) and then packages exactly that folder.
 msix_config:
-  display_name: MFSL Office
+  display_name: N.O Business
   publisher_display_name: N.O Group
   publisher: CN=N.O Group
-  identity_name: com.n-o-group.mfsl
-  msix_version: 1.0.7.0
-  logo_path: assets/branding/app_icon.png
+  identity_name: com.nogroup.business
+  msix_version: 1.0.0.0
+  logo_path: assets/brand/logo.png
   capabilities: internetClient
   output_path: build\windows\x64\runner\Release
-  output_name: MFSL-Office-Setup
-  # IMPORTANT: build_windows is false because make_exe.bat already ran
-  # `flutter build windows --release` itself with the baked-in server
-  # --dart-defines. If the msix tool were left to rebuild on its own here,
-  # it would run a fresh `flutter build windows` WITHOUT those --dart-define
-  # values and silently package an app pointing at no server. Packaging the
-  # already-built Release folder as-is keeps the correct server config.
+  output_name: NO-Business-Setup
   build_windows: false
-  # Skip the interactive "install this certificate?" prompt — it hangs
-  # non-interactive CI runners. The generated self-signed test certificate
-  # still signs the package; users just won't get it auto-trusted locally
-  # (Windows will show the usual "unknown publisher" SmartScreen prompt on
-  # first run for a self-signed cert either way).
   install_certificate: false
-  # No certificate_path given -> the msix tool auto-generates and installs a
-  # self-signed test certificate on first run, so no manual cert setup is
-  # needed on the build machine. Windows will show "Publisher: N.O Group"
-  # in the install wizard using this identity.

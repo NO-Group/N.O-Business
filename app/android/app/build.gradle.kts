@@ -5,20 +5,17 @@ plugins {
 }
 
 android {
-    namespace = "com.n_o_group.mfsl_office"
+    namespace = "com.nogroup.business"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-        // Required by flutter_local_notifications for java.time APIs on
-        // Android versions below API 26.
-        isCoreLibraryDesugaringEnabled = true
     }
 
     defaultConfig {
-        applicationId = "com.n_o_group.mfsl_office"
+        applicationId = "com.nogroup.business"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -27,10 +24,10 @@ android {
         versionName = flutter.versionName
     }
 
-    val releaseStorePath = System.getenv("MFSL_ANDROID_KEYSTORE")
-    val releaseStorePassword = System.getenv("MFSL_ANDROID_STORE_PASSWORD")
-    val releaseKeyPassword = System.getenv("MFSL_ANDROID_KEY_PASSWORD")
-    val releaseKeyAlias = System.getenv("MFSL_ANDROID_KEY_ALIAS") ?: "com.n_o_group.mfsl_office"
+    val releaseStorePath = System.getenv("NOB_ANDROID_KEYSTORE")
+    val releaseStorePassword = System.getenv("NOB_ANDROID_STORE_PASSWORD")
+    val releaseKeyPassword = System.getenv("NOB_ANDROID_KEY_PASSWORD")
+    val releaseKeyAlias = System.getenv("NOB_ANDROID_KEY_ALIAS") ?: "no-business"
     val hasReleaseSigning = !releaseStorePath.isNullOrBlank() &&
         !releaseStorePassword.isNullOrBlank() && !releaseKeyPassword.isNullOrBlank()
 
@@ -61,10 +58,6 @@ kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
-}
-
-dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
 }
 
 flutter {

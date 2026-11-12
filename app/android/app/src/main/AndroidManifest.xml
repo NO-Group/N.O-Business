@@ -1,14 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- The app is 100% server-backed (Supabase Auth + data-api Edge Function) —
-         INTERNET is required in every build type, not just debug. -->
+    <!-- N.O Business talks to its backend over HTTPS in every build type. -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
-    <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
     <application
-        android:label="MFSL Office"
+        android:label="@string/app_name"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/ic_launcher"
+        android:allowBackup="false"
+        android:fullBackupContent="false">
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -30,25 +28,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
-            <!-- Long-press launcher shortcuts (the "custom console menu"). -->
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/mtek_shortcuts" />
         </activity>
-
-        <!-- Home-screen widget: quick stats + shortcuts into the app. -->
-        <receiver
-            android:name=".MtekWidgetProvider"
-            android:exported="false"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-                <action android:name="com.n_o_group.mfsl_office.WIDGET_REFRESH"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.appwidget.provider"
-                android:resource="@xml/mtek_widget_info" />
-        </receiver>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
