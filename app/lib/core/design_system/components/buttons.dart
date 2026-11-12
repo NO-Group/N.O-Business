@@ -43,34 +43,42 @@ class PrimaryButton extends StatelessWidget {
           child: Text(
             label,
             overflow: TextOverflow.ellipsis,
-            style: NobText.subtitle.copyWith(color: enabled || loading ? NobColors.onAccent : NobColors.textMuted),
+            style: NobText.subtitle.copyWith(
+              color: enabled || loading ? NobColors.onAccent : NobColors.textMuted,
+            ),
           ),
         ),
       ],
     );
 
+    final active = enabled || loading;
+    // The button owns a Material so its gradient and ink are painted above
+    // whatever surface it sits on (cards paint their own background).
     return Semantics(
       button: true,
       enabled: enabled,
       child: AnimatedOpacity(
         duration: NobMotion.fast,
-        opacity: enabled || loading ? 1 : 0.7,
-        child: Ink(
-          decoration: BoxDecoration(
-            gradient: enabled || loading ? NobGradients.action : null,
-            color: enabled || loading ? null : NobColors.surfaceHigh,
-            borderRadius: NobRadius.medium,
-          ),
-          child: InkWell(
-            onTap: enabled ? onPressed : null,
-            borderRadius: NobRadius.medium,
-            hoverColor: Colors.white.withValues(alpha: 0.08),
-            splashColor: Colors.white.withValues(alpha: 0.14),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: 44),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: NobSpace.xl, vertical: NobSpace.md),
-                child: child,
+        opacity: active ? 1 : 0.7,
+        child: Material(
+          color: Colors.transparent,
+          borderRadius: NobRadius.medium,
+          clipBehavior: Clip.antiAlias,
+          child: Ink(
+            decoration: BoxDecoration(
+              gradient: active ? NobGradients.action : null,
+              color: active ? null : NobColors.surfaceHigh,
+            ),
+            child: InkWell(
+              onTap: enabled ? onPressed : null,
+              hoverColor: Colors.white.withValues(alpha: 0.08),
+              splashColor: Colors.white.withValues(alpha: 0.14),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: 44),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: NobSpace.xl, vertical: NobSpace.md),
+                  child: child,
+                ),
               ),
             ),
           ),

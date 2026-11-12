@@ -50,10 +50,10 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final next = action;
     return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 420),
-        child: Padding(
-          padding: const EdgeInsets.all(NobSpace.xxl),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(NobSpace.xxl),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -98,10 +98,10 @@ class ErrorState extends StatelessWidget {
   Widget build(BuildContext context) {
     final retry = onRetry;
     return Center(
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 420),
-        child: Padding(
-          padding: const EdgeInsets.all(NobSpace.xxl),
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(NobSpace.xxl),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 420),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -120,6 +120,21 @@ class ErrorState extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Shown in place of a module the active role may not open.
+class NoAccessState extends StatelessWidget {
+  const NoAccessState({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const EmptyState(
+      icon: Icons.lock_outline_rounded,
+      title: 'No access',
+      message: 'Your role in this organization does not include this area. '
+          'Ask an owner or administrator if you need it.',
     );
   }
 }

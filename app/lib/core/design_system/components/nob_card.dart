@@ -22,6 +22,7 @@ class NobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accentColor = accent;
+    final tap = onTap;
     final content = Padding(padding: padding, child: child);
     return DecoratedBox(
       decoration: BoxDecoration(
@@ -30,8 +31,12 @@ class NobCard extends StatelessWidget {
         borderRadius: NobRadius.large,
         border: Border.all(color: NobColors.border),
       ),
-      child: ClipRRect(
+      // The card owns a transparent Material so list tiles and ink effects
+      // inside it are painted above the card's own background.
+      child: Material(
+        type: MaterialType.transparency,
         borderRadius: NobRadius.large,
+        clipBehavior: Clip.antiAlias,
         child: Stack(
           children: [
             if (accentColor != null)
@@ -42,21 +47,13 @@ class NobCard extends StatelessWidget {
                 child: Container(
                   height: 2,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: [
-                      accentColor.withValues(alpha: 0),
-                      accentColor,
-                      accentColor.withValues(alpha: 0),
-                    ]),
+                    gradient: LinearGradient(
+                      colors: [accentColor.withValues(alpha: 0), accentColor, accentColor.withValues(alpha: 0)],
+                    ),
                   ),
                 ),
               ),
-            if (onTap == null)
-              content
-            else
-              Material(
-                type: MaterialType.transparency,
-                child: InkWell(onTap: onTap, child: content),
-              ),
+            if (tap == null) content else InkWell(onTap: tap, child: content),
           ],
         ),
       ),
