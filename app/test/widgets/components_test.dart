@@ -81,7 +81,7 @@ void main() {
     var retries = 0;
     await pump(tester, ErrorState(message: 'Cannot reach the server.', onRetry: () => retries++));
     expect(find.text('Cannot reach the server.'), findsOneWidget);
-    await tester.tap(find.byType(FilledButton).hitTestable().first);
+    await tester.tap(find.text('Try again'));
     expect(retries, 1);
   });
 
@@ -150,7 +150,9 @@ void main() {
     expect(find.text('Invoice payments'), findsOneWidget);
     expect(find.textContaining('Touch or hover'), findsOneWidget);
 
-    final chart = tester.getRect(find.byType(CustomPaint).last);
+    final chart = tester.getRect(
+      find.descendant(of: find.byType(RevenueChart), matching: find.byType(CustomPaint)).last,
+    );
     await tester.tapAt(Offset(chart.right - 20, chart.center.dy));
     await tester.pump();
     expect(find.textContaining('7 Nov'), findsOneWidget);

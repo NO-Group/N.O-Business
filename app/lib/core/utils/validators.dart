@@ -40,8 +40,9 @@ abstract final class Validators {
     String label = 'This field',
   }) {
     final size = value?.trim().length ?? 0;
-    if (size < min)
+    if (size < min) {
       return min == 1 ? '$label is required' : '$label needs at least $min characters';
+    }
     if (size > max) return '$label can be at most $max characters';
     return null;
   }

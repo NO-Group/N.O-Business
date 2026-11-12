@@ -104,12 +104,13 @@ class _InvitationTileState extends ConsumerState<InvitationTile> {
           .acceptInvitation(widget.invitation.id);
       ref.read(selectedOrganizationProvider.notifier).select(organizationId);
       ref.invalidate(myContextProvider);
-      if (mounted)
+      if (mounted) {
         showNobSnack(
           context,
           'You joined ${widget.invitation.organizationName}.',
           tone: SnackTone.success,
         );
+      }
     } catch (error) {
       if (mounted) showFailure(context, error);
     } finally {

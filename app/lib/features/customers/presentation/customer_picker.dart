@@ -83,7 +83,6 @@ class _CustomerPickerState extends ConsumerState<_CustomerPicker> {
                           return ListRow(
                             dense: true,
                             inset: NobSpace.sm,
-                            inset: NobSpace.sm,
                             leading: RowIcon(
                               customer.isCompany
                                   ? Icons.apartment_outlined

@@ -80,8 +80,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
         bytes: bytes,
         mimeType: document.mimeType,
       );
-      if (target != null && mounted)
+      if (target != null && mounted) {
         showNobSnack(context, 'Saved a copy.', tone: SnackTone.success);
+      }
     } catch (error) {
       if (mounted) showFailure(context, error);
     }
