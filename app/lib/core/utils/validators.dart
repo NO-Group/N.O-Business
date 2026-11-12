@@ -33,9 +33,15 @@ abstract final class Validators {
     return null;
   }
 
-  static String? length(String? value, {required int min, required int max, String label = 'This field'}) {
+  static String? length(
+    String? value, {
+    required int min,
+    required int max,
+    String label = 'This field',
+  }) {
     final size = value?.trim().length ?? 0;
-    if (size < min) return min == 1 ? '$label is required' : '$label needs at least $min characters';
+    if (size < min)
+      return min == 1 ? '$label is required' : '$label needs at least $min characters';
     if (size > max) return '$label can be at most $max characters';
     return null;
   }

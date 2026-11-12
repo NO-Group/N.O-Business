@@ -100,7 +100,13 @@ Future<T?> showNobSheet<T>(BuildContext context, {required Widget child}) {
 /// Standard frame for the content of [showNobSheet]: title, scrolling body,
 /// pinned action row.
 class SheetScaffold extends StatelessWidget {
-  const SheetScaffold({super.key, required this.title, required this.child, required this.actions, this.subtitle});
+  const SheetScaffold({
+    super.key,
+    required this.title,
+    required this.child,
+    required this.actions,
+    this.subtitle,
+  });
 
   final String title;
   final String? subtitle;

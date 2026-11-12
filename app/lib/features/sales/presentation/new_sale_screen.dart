@@ -67,7 +67,9 @@ class _NewSaleScreenState extends ConsumerState<NewSaleScreen> {
       _error = null;
     });
     try {
-      final id = await ref.read(salesRepositoryProvider).record(
+      final id = await ref
+          .read(salesRepositoryProvider)
+          .record(
             organizationId: organizationId,
             workspaceId: workspaceId,
             customerId: _customer?.id,
@@ -94,7 +96,12 @@ class _NewSaleScreenState extends ConsumerState<NewSaleScreen> {
   Widget build(BuildContext context) {
     void back() => context.go(Routes.sales);
     if (!ref.watch(canProvider(Permissions.salesCreate))) {
-      return PageScaffold(title: 'New sale', onBack: back, scrollable: false, child: const NoAccessState());
+      return PageScaffold(
+        title: 'New sale',
+        onBack: back,
+        scrollable: false,
+        child: const NoAccessState(),
+      );
     }
     final organization = ref.watch(activeOrganizationProvider);
     final workspace = ref.watch(activeWorkspaceProvider);

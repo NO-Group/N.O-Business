@@ -50,7 +50,8 @@ class SalesScreen extends ConsumerWidget {
             return EmptyState(
               icon: Icons.point_of_sale_outlined,
               title: 'No sales yet',
-              message: 'Record a sale when a customer pays straight away. Stock is reduced and the '
+              message:
+                  'Record a sale when a customer pays straight away. Stock is reduced and the '
                   'amount shows up on the dashboard.',
               action: canCreate
                   ? FilledButton(

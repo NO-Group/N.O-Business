@@ -45,7 +45,10 @@ class SettingsScreen extends ConsumerWidget {
                     SingleChildScrollView(
                       child: Align(
                         alignment: Alignment.topLeft,
-                        child: ConstrainedBox(constraints: const BoxConstraints(maxWidth: 720), child: view),
+                        child: ConstrainedBox(
+                          constraints: const BoxConstraints(maxWidth: 720),
+                          child: view,
+                        ),
                       ),
                     ),
                 ],

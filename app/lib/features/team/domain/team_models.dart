@@ -55,12 +55,12 @@ class Invitation {
   });
 
   factory Invitation.fromJson(JsonMap json) => Invitation(
-        id: asString(json['id']),
-        email: asString(json['email']),
-        roleName: asString(asJsonMap(json['role'])['name'], 'Member'),
-        expiresAt: asDateTime(json['expires_at']),
-        createdAt: asDateTime(json['created_at']),
-      );
+    id: asString(json['id']),
+    email: asString(json['email']),
+    roleName: asString(asJsonMap(json['role'])['name'], 'Member'),
+    expiresAt: asDateTime(json['expires_at']),
+    createdAt: asDateTime(json['created_at']),
+  );
 
   final String id;
   final String email;
@@ -82,15 +82,15 @@ class Role {
   });
 
   factory Role.fromJson(JsonMap json) => Role(
-        id: asString(json['id']),
-        name: asString(json['name']),
-        description: asString(json['description']),
-        isSystem: asBool(json['is_system']),
-        isOwner: asBool(json['is_owner']),
-        permissions: {
-          for (final row in asJsonList(json['role_permissions'])) asString(row['permission_key']),
-        },
-      );
+    id: asString(json['id']),
+    name: asString(json['name']),
+    description: asString(json['description']),
+    isSystem: asBool(json['is_system']),
+    isOwner: asBool(json['is_owner']),
+    permissions: {
+      for (final row in asJsonList(json['role_permissions'])) asString(row['permission_key']),
+    },
+  );
 
   final String id;
   final String name;
@@ -107,10 +107,10 @@ class PermissionInfo {
   const PermissionInfo({required this.key, required this.module, required this.description});
 
   factory PermissionInfo.fromJson(JsonMap json) => PermissionInfo(
-        key: asString(json['key']),
-        module: asString(json['module']),
-        description: asString(json['description']),
-      );
+    key: asString(json['key']),
+    module: asString(json['module']),
+    description: asString(json['description']),
+  );
 
   final String key;
   final String module;
@@ -121,11 +121,11 @@ class AuditEntry {
   const AuditEntry({required this.action, required this.entityType, this.actorId, this.createdAt});
 
   factory AuditEntry.fromJson(JsonMap json) => AuditEntry(
-        action: asString(json['action']),
-        entityType: asString(json['entity_type']),
-        actorId: asStringOrNull(json['actor_id']),
-        createdAt: asDateTime(json['created_at']),
-      );
+    action: asString(json['action']),
+    entityType: asString(json['entity_type']),
+    actorId: asStringOrNull(json['actor_id']),
+    createdAt: asDateTime(json['created_at']),
+  );
 
   /// What happened: `insert`, `update`, `delete` or a named operation such
   /// as `issue` or `void`.

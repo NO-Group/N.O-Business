@@ -46,7 +46,8 @@ class QuotationsScreen extends ConsumerWidget {
             return EmptyState(
               icon: Icons.request_quote_outlined,
               title: 'No quotations yet',
-              message: 'Send a customer a price before they commit. An accepted quotation becomes '
+              message:
+                  'Send a customer a price before they commit. An accepted quotation becomes '
                   'an invoice in one step.',
               action: canWrite
                   ? FilledButton(

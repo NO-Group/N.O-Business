@@ -36,35 +36,49 @@ final attentionItemsProvider = Provider<List<AttentionItem>>((ref) {
 
   final invitations = ref.watch(myContextProvider).value?.invitations ?? const [];
   if (invitations.isNotEmpty) {
-    items.add(AttentionItem(
-      icon: Icons.mark_email_unread_outlined,
-      title: invitations.length == 1 ? '1 pending invitation' : '${invitations.length} pending invitations',
-      detail: 'You have been invited to join ${invitations.first.organizationName}'
-          '${invitations.length > 1 ? ' and others' : ''}.',
-      route: Routes.settings,
-      tone: BadgeTone.info,
-    ));
+    items.add(
+      AttentionItem(
+        icon: Icons.mark_email_unread_outlined,
+        title: invitations.length == 1
+            ? '1 pending invitation'
+            : '${invitations.length} pending invitations',
+        detail:
+            'You have been invited to join ${invitations.first.organizationName}'
+            '${invitations.length > 1 ? ' and others' : ''}.',
+        route: Routes.settings,
+        tone: BadgeTone.info,
+      ),
+    );
   }
 
   final summary = ref.watch(dashboardSummaryProvider).value;
   if (summary != null) {
     if (summary.overdueCount > 0 && permissions.contains(Permissions.invoicesRead)) {
-      items.add(AttentionItem(
-        icon: Icons.schedule_rounded,
-        title: summary.overdueCount == 1 ? '1 overdue invoice' : '${summary.overdueCount} overdue invoices',
-        detail: '${Money.format(summary.overdueMinor, summary.currencyCode)} is past its due date.',
-        route: '${Routes.invoices}?status=overdue',
-        tone: BadgeTone.danger,
-      ));
+      items.add(
+        AttentionItem(
+          icon: Icons.schedule_rounded,
+          title: summary.overdueCount == 1
+              ? '1 overdue invoice'
+              : '${summary.overdueCount} overdue invoices',
+          detail:
+              '${Money.format(summary.overdueMinor, summary.currencyCode)} is past its due date.',
+          route: '${Routes.invoices}?status=overdue',
+          tone: BadgeTone.danger,
+        ),
+      );
     }
     if (summary.lowStockCount > 0 && permissions.contains(Permissions.catalogRead)) {
-      items.add(AttentionItem(
-        icon: Icons.inventory_outlined,
-        title: summary.lowStockCount == 1 ? '1 item is low on stock' : '${summary.lowStockCount} items are low on stock',
-        detail: 'At or below the reorder level in this workspace.',
-        route: '${Routes.catalog}?stock=low',
-        tone: BadgeTone.warning,
-      ));
+      items.add(
+        AttentionItem(
+          icon: Icons.inventory_outlined,
+          title: summary.lowStockCount == 1
+              ? '1 item is low on stock'
+              : '${summary.lowStockCount} items are low on stock',
+          detail: 'At or below the reorder level in this workspace.',
+          route: '${Routes.catalog}?stock=low',
+          tone: BadgeTone.warning,
+        ),
+      );
     }
   }
   return items;

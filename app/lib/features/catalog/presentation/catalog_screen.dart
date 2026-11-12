@@ -42,7 +42,8 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
     final confirmed = await confirmAction(
       context,
       title: 'Delete ${product.name}?',
-      message: 'The item is removed from the catalogue. Items that already appear on sales, '
+      message:
+          'The item is removed from the catalogue. Items that already appear on sales, '
           'quotations or invoices cannot be deleted; mark those inactive instead.',
       confirmLabel: 'Delete',
       destructive: true,
@@ -61,7 +62,11 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
   @override
   Widget build(BuildContext context) {
     if (!ref.watch(canProvider(Permissions.catalogRead))) {
-      return const PageScaffold(title: 'Products & stock', scrollable: false, child: NoAccessState());
+      return const PageScaffold(
+        title: 'Products & stock',
+        scrollable: false,
+        child: NoAccessState(),
+      );
     }
     final canWrite = ref.watch(canProvider(Permissions.catalogWrite));
     final canDelete = ref.watch(canProvider(Permissions.catalogDelete));
@@ -88,7 +93,10 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SearchField(hint: 'Search by name or SKU', onChanged: (value) => setState(() => _query = value)),
+          SearchField(
+            hint: 'Search by name or SKU',
+            onChanged: (value) => setState(() => _query = value),
+          ),
           if (seesStock) ...[
             const SizedBox(height: NobSpace.md),
             Align(
@@ -106,8 +114,9 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
               value: products,
               onRetry: () => ref.invalidate(productsProvider),
               builder: (all) {
-                final items =
-                    _lowOnly && seesStock ? all.where((p) => p.isLowIn(workspace?.id)).toList() : all;
+                final items = _lowOnly && seesStock
+                    ? all.where((p) => p.isLowIn(workspace?.id)).toList()
+                    : all;
                 if (items.isEmpty) {
                   final filtered = _query.isNotEmpty || _lowOnly;
                   return EmptyState(
@@ -116,16 +125,21 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                     message: filtered
                         ? 'No item matches the current search or filter.'
                         : 'Add the products and services you sell. Prices and tax rates are filled '
-                            'in automatically when you add them to a sale or invoice.',
+                              'in automatically when you add them to a sale or invoice.',
                     action: !filtered && canWrite
-                        ? FilledButton(onPressed: () => showProductForm(context), child: const Text('Add an item'))
+                        ? FilledButton(
+                            onPressed: () => showProductForm(context),
+                            child: const Text('Add an item'),
+                          )
                         : null,
                   );
                 }
                 return ListPanel(
                   itemCount: items.length,
                   footer: all.length >= listPageSize
-                      ? const Text('Showing the first $listPageSize items. Search to narrow the list.')
+                      ? const Text(
+                          'Showing the first $listPageSize items. Search to narrow the list.',
+                        )
                       : null,
                   itemBuilder: (context, index) {
                     final product = items[index];
@@ -150,42 +164,46 @@ class _CatalogScreenState extends ConsumerState<CatalogScreen> {
                         children: [
                           TrailingAmount(
                             amount: Money.format(product.unitPriceMinor, currency),
-                            below: low ? const StatusBadge(label: 'Low stock', tone: BadgeTone.warning) : null,
+                            below: low
+                                ? const StatusBadge(label: 'Low stock', tone: BadgeTone.warning)
+                                : null,
                           ),
-                          if (hasActions) MenuAnchor(
-                            menuChildren: [
-                              if (hasStock)
-                                MenuItemButton(
-                                  leadingIcon: const Icon(Icons.swap_vert_rounded, size: 18),
-                                  onPressed: () => showStockSheet(context, product),
-                                  child: const Text('Stock'),
-                                ),
-                              if (canWrite)
-                                MenuItemButton(
-                                  leadingIcon: const Icon(Icons.edit_outlined, size: 18),
-                                  onPressed: () => showProductForm(context, product: product),
-                                  child: const Text('Edit'),
-                                ),
-                              if (canDelete)
-                                MenuItemButton(
-                                  leadingIcon: const Icon(Icons.delete_outline_rounded, size: 18),
-                                  onPressed: () => _delete(product),
-                                  child: const Text('Delete'),
-                                ),
-                            ],
-                            builder: (context, controller, _) => IconButton(
-                              tooltip: 'Actions for ${product.name}',
-                              icon: const Icon(Icons.more_vert_rounded),
-                              onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+                          if (hasActions)
+                            MenuAnchor(
+                              menuChildren: [
+                                if (hasStock)
+                                  MenuItemButton(
+                                    leadingIcon: const Icon(Icons.swap_vert_rounded, size: 18),
+                                    onPressed: () => showStockSheet(context, product),
+                                    child: const Text('Stock'),
+                                  ),
+                                if (canWrite)
+                                  MenuItemButton(
+                                    leadingIcon: const Icon(Icons.edit_outlined, size: 18),
+                                    onPressed: () => showProductForm(context, product: product),
+                                    child: const Text('Edit'),
+                                  ),
+                                if (canDelete)
+                                  MenuItemButton(
+                                    leadingIcon: const Icon(Icons.delete_outline_rounded, size: 18),
+                                    onPressed: () => _delete(product),
+                                    child: const Text('Delete'),
+                                  ),
+                              ],
+                              builder: (context, controller, _) => IconButton(
+                                tooltip: 'Actions for ${product.name}',
+                                icon: const Icon(Icons.more_vert_rounded),
+                                onPressed: () =>
+                                    controller.isOpen ? controller.close() : controller.open(),
+                              ),
                             ),
-                          ),
                         ],
                       ),
                       onTap: hasStock
                           ? () => showStockSheet(context, product)
                           : canWrite
-                              ? () => showProductForm(context, product: product)
-                              : null,
+                          ? () => showProductForm(context, product: product)
+                          : null,
                     );
                   },
                 );

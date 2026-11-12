@@ -12,13 +12,13 @@ class LineItem {
   });
 
   factory LineItem.fromJson(JsonMap json) => LineItem(
-        productId: asStringOrNull(json['product_id']),
-        description: asString(json['description']),
-        quantity: asDouble(json['quantity']),
-        unitPriceMinor: asInt(json['unit_price_minor']),
-        taxRate: asDouble(json['tax_rate']),
-        lineTotalMinor: asInt(json['line_total_minor']),
-      );
+    productId: asStringOrNull(json['product_id']),
+    description: asString(json['description']),
+    quantity: asDouble(json['quantity']),
+    unitPriceMinor: asInt(json['unit_price_minor']),
+    taxRate: asDouble(json['tax_rate']),
+    lineTotalMinor: asInt(json['line_total_minor']),
+  );
 
   final String? productId;
   final String description;
@@ -29,7 +29,8 @@ class LineItem {
 
   /// Stored lines sorted by their position on the document.
   static List<LineItem> listFromJson(Object? value) {
-    final rows = asJsonList(value)..sort((a, b) => asInt(a['position']).compareTo(asInt(b['position'])));
+    final rows = asJsonList(value)
+      ..sort((a, b) => asInt(a['position']).compareTo(asInt(b['position'])));
     return rows.map(LineItem.fromJson).toList();
   }
 }
@@ -45,12 +46,12 @@ class DraftLine {
   });
 
   factory DraftLine.fromItem(LineItem item) => DraftLine(
-        productId: item.productId,
-        description: item.description,
-        quantity: item.quantity,
-        unitPriceMinor: item.unitPriceMinor,
-        taxRate: item.taxRate,
-      );
+    productId: item.productId,
+    description: item.description,
+    quantity: item.quantity,
+    unitPriceMinor: item.unitPriceMinor,
+    taxRate: item.taxRate,
+  );
 
   final String? productId;
   final String description;
@@ -62,23 +63,28 @@ class DraftLine {
 
   int get lineTotalMinor => (quantity * unitPriceMinor).round();
 
-  DraftLine copyWith({String? description, double? quantity, int? unitPriceMinor, double? taxRate}) => DraftLine(
-        productId: productId,
-        description: description ?? this.description,
-        quantity: quantity ?? this.quantity,
-        unitPriceMinor: unitPriceMinor ?? this.unitPriceMinor,
-        taxRate: taxRate ?? this.taxRate,
-      );
+  DraftLine copyWith({
+    String? description,
+    double? quantity,
+    int? unitPriceMinor,
+    double? taxRate,
+  }) => DraftLine(
+    productId: productId,
+    description: description ?? this.description,
+    quantity: quantity ?? this.quantity,
+    unitPriceMinor: unitPriceMinor ?? this.unitPriceMinor,
+    taxRate: taxRate ?? this.taxRate,
+  );
 
   /// Shape expected by the `record_sale`, `save_quotation` and
   /// `save_invoice` functions.
   JsonMap toJson() => {
-        if (productId != null) 'product_id': productId,
-        'description': description.trim(),
-        'quantity': quantity,
-        'unit_price_minor': unitPriceMinor,
-        'tax_rate': taxRate,
-      };
+    if (productId != null) 'product_id': productId,
+    'description': description.trim(),
+    'quantity': quantity,
+    'unit_price_minor': unitPriceMinor,
+    'tax_rate': taxRate,
+  };
 }
 
 /// Subtotal, tax and total of a document.

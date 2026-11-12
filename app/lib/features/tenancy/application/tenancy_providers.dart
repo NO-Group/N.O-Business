@@ -30,8 +30,9 @@ class SelectedOrganization extends Notifier<String?> {
   }
 }
 
-final selectedOrganizationProvider =
-    NotifierProvider<SelectedOrganization, String?>(SelectedOrganization.new);
+final selectedOrganizationProvider = NotifierProvider<SelectedOrganization, String?>(
+  SelectedOrganization.new,
+);
 
 /// The membership the app is currently operating under: the chosen
 /// organization if the user still belongs to it, otherwise their first one.
@@ -90,7 +91,9 @@ class SelectedWorkspace extends Notifier<String?> {
   }
 }
 
-final selectedWorkspaceProvider = NotifierProvider<SelectedWorkspace, String?>(SelectedWorkspace.new);
+final selectedWorkspaceProvider = NotifierProvider<SelectedWorkspace, String?>(
+  SelectedWorkspace.new,
+);
 
 /// The workspace sales, stock and billing screens operate in: the chosen one
 /// if it is still usable, else the organization's default, else the first.

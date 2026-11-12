@@ -27,7 +27,8 @@ class OrganizationSettings extends ConsumerWidget {
     final confirmed = await confirmAction(
       context,
       title: 'Leave ${organization.name}?',
-      message: 'You lose access to this organization and its data. An owner or administrator '
+      message:
+          'You lose access to this organization and its data. An owner or administrator '
           'would need to invite you again. The last owner cannot leave.',
       confirmLabel: 'Leave organization',
       destructive: true,
@@ -57,7 +58,11 @@ class OrganizationSettings extends ConsumerWidget {
               ? 'These details appear on quotations, invoices and receipts.'
               : 'Only members with permission to manage the organization can change these details.',
           // A new form (and fresh controllers) per organization.
-          child: _OrganizationForm(key: ValueKey(organization.id), organization: organization, editable: editable),
+          child: _OrganizationForm(
+            key: ValueKey(organization.id),
+            organization: organization,
+            editable: editable,
+          ),
         ),
         const SizedBox(height: NobSpace.lg),
         SectionCard(
@@ -98,7 +103,9 @@ class _OrganizationFormState extends ConsumerState<_OrganizationForm> {
   late final _phone = TextEditingController(text: widget.organization.phone);
   late final _address = TextEditingController(text: widget.organization.address);
   late final _taxId = TextEditingController(text: widget.organization.taxId);
-  late final _taxRate = TextEditingController(text: formatQuantity(widget.organization.defaultTaxRate));
+  late final _taxRate = TextEditingController(
+    text: formatQuantity(widget.organization.defaultTaxRate),
+  );
   late final _brandColor = TextEditingController(text: widget.organization.brandColor);
   late final _footer = TextEditingController(text: widget.organization.documentFooter);
   late String _currency = widget.organization.currencyCode;
@@ -234,7 +241,10 @@ class _OrganizationFormState extends ConsumerState<_OrganizationForm> {
             items: [
               if (!knownCurrency) DropdownMenuItem(value: _currency, child: Text(_currency)),
               for (final currency in currencies)
-                DropdownMenuItem(value: currency.code, child: Text('${currency.code} · ${currency.name}')),
+                DropdownMenuItem(
+                  value: currency.code,
+                  child: Text('${currency.code} · ${currency.name}'),
+                ),
             ],
             onChanged: editable ? (value) => setState(() => _currency = value ?? _currency) : null,
           ),

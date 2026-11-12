@@ -242,10 +242,10 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     final String? problem = customerId == null
         ? 'Choose a customer.'
         : _lines.isEmpty
-            ? 'Add at least one item.'
-            : discount == null
-                ? 'Enter the discount as an amount, for example 500.00.'
-                : null;
+        ? 'Add at least one item.'
+        : discount == null
+        ? 'Enter the discount as an amount, for example 500.00.'
+        : null;
     if (problem != null || customerId == null || discount == null) {
       setState(() => _error = problem);
       return;

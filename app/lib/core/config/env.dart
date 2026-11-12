@@ -60,13 +60,17 @@ abstract final class Env {
 
 /// Resolved configuration, injectable so tests can supply their own.
 class AppConfig {
-  const AppConfig({required this.supabaseUrl, required this.supabaseAnonKey, required this.appVersion});
+  const AppConfig({
+    required this.supabaseUrl,
+    required this.supabaseAnonKey,
+    required this.appVersion,
+  });
 
   factory AppConfig.fromEnvironment() => const AppConfig(
-        supabaseUrl: Env.supabaseUrl,
-        supabaseAnonKey: Env.supabaseAnonKey,
-        appVersion: Env.appVersion,
-      );
+    supabaseUrl: Env.supabaseUrl,
+    supabaseAnonKey: Env.supabaseAnonKey,
+    appVersion: Env.appVersion,
+  );
 
   final String supabaseUrl;
   final String supabaseAnonKey;

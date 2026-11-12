@@ -29,7 +29,12 @@ class AppShell extends ConsumerWidget {
     void open(NavDestination destination) => context.go(destination.path);
 
     if (width < NobBreakpoints.compact) {
-      return _CompactShell(destinations: destinations, selected: selected, onOpen: open, child: child);
+      return _CompactShell(
+        destinations: destinations,
+        selected: selected,
+        onOpen: open,
+        child: child,
+      );
     }
 
     final expanded = width >= NobBreakpoints.expanded;
@@ -73,10 +78,7 @@ class _TopBar extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: NobSpace.lg),
         child: Row(
           children: [
-            if (showBrand) ...[
-              const BrandMark(size: 30),
-              const SizedBox(width: NobSpace.md),
-            ],
+            if (showBrand) ...[const BrandMark(size: 30), const SizedBox(width: NobSpace.md)],
             const Flexible(child: WorkspaceSwitcher()),
             const Spacer(),
             const AttentionButton(),
@@ -113,7 +115,12 @@ class _SideNavigation extends StatelessWidget {
         items.add(
           expanded
               ? Padding(
-                  padding: const EdgeInsets.fromLTRB(NobSpace.md, NobSpace.lg, NobSpace.md, NobSpace.sm),
+                  padding: const EdgeInsets.fromLTRB(
+                    NobSpace.md,
+                    NobSpace.lg,
+                    NobSpace.md,
+                    NobSpace.sm,
+                  ),
                   child: Text(
                     destination.section.toUpperCase(),
                     style: NobText.overline.copyWith(color: NobColors.textMuted),
@@ -195,7 +202,9 @@ class _NavTile extends StatelessWidget {
           color: selected ? NobColors.cobalt.withValues(alpha: 0.22) : Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: NobRadius.medium,
-            side: BorderSide(color: selected ? NobColors.cobalt.withValues(alpha: 0.55) : Colors.transparent),
+            side: BorderSide(
+              color: selected ? NobColors.cobalt.withValues(alpha: 0.55) : Colors.transparent,
+            ),
           ),
           clipBehavior: Clip.antiAlias,
           child: InkWell(
@@ -259,8 +268,8 @@ class _CompactShell extends StatelessWidget {
     final barIndex = selected < 0
         ? 0
         : selected < primary.length
-            ? selected
-            : primary.length;
+        ? selected
+        : primary.length;
 
     return Scaffold(
       body: SafeArea(

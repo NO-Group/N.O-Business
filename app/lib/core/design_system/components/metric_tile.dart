@@ -59,7 +59,8 @@ class MetricTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                if (onTap != null) const Icon(Icons.north_east_rounded, size: 14, color: NobColors.textMuted),
+                if (onTap != null)
+                  const Icon(Icons.north_east_rounded, size: 14, color: NobColors.textMuted),
               ],
             ),
             const SizedBox(height: NobSpace.md),

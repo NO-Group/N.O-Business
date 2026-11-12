@@ -76,7 +76,10 @@ class PrimaryButton extends StatelessWidget {
               child: ConstrainedBox(
                 constraints: const BoxConstraints(minHeight: 44),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: NobSpace.xl, vertical: NobSpace.md),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: NobSpace.xl,
+                    vertical: NobSpace.md,
+                  ),
                   child: child,
                 ),
               ),

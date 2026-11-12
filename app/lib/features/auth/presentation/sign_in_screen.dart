@@ -100,7 +100,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               const SizedBox(height: NobSpace.lg),
             ] else
               const SizedBox(height: NobSpace.sm),
-            PrimaryButton(label: 'Sign in', onPressed: _submit, loading: _submitting, expanded: true),
+            PrimaryButton(
+              label: 'Sign in',
+              onPressed: _submit,
+              loading: _submitting,
+              expanded: true,
+            ),
           ],
         ),
       ),

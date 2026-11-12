@@ -77,13 +77,17 @@ class _CustomersScreenState extends ConsumerState<CustomersScreen> {
                 return ListPanel(
                   itemCount: items.length,
                   footer: items.length >= listPageSize
-                      ? const Text('Showing the first $listPageSize customers. Search to narrow the list.')
+                      ? const Text(
+                          'Showing the first $listPageSize customers. Search to narrow the list.',
+                        )
                       : null,
                   itemBuilder: (context, index) {
                     final customer = items[index];
                     return ListRow(
                       leading: RowIcon(
-                        customer.isCompany ? Icons.apartment_outlined : Icons.person_outline_rounded,
+                        customer.isCompany
+                            ? Icons.apartment_outlined
+                            : Icons.person_outline_rounded,
                       ),
                       title: customer.name,
                       subtitle: customer.contactLine,

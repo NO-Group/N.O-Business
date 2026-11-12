@@ -43,8 +43,7 @@ class AppLogger {
     Map<String, Object?> fields = const {},
     Object? error,
     StackTrace? stackTrace,
-  }) =>
-      _write(LogLevel.error, message, fields, error: error, stackTrace: stackTrace);
+  }) => _write(LogLevel.error, message, fields, error: error, stackTrace: stackTrace);
 
   /// Returns a copy of [fields] that is safe to persist.
   static Map<String, Object?> redact(Map<String, Object?> fields) {

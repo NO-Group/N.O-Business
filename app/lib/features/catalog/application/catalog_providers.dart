@@ -10,7 +10,10 @@ final catalogRepositoryProvider = Provider<CatalogRepository>(
 );
 
 /// Catalogue of the active organization matching a search query.
-final productsProvider = FutureProvider.autoDispose.family<List<Product>, String>((ref, query) async {
+final productsProvider = FutureProvider.autoDispose.family<List<Product>, String>((
+  ref,
+  query,
+) async {
   final organizationId = ref.watch(activeOrganizationIdProvider);
   if (organizationId == null) return const [];
   return ref.watch(catalogRepositoryProvider).list(organizationId, query: query);
@@ -24,9 +27,13 @@ final sellableProductsProvider = FutureProvider.autoDispose<List<Product>>((ref)
 });
 
 /// Recent stock movements of one item in the active workspace.
-final stockMovementsProvider =
-    FutureProvider.autoDispose.family<List<StockMovement>, String>((ref, productId) async {
+final stockMovementsProvider = FutureProvider.autoDispose.family<List<StockMovement>, String>((
+  ref,
+  productId,
+) async {
   final workspaceId = ref.watch(activeWorkspaceProvider)?.id;
   if (workspaceId == null) return const [];
-  return ref.watch(catalogRepositoryProvider).movements(productId: productId, workspaceId: workspaceId);
+  return ref
+      .watch(catalogRepositoryProvider)
+      .movements(productId: productId, workspaceId: workspaceId);
 });

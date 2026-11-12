@@ -57,17 +57,17 @@ class DocumentFile {
   });
 
   factory DocumentFile.fromJson(JsonMap json) => DocumentFile(
-        id: asString(json['id']),
-        name: asString(json['name']),
-        category: asString(json['category'], 'general'),
-        storagePath: asString(json['storage_path']),
-        mimeType: asString(json['mime_type']),
-        sizeBytes: asInt(json['size_bytes']),
-        customerId: asStringOrNull(json['customer_id']),
-        customerName: asStringOrNull(asJsonMap(json['customer'])['name']),
-        notes: asStringOrNull(json['notes']),
-        createdAt: asDateTime(json['created_at']),
-      );
+    id: asString(json['id']),
+    name: asString(json['name']),
+    category: asString(json['category'], 'general'),
+    storagePath: asString(json['storage_path']),
+    mimeType: asString(json['mime_type']),
+    sizeBytes: asInt(json['size_bytes']),
+    customerId: asStringOrNull(json['customer_id']),
+    customerName: asStringOrNull(asJsonMap(json['customer'])['name']),
+    notes: asStringOrNull(json['notes']),
+    createdAt: asDateTime(json['created_at']),
+  );
 
   final String id;
   final String name;

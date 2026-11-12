@@ -101,9 +101,9 @@ const List<NavDestination> navDestinations = [
 
 /// Destinations the given permission set may open.
 List<NavDestination> visibleDestinations(Set<String> permissions) => [
-      for (final destination in navDestinations)
-        if (destination.permission == null || permissions.contains(destination.permission)) destination,
-    ];
+  for (final destination in navDestinations)
+    if (destination.permission == null || permissions.contains(destination.permission)) destination,
+];
 
 /// Index of the destination that owns [location] (`/invoices/123` belongs to
 /// Invoices), or -1.

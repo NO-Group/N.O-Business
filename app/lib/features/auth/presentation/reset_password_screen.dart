@@ -104,9 +104,13 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
                 controller: _code,
                 keyboardType: TextInputType.number,
                 autofillHints: const [AutofillHints.oneTimeCode],
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(8),
+                ],
                 textInputAction: TextInputAction.next,
-                validator: (value) => (value ?? '').trim().length < 6 ? 'Enter the code from the email' : null,
+                validator: (value) =>
+                    (value ?? '').trim().length < 6 ? 'Enter the code from the email' : null,
                 decoration: const InputDecoration(
                   labelText: 'Reset code',
                   prefixIcon: Icon(Icons.pin_outlined),
@@ -123,10 +127,7 @@ class _ResetPasswordScreenState extends ConsumerState<ResetPasswordScreen> {
               ),
             ],
             const SizedBox(height: NobSpace.xl),
-            if (error != null) ...[
-              FormMessage(error),
-              const SizedBox(height: NobSpace.lg),
-            ],
+            if (error != null) ...[FormMessage(error), const SizedBox(height: NobSpace.lg)],
             PrimaryButton(
               label: _codeSent ? 'Set new password' : 'Send reset code',
               onPressed: _submit,

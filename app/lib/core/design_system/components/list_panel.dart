@@ -45,10 +45,7 @@ class RowGroup extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        for (var i = 0; i < children.length; i++) ...[
-          if (i > 0) const Divider(),
-          children[i],
-        ],
+        for (var i = 0; i < children.length; i++) ...[if (i > 0) const Divider(), children[i]],
       ],
     );
   }

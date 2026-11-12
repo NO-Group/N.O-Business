@@ -50,7 +50,9 @@ class _OrganizationFormState extends ConsumerState<OrganizationForm> {
       _error = null;
     });
     try {
-      final organizationId = await ref.read(tenancyRepositoryProvider).createOrganization(
+      final organizationId = await ref
+          .read(tenancyRepositoryProvider)
+          .createOrganization(
             NewOrganization(
               name: _name.text.trim(),
               currencyCode: _currency,
@@ -85,7 +87,8 @@ class _OrganizationFormState extends ConsumerState<OrganizationForm> {
             controller: _name,
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.next,
-            validator: (value) => Validators.length(value, min: 2, max: 120, label: 'Organization name'),
+            validator: (value) =>
+                Validators.length(value, min: 2, max: 120, label: 'Organization name'),
             decoration: const InputDecoration(
               labelText: 'Organization name',
               prefixIcon: Icon(Icons.apartment_rounded),
@@ -102,9 +105,14 @@ class _OrganizationFormState extends ConsumerState<OrganizationForm> {
             ),
             items: [
               for (final currency in currencies)
-                DropdownMenuItem(value: currency.code, child: Text('${currency.code} · ${currency.name}')),
+                DropdownMenuItem(
+                  value: currency.code,
+                  child: Text('${currency.code} · ${currency.name}'),
+                ),
             ],
-            onChanged: _submitting ? null : (value) => setState(() => _currency = value ?? _currency),
+            onChanged: _submitting
+                ? null
+                : (value) => setState(() => _currency = value ?? _currency),
           ),
           const SizedBox(height: NobSpace.lg),
           DropdownButtonFormField<String>(
@@ -116,9 +124,12 @@ class _OrganizationFormState extends ConsumerState<OrganizationForm> {
               prefixIcon: Icon(Icons.schedule_rounded),
             ),
             items: [
-              for (final zone in timeZones) DropdownMenuItem(value: zone, child: Text(zone.replaceAll('_', ' '))),
+              for (final zone in timeZones)
+                DropdownMenuItem(value: zone, child: Text(zone.replaceAll('_', ' '))),
             ],
-            onChanged: _submitting ? null : (value) => setState(() => _timeZone = value ?? _timeZone),
+            onChanged: _submitting
+                ? null
+                : (value) => setState(() => _timeZone = value ?? _timeZone),
           ),
           const SizedBox(height: NobSpace.lg),
           TextFormField(
@@ -145,7 +156,8 @@ class _OrganizationFormState extends ConsumerState<OrganizationForm> {
             textCapitalization: TextCapitalization.words,
             textInputAction: TextInputAction.done,
             onFieldSubmitted: (_) => _submit(),
-            validator: (value) => Validators.length(value, min: 2, max: 80, label: 'Workspace name'),
+            validator: (value) =>
+                Validators.length(value, min: 2, max: 80, label: 'Workspace name'),
             decoration: const InputDecoration(
               labelText: 'First workspace',
               helperText: 'A branch or location. Stock and sales are tracked per workspace.',
@@ -153,11 +165,13 @@ class _OrganizationFormState extends ConsumerState<OrganizationForm> {
             ),
           ),
           const SizedBox(height: NobSpace.xl),
-          if (error != null) ...[
-            FormMessage(error),
-            const SizedBox(height: NobSpace.lg),
-          ],
-          PrimaryButton(label: widget.submitLabel, onPressed: _submit, loading: _submitting, expanded: true),
+          if (error != null) ...[FormMessage(error), const SizedBox(height: NobSpace.lg)],
+          PrimaryButton(
+            label: widget.submitLabel,
+            onPressed: _submit,
+            loading: _submitting,
+            expanded: true,
+          ),
         ],
       ),
     );

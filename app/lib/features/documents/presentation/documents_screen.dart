@@ -56,7 +56,10 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
         showNobSnack(context, 'Files can be up to 20 MB.', tone: SnackTone.danger);
         return;
       }
-      final saved = await showNobSheet<bool>(context, child: _UploadSheet(fileName: picked.name, bytes: bytes));
+      final saved = await showNobSheet<bool>(
+        context,
+        child: _UploadSheet(fileName: picked.name, bytes: bytes),
+      );
       if (saved == true && mounted) {
         ref.invalidate(documentsProvider);
         showNobSnack(context, 'Document uploaded.', tone: SnackTone.success);
@@ -77,7 +80,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
         bytes: bytes,
         mimeType: document.mimeType,
       );
-      if (target != null && mounted) showNobSnack(context, 'Saved a copy.', tone: SnackTone.success);
+      if (target != null && mounted)
+        showNobSnack(context, 'Saved a copy.', tone: SnackTone.success);
     } catch (error) {
       if (mounted) showFailure(context, error);
     }
@@ -95,7 +99,12 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(NobSpace.xl, NobSpace.md, NobSpace.sm, NobSpace.md),
+                padding: const EdgeInsets.fromLTRB(
+                  NobSpace.xl,
+                  NobSpace.md,
+                  NobSpace.sm,
+                  NobSpace.md,
+                ),
                 child: Row(
                   children: [
                     Expanded(
@@ -140,7 +149,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
     final confirmed = await confirmAction(
       context,
       title: 'Delete ${document.name}?',
-      message: 'The file is removed from storage for everyone in the organization. '
+      message:
+          'The file is removed from storage for everyone in the organization. '
           'This cannot be undone.',
       confirmLabel: 'Delete document',
       destructive: true,
@@ -211,7 +221,7 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                     message: filtered
                         ? 'No document matches the current search or category.'
                         : 'Upload PDFs, images, spreadsheets and text files up to 20 MB. '
-                            'Only members of this organization with access can open them.',
+                              'Only members of this organization with access can open them.',
                     action: !filtered && canWrite
                         ? FilledButton(onPressed: _upload, child: const Text('Upload a document'))
                         : null,
@@ -220,7 +230,9 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                 return ListPanel(
                   itemCount: items.length,
                   footer: items.length >= listPageSize
-                      ? const Text('Showing the most recent $listPageSize documents. Search to narrow the list.')
+                      ? const Text(
+                          'Showing the most recent $listPageSize documents. Search to narrow the list.',
+                        )
                       : null,
                   itemBuilder: (context, index) {
                     final document = items[index];
@@ -230,8 +242,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                         document.isPdf
                             ? Icons.picture_as_pdf_outlined
                             : document.isImage
-                                ? Icons.image_outlined
-                                : Icons.insert_drive_file_outlined,
+                            ? Icons.image_outlined
+                            : Icons.insert_drive_file_outlined,
                       ),
                       title: document.name,
                       subtitle: [
@@ -275,7 +287,8 @@ class _DocumentsScreenState extends ConsumerState<DocumentsScreen> {
                         builder: (context, controller, _) => IconButton(
                           tooltip: 'Actions for ${document.name}',
                           icon: const Icon(Icons.more_vert_rounded),
-                          onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+                          onPressed: () =>
+                              controller.isOpen ? controller.close() : controller.open(),
                         ),
                       ),
                       onTap: () => document.isImage ? _preview(document) : _download(document),
@@ -352,7 +365,9 @@ class _UploadSheetState extends ConsumerState<_UploadSheet> {
       _error = null;
     });
     try {
-      await ref.read(documentRepositoryProvider).upload(
+      await ref
+          .read(documentRepositoryProvider)
+          .upload(
             organizationId: organizationId,
             workspaceId: ref.read(activeWorkspaceProvider)?.id,
             fileName: widget.fileName,
@@ -380,7 +395,10 @@ class _UploadSheetState extends ConsumerState<_UploadSheet> {
       title: 'Upload document',
       subtitle: '${widget.fileName} · ${formatFileSize(widget.bytes.length)}',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(false), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(false),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Upload', onPressed: _save, loading: _saving),
       ],
       child: Form(
@@ -394,7 +412,10 @@ class _UploadSheetState extends ConsumerState<_UploadSheet> {
               validator: (value) => Validators.length(value, min: 1, max: 200, label: 'Name'),
             ),
             const SizedBox(height: NobSpace.lg),
-            _CategoryField(value: _category, onChanged: (value) => setState(() => _category = value)),
+            _CategoryField(
+              value: _category,
+              onChanged: (value) => setState(() => _category = value),
+            ),
             if (canPickCustomer) ...[
               const SizedBox(height: NobSpace.lg),
               CustomerField(
@@ -454,7 +475,9 @@ class _EditSheetState extends ConsumerState<_EditSheet> {
       _error = null;
     });
     try {
-      await ref.read(documentRepositoryProvider).update(
+      await ref
+          .read(documentRepositoryProvider)
+          .update(
             widget.document.id,
             name: _name.text,
             category: _category,
@@ -476,7 +499,10 @@ class _EditSheetState extends ConsumerState<_EditSheet> {
     return SheetScaffold(
       title: 'Document details',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(false), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(false),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Save', onPressed: _save, loading: _saving),
       ],
       child: Form(
@@ -490,7 +516,10 @@ class _EditSheetState extends ConsumerState<_EditSheet> {
               validator: (value) => Validators.length(value, min: 1, max: 200, label: 'Name'),
             ),
             const SizedBox(height: NobSpace.lg),
-            _CategoryField(value: _category, onChanged: (value) => setState(() => _category = value)),
+            _CategoryField(
+              value: _category,
+              onChanged: (value) => setState(() => _category = value),
+            ),
             const SizedBox(height: NobSpace.lg),
             TextFormField(
               controller: _notes,

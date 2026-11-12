@@ -60,7 +60,8 @@ class OnboardingScreen extends ConsumerWidget {
                         subtitle: 'Sent to ${myContext?.profile.email ?? 'your email'}',
                         child: Column(
                           children: [
-                            for (final invitation in invitations) InvitationTile(invitation: invitation),
+                            for (final invitation in invitations)
+                              InvitationTile(invitation: invitation),
                           ],
                         ),
                       ),
@@ -98,11 +99,17 @@ class _InvitationTileState extends ConsumerState<InvitationTile> {
   Future<void> _accept() async {
     setState(() => _accepting = true);
     try {
-      final organizationId =
-          await ref.read(tenancyRepositoryProvider).acceptInvitation(widget.invitation.id);
+      final organizationId = await ref
+          .read(tenancyRepositoryProvider)
+          .acceptInvitation(widget.invitation.id);
       ref.read(selectedOrganizationProvider.notifier).select(organizationId);
       ref.invalidate(myContextProvider);
-      if (mounted) showNobSnack(context, 'You joined ${widget.invitation.organizationName}.', tone: SnackTone.success);
+      if (mounted)
+        showNobSnack(
+          context,
+          'You joined ${widget.invitation.organizationName}.',
+          tone: SnackTone.success,
+        );
     } catch (error) {
       if (mounted) showFailure(context, error);
     } finally {

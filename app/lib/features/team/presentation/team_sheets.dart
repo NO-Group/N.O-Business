@@ -11,13 +11,17 @@ import '../../tenancy/application/tenancy_providers.dart';
 import '../application/team_providers.dart';
 import '../domain/team_models.dart';
 
-Future<void> showInviteSheet(BuildContext context) => showNobSheet<void>(context, child: const _InviteSheet());
+Future<void> showInviteSheet(BuildContext context) =>
+    showNobSheet<void>(context, child: const _InviteSheet());
 
 Future<void> showChangeRoleSheet(BuildContext context, Member member) =>
     showNobSheet<void>(context, child: _ChangeRoleSheet(member: member));
 
 Future<void> showRoleSheet(BuildContext context, {Role? role, bool readOnly = false}) =>
-    showNobSheet<void>(context, child: _RoleSheet(role: role, readOnly: readOnly));
+    showNobSheet<void>(
+      context,
+      child: _RoleSheet(role: role, readOnly: readOnly),
+    );
 
 /// Dropdown of the organization's roles. Shows a spinner while they load.
 class _RolePicker extends ConsumerWidget {
@@ -94,10 +98,14 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     final error = _error;
     return SheetScaffold(
       title: 'Invite a team member',
-      subtitle: 'They see the invitation when they sign in to N.O Business with this email '
+      subtitle:
+          'They see the invitation when they sign in to N.O Business with this email '
           'address. No email is sent yet, so let them know.',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Create invitation', onPressed: _send, loading: _saving),
       ],
       child: Form(
@@ -170,7 +178,10 @@ class _ChangeRoleSheetState extends ConsumerState<_ChangeRoleSheet> {
       title: 'Change role',
       subtitle: widget.member.displayName,
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Save', onPressed: _save, loading: _saving),
       ],
       child: Column(
@@ -223,7 +234,9 @@ class _RoleSheetState extends ConsumerState<_RoleSheet> {
       _error = null;
     });
     try {
-      await ref.read(teamRepositoryProvider).saveRole(
+      await ref
+          .read(teamRepositoryProvider)
+          .saveRole(
             organizationId: organizationId,
             roleId: widget.role?.id,
             name: _name.text,
@@ -286,10 +299,10 @@ class _RoleSheetState extends ConsumerState<_RoleSheet> {
       subtitle: role == null
           ? 'A custom set of permissions for this organization.'
           : role.isOwner
-              ? 'Owners always hold every permission.'
-              : role.isSystem
-                  ? 'Built-in role. Create a custom role to use a different set of permissions.'
-                  : null,
+          ? 'Owners always hold every permission.'
+          : role.isSystem
+          ? 'Built-in role. Create a custom role to use a different set of permissions.'
+          : null,
       actions: [
         if (role != null && !readOnly)
           DangerButton(label: 'Delete', onPressed: _saving ? null : _delete),
@@ -315,7 +328,10 @@ class _RoleSheetState extends ConsumerState<_RoleSheet> {
               TextFormField(
                 controller: _description,
                 maxLength: 300,
-                decoration: const InputDecoration(labelText: 'Description (optional)', counterText: ''),
+                decoration: const InputDecoration(
+                  labelText: 'Description (optional)',
+                  counterText: '',
+                ),
               ),
               const SizedBox(height: NobSpace.lg),
             ],
@@ -349,12 +365,12 @@ class _RoleSheetState extends ConsumerState<_RoleSheet> {
                           onChanged: readOnly || !mine.contains(permission.key)
                               ? null
                               : (checked) => setState(() {
-                                    if (checked ?? false) {
-                                      _selected.add(permission.key);
-                                    } else {
-                                      _selected.remove(permission.key);
-                                    }
-                                  }),
+                                  if (checked ?? false) {
+                                    _selected.add(permission.key);
+                                  } else {
+                                    _selected.remove(permission.key);
+                                  }
+                                }),
                           title: Text(permission.description),
                         ),
                     ],

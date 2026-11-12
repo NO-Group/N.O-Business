@@ -145,8 +145,8 @@ class _Summary extends StatelessWidget {
               captionColor: change == null
                   ? null
                   : change >= 0
-                      ? NobColors.success
-                      : NobColors.danger,
+                  ? NobColors.success
+                  : NobColors.danger,
             ),
             MetricTile(
               label: 'Sales',
@@ -173,8 +173,8 @@ class _Summary extends StatelessWidget {
               caption: summary.overdueCount == 0
                   ? 'Nothing overdue'
                   : summary.overdueCount == 1
-                      ? '1 invoice past due'
-                      : '${summary.overdueCount} invoices past due',
+                  ? '1 invoice past due'
+                  : '${summary.overdueCount} invoices past due',
               captionColor: summary.overdueCount > 0 ? NobColors.danger : null,
               onTap: link(Permissions.invoicesRead, '${Routes.invoices}?status=overdue'),
             ),
@@ -200,7 +200,9 @@ class _Summary extends StatelessWidget {
               value: '${summary.lowStockCount}',
               icon: Icons.inventory_outlined,
               color: summary.lowStockCount > 0 ? NobColors.warning : NobColors.textSecondary,
-              caption: summary.lowStockCount == 0 ? 'Stock levels are healthy' : 'At or below reorder level',
+              caption: summary.lowStockCount == 0
+                  ? 'Stock levels are healthy'
+                  : 'At or below reorder level',
               onTap: link(Permissions.catalogRead, '${Routes.catalog}?stock=low'),
             ),
           ],
@@ -305,8 +307,9 @@ class _ModuleLinks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final destinations =
-        visibleDestinations(permissions).where((destination) => destination.path != Routes.dashboard).toList();
+    final destinations = visibleDestinations(
+      permissions,
+    ).where((destination) => destination.path != Routes.dashboard).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

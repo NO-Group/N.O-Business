@@ -81,7 +81,8 @@ class _QuotationViewState extends ConsumerState<_QuotationView> {
     final confirmed = await confirmAction(
       context,
       title: 'Create an invoice from this quotation?',
-      message: 'A draft invoice is created with the same customer, items and prices. '
+      message:
+          'A draft invoice is created with the same customer, items and prices. '
           'You can review it before issuing.',
       confirmLabel: 'Create invoice',
     );
@@ -125,8 +126,10 @@ class _QuotationViewState extends ConsumerState<_QuotationView> {
     final quotation = _quotation;
     final organization = ref.watch(activeOrganizationProvider);
     final workspaces = ref.watch(workspacesProvider).value ?? const [];
-    final workspaceName =
-        workspaces.where((w) => w.id == quotation.workspaceId).map((w) => w.name).firstOrNull;
+    final workspaceName = workspaces
+        .where((w) => w.id == quotation.workspaceId)
+        .map((w) => w.name)
+        .firstOrNull;
     final customer = ref.watch(customerProvider(quotation.customerId)).value;
     final canWrite = ref.watch(canProvider(Permissions.quotationsWrite));
     final canInvoice = canWrite && ref.watch(canProvider(Permissions.invoicesWrite));
@@ -137,27 +140,27 @@ class _QuotationViewState extends ConsumerState<_QuotationView> {
     final invoiceId = quotation.convertedInvoiceId;
 
     CommercialPdfData pdf() => CommercialPdfData(
-          title: 'QUOTATION',
-          number: quotation.number,
-          seller: organization == null
-              ? const PdfParty(name: 'N.O Business')
-              : sellerParty(organization, workspaceName: workspaceName),
-          buyer: PdfParty(
-            name: quotation.customerName,
-            lines: [?customer?.address, ?customer?.phone, ?customer?.email],
-          ),
-          meta: [
-            if (issueDate != null) ('Date', formatDate(issueDate)),
-            if (validUntil != null) ('Valid until', formatDate(validUntil)),
-          ],
-          items: quotation.items,
-          totals: quotation.totals,
-          currencyCode: quotation.currencyCode,
-          notes: notes,
-          footer: organization?.documentFooter,
-          brandColorHex: organization?.brandColor,
-          stamp: status == 'draft' ? 'DRAFT' : null,
-        );
+      title: 'QUOTATION',
+      number: quotation.number,
+      seller: organization == null
+          ? const PdfParty(name: 'N.O Business')
+          : sellerParty(organization, workspaceName: workspaceName),
+      buyer: PdfParty(
+        name: quotation.customerName,
+        lines: [?customer?.address, ?customer?.phone, ?customer?.email],
+      ),
+      meta: [
+        if (issueDate != null) ('Date', formatDate(issueDate)),
+        if (validUntil != null) ('Valid until', formatDate(validUntil)),
+      ],
+      items: quotation.items,
+      totals: quotation.totals,
+      currencyCode: quotation.currencyCode,
+      notes: notes,
+      footer: organization?.documentFooter,
+      brandColorHex: organization?.brandColor,
+      stamp: status == 'draft' ? 'DRAFT' : null,
+    );
 
     return PageScaffold(
       title: quotation.number,

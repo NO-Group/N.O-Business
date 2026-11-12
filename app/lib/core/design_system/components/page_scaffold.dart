@@ -42,11 +42,7 @@ class PageScaffold extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (back != null) ...[
-          IconButton(
-            tooltip: 'Back',
-            onPressed: back,
-            icon: const Icon(Icons.arrow_back_rounded),
-          ),
+          IconButton(tooltip: 'Back', onPressed: back, icon: const Icon(Icons.arrow_back_rounded)),
           const SizedBox(width: NobSpace.sm),
         ],
         Expanded(
@@ -86,18 +82,15 @@ class PageScaffold extends StatelessWidget {
             ),
     );
 
-    final body = Padding(
-      padding: EdgeInsets.fromLTRB(gutter, 0, gutter, gutter),
-      child: child,
-    );
+    final body = Padding(padding: EdgeInsets.fromLTRB(gutter, 0, gutter, gutter), child: child);
 
     Widget constrain(Widget content) => Align(
-          alignment: Alignment.topCenter,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: NobBreakpoints.contentMax),
-            child: content,
-          ),
-        );
+      alignment: Alignment.topCenter,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: NobBreakpoints.contentMax),
+        child: content,
+      ),
+    );
 
     // Pages are stacked inside the shell; an opaque background keeps the
     // page underneath from showing through during transitions.
@@ -112,7 +105,10 @@ class PageScaffold extends StatelessWidget {
           : constrain(
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [header, Expanded(child: body)],
+                children: [
+                  header,
+                  Expanded(child: body),
+                ],
               ),
             ),
     );
@@ -136,7 +132,10 @@ class ResponsiveGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        final columns = ((constraints.maxWidth + spacing) / (minItemWidth + spacing)).floor().clamp(1, 6);
+        final columns = ((constraints.maxWidth + spacing) / (minItemWidth + spacing)).floor().clamp(
+          1,
+          6,
+        );
         // Rounded down so accumulated fractions never push the last item to a new row.
         final width = ((constraints.maxWidth - spacing * (columns - 1)) / columns).floorToDouble();
         return Wrap(
@@ -163,7 +162,11 @@ class TwoPane extends StatelessWidget {
         if (constraints.maxWidth < 860) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [primary, const SizedBox(height: NobSpace.lg), secondary],
+            children: [
+              primary,
+              const SizedBox(height: NobSpace.lg),
+              secondary,
+            ],
           );
         }
         return Row(
@@ -206,7 +209,8 @@ class DetailLoader<T> extends StatelessWidget {
 
     return value.when(
       loading: () => frame(const LoadingView()),
-      error: (error, _) => frame(ErrorState(message: AppFailure.from(error).message, onRetry: onRetry)),
+      error: (error, _) =>
+          frame(ErrorState(message: AppFailure.from(error).message, onRetry: onRetry)),
       data: (record) => record == null
           ? frame(
               EmptyState(

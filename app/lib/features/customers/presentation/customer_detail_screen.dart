@@ -32,7 +32,12 @@ class CustomerDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     void back() => context.go(Routes.customers);
     if (!ref.watch(canProvider(Permissions.customersRead))) {
-      return PageScaffold(title: 'Customer', onBack: back, scrollable: false, child: const NoAccessState());
+      return PageScaffold(
+        title: 'Customer',
+        onBack: back,
+        scrollable: false,
+        child: const NoAccessState(),
+      );
     }
     return DetailLoader<Customer>(
       value: ref.watch(customerProvider(customerId)),
@@ -54,7 +59,8 @@ class _CustomerView extends ConsumerWidget {
     final confirmed = await confirmAction(
       context,
       title: 'Delete ${customer.name}?',
-      message: 'The customer record is removed. Customers that appear on sales, quotations or '
+      message:
+          'The customer record is removed. Customers that appear on sales, quotations or '
           'invoices cannot be deleted, because those records must stay complete.',
       confirmLabel: 'Delete customer',
       destructive: true,
@@ -178,7 +184,12 @@ class _CustomerView extends ConsumerWidget {
 
 /// A card listing related records, with inline loading and failure states.
 class _History<T> extends StatelessWidget {
-  const _History({required this.title, required this.empty, required this.value, required this.row});
+  const _History({
+    required this.title,
+    required this.empty,
+    required this.value,
+    required this.row,
+  });
 
   final String title;
   final String empty;
@@ -193,7 +204,13 @@ class _History<T> extends StatelessWidget {
       child: value.when(
         loading: () => const Padding(
           padding: EdgeInsets.all(NobSpace.lg),
-          child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
+          child: Center(
+            child: SizedBox(
+              width: 20,
+              height: 20,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
         ),
         error: (error, _) => Padding(
           padding: const EdgeInsets.fromLTRB(NobSpace.xl, 0, NobSpace.xl, NobSpace.md),

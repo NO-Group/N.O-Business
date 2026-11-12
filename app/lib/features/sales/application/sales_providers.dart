@@ -16,14 +16,21 @@ final salesProvider = FutureProvider.autoDispose<List<Sale>>((ref) async {
   await ref.watch(workspacesProvider.future);
   final workspaceId = ref.watch(activeWorkspaceProvider)?.id;
   if (workspaceId == null) return const [];
-  return ref.watch(salesRepositoryProvider).list(organizationId: organizationId, workspaceId: workspaceId);
+  return ref
+      .watch(salesRepositoryProvider)
+      .list(organizationId: organizationId, workspaceId: workspaceId);
 });
 
 /// Sales made to one customer, across workspaces.
-final customerSalesProvider = FutureProvider.autoDispose.family<List<Sale>, String>((ref, customerId) async {
+final customerSalesProvider = FutureProvider.autoDispose.family<List<Sale>, String>((
+  ref,
+  customerId,
+) async {
   final organizationId = ref.watch(activeOrganizationIdProvider);
   if (organizationId == null) return const [];
-  return ref.watch(salesRepositoryProvider).list(organizationId: organizationId, customerId: customerId);
+  return ref
+      .watch(salesRepositoryProvider)
+      .list(organizationId: organizationId, customerId: customerId);
 });
 
 final saleProvider = FutureProvider.autoDispose.family<Sale?, String>((ref, saleId) async {

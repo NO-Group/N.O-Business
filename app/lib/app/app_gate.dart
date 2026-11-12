@@ -72,7 +72,8 @@ String? resolveRedirect({required AppGate gate, required String location}) {
     case AppGate.needsOrganization:
       return location == Routes.onboarding ? null : Routes.onboarding;
     case AppGate.ready:
-      final transitional = onAuthRoute ||
+      final transitional =
+          onAuthRoute ||
           location == '/' ||
           location == Routes.loading ||
           location == Routes.failed ||

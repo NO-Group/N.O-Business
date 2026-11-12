@@ -15,17 +15,17 @@ class Customer {
   });
 
   factory Customer.fromJson(JsonMap json) => Customer(
-        id: asString(json['id']),
-        organizationId: asString(json['organization_id']),
-        kind: asString(json['kind'], 'individual'),
-        name: asString(json['name']),
-        email: asStringOrNull(json['email']),
-        phone: asStringOrNull(json['phone']),
-        address: asStringOrNull(json['address']),
-        taxId: asStringOrNull(json['tax_id']),
-        notes: asStringOrNull(json['notes']),
-        createdAt: asDateTime(json['created_at']),
-      );
+    id: asString(json['id']),
+    organizationId: asString(json['organization_id']),
+    kind: asString(json['kind'], 'individual'),
+    name: asString(json['name']),
+    email: asStringOrNull(json['email']),
+    phone: asStringOrNull(json['phone']),
+    address: asStringOrNull(json['address']),
+    taxId: asStringOrNull(json['tax_id']),
+    notes: asStringOrNull(json['notes']),
+    createdAt: asDateTime(json['created_at']),
+  );
 
   final String id;
   final String organizationId;
@@ -67,12 +67,12 @@ class CustomerInput {
   final String? notes;
 
   JsonMap toJson() => {
-        'kind': kind,
-        'name': name.trim(),
-        'email': email,
-        'phone': phone,
-        'address': address,
-        'tax_id': taxId,
-        'notes': notes,
-      };
+    'kind': kind,
+    'name': name.trim(),
+    'email': email,
+    'phone': phone,
+    'address': address,
+    'tax_id': taxId,
+    'notes': notes,
+  };
 }

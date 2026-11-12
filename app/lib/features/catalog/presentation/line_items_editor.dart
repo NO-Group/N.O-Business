@@ -43,10 +43,14 @@ class LineItemsEditor extends StatelessWidget {
     // Picking the same catalogue item again raises its quantity.
     final existing = line.productId == null
         ? -1
-        : lines.indexWhere((l) => l.productId == line.productId && l.unitPriceMinor == line.unitPriceMinor);
+        : lines.indexWhere(
+            (l) => l.productId == line.productId && l.unitPriceMinor == line.unitPriceMinor,
+          );
     if (existing >= 0) {
       final updated = [...lines];
-      updated[existing] = lines[existing].copyWith(quantity: lines[existing].quantity + line.quantity);
+      updated[existing] = lines[existing].copyWith(
+        quantity: lines[existing].quantity + line.quantity,
+      );
       onChanged(updated);
     } else {
       onChanged([...lines, line]);
@@ -103,7 +107,10 @@ class LineItemsEditor extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: NobSpace.md),
-                        Text(Money.format(lines[i].lineTotalMinor, currencyCode), style: NobText.numeric),
+                        Text(
+                          Money.format(lines[i].lineTotalMinor, currencyCode),
+                          style: NobText.numeric,
+                        ),
                         IconButton(
                           tooltip: 'Remove ${lines[i].description}',
                           icon: const Icon(Icons.close_rounded, size: 18),
@@ -166,7 +173,12 @@ class LineItemRow extends StatelessWidget {
 
 /// Subtotal / discount / tax / total block shown under the lines.
 class TotalsSummary extends StatelessWidget {
-  const TotalsSummary({super.key, required this.totals, required this.currencyCode, this.extra = const []});
+  const TotalsSummary({
+    super.key,
+    required this.totals,
+    required this.currencyCode,
+    this.extra = const [],
+  });
 
   final DocumentTotals totals;
   final String currencyCode;
@@ -177,22 +189,24 @@ class TotalsSummary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget row(String label, int minor, {bool strong = false, bool negative = false}) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: NobSpace.xs),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: strong ? NobText.subtitle : NobText.body.copyWith(color: NobColors.textSecondary),
-                ),
-              ),
-              Text(
-                '${negative ? '− ' : ''}${Money.format(minor, currencyCode)}',
-                style: strong ? NobText.title.copyWith(fontFeatures: NobText.tabular) : NobText.numeric,
-              ),
-            ],
+      padding: const EdgeInsets.symmetric(vertical: NobSpace.xs),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label,
+              style: strong
+                  ? NobText.subtitle
+                  : NobText.body.copyWith(color: NobColors.textSecondary),
+            ),
           ),
-        );
+          Text(
+            '${negative ? '− ' : ''}${Money.format(minor, currencyCode)}',
+            style: strong ? NobText.title.copyWith(fontFeatures: NobText.tabular) : NobText.numeric,
+          ),
+        ],
+      ),
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -226,7 +240,12 @@ class _ProductPickerState extends ConsumerState<_ProductPicker> {
     final line = await showNobSheet<DraftLine>(
       context,
       child: _LineForm(
-        line: DraftLine(description: '', quantity: 1, unitPriceMinor: 0, taxRate: widget.defaultTaxRate),
+        line: DraftLine(
+          description: '',
+          quantity: 1,
+          unitPriceMinor: 0,
+          taxRate: widget.defaultTaxRate,
+        ),
         currencyCode: widget.currencyCode,
         isNew: true,
       ),
@@ -259,7 +278,10 @@ class _ProductPickerState extends ConsumerState<_ProductPicker> {
               ],
             ),
             const SizedBox(height: NobSpace.md),
-            SearchField(hint: 'Search your catalogue', onChanged: (value) => setState(() => _query = value)),
+            SearchField(
+              hint: 'Search your catalogue',
+              onChanged: (value) => setState(() => _query = value),
+            ),
             const SizedBox(height: NobSpace.md),
             Expanded(
               child: AsyncView(
@@ -269,12 +291,12 @@ class _ProductPickerState extends ConsumerState<_ProductPicker> {
                   final items = needle.isEmpty
                       ? all
                       : all
-                          .where(
-                            (p) =>
-                                p.name.toLowerCase().contains(needle) ||
-                                (p.sku ?? '').toLowerCase().contains(needle),
-                          )
-                          .toList();
+                            .where(
+                              (p) =>
+                                  p.name.toLowerCase().contains(needle) ||
+                                  (p.sku ?? '').toLowerCase().contains(needle),
+                            )
+                            .toList();
                   if (items.isEmpty) {
                     return EmptyState(
                       icon: Icons.inventory_2_outlined,
@@ -338,7 +360,9 @@ class _LineForm extends StatefulWidget {
 class _LineFormState extends State<_LineForm> {
   final _formKey = GlobalKey<FormState>();
   late final _description = TextEditingController(text: widget.line.description);
-  late final _quantity = TextEditingController(text: formatQuantity(widget.line.quantity).replaceAll(',', ''));
+  late final _quantity = TextEditingController(
+    text: formatQuantity(widget.line.quantity).replaceAll(',', ''),
+  );
   late final _price = TextEditingController(
     text: widget.isNew ? '' : Money.toInput(widget.line.unitPriceMinor, widget.currencyCode),
   );
@@ -383,7 +407,8 @@ class _LineFormState extends State<_LineForm> {
               maxLength: 300,
               textCapitalization: TextCapitalization.sentences,
               decoration: const InputDecoration(labelText: 'Description', counterText: ''),
-              validator: (value) => Validators.length(value, min: 1, max: 300, label: 'Description'),
+              validator: (value) =>
+                  Validators.length(value, min: 1, max: 300, label: 'Description'),
             ),
             const SizedBox(height: NobSpace.lg),
             Row(

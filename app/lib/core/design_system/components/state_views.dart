@@ -19,7 +19,11 @@ class LoadingView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const SizedBox(width: 28, height: 28, child: CircularProgressIndicator(strokeWidth: 2.5)),
+            const SizedBox(
+              width: 28,
+              height: 28,
+              child: CircularProgressIndicator(strokeWidth: 2.5),
+            ),
             if (caption != null) ...[
               const SizedBox(height: NobSpace.lg),
               Text(caption, style: NobText.bodySmall.copyWith(color: NobColors.textSecondary)),
@@ -75,10 +79,7 @@ class EmptyState extends StatelessWidget {
                 style: NobText.body.copyWith(color: NobColors.textSecondary),
                 textAlign: TextAlign.center,
               ),
-              if (next != null) ...[
-                const SizedBox(height: NobSpace.xl),
-                next,
-              ],
+              if (next != null) ...[const SizedBox(height: NobSpace.xl), next],
             ],
           ),
         ),
@@ -133,7 +134,8 @@ class NoAccessState extends StatelessWidget {
     return const EmptyState(
       icon: Icons.lock_outline_rounded,
       title: 'No access',
-      message: 'Your role in this organization does not include this area. '
+      message:
+          'Your role in this organization does not include this area. '
           'Ask an owner or administrator if you need it.',
     );
   }

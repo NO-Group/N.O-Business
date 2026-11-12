@@ -19,25 +19,25 @@ class Sale {
   });
 
   factory Sale.fromJson(JsonMap json) => Sale(
-        id: asString(json['id']),
-        number: asString(json['number']),
-        workspaceId: asString(json['workspace_id']),
-        customerId: asStringOrNull(json['customer_id']),
-        customerName: asStringOrNull(asJsonMap(json['customer'])['name']),
-        status: asString(json['status'], 'completed'),
-        paymentMethod: asString(json['payment_method'], 'other'),
-        currencyCode: asString(json['currency_code'], 'USD'),
-        totals: DocumentTotals(
-          subtotalMinor: asInt(json['subtotal_minor']),
-          discountMinor: asInt(json['discount_minor']),
-          taxMinor: asInt(json['tax_minor']),
-          totalMinor: asInt(json['total_minor']),
-        ),
-        note: asStringOrNull(json['note']),
-        soldAt: asDateTime(json['sold_at']),
-        voidedAt: asDateTime(json['voided_at']),
-        items: LineItem.listFromJson(json['items']),
-      );
+    id: asString(json['id']),
+    number: asString(json['number']),
+    workspaceId: asString(json['workspace_id']),
+    customerId: asStringOrNull(json['customer_id']),
+    customerName: asStringOrNull(asJsonMap(json['customer'])['name']),
+    status: asString(json['status'], 'completed'),
+    paymentMethod: asString(json['payment_method'], 'other'),
+    currencyCode: asString(json['currency_code'], 'USD'),
+    totals: DocumentTotals(
+      subtotalMinor: asInt(json['subtotal_minor']),
+      discountMinor: asInt(json['discount_minor']),
+      taxMinor: asInt(json['tax_minor']),
+      totalMinor: asInt(json['total_minor']),
+    ),
+    note: asStringOrNull(json['note']),
+    soldAt: asDateTime(json['sold_at']),
+    voidedAt: asDateTime(json['voided_at']),
+    items: LineItem.listFromJson(json['items']),
+  );
 
   final String id;
   final String number;

@@ -79,11 +79,13 @@ final routerProvider = Provider<GoRouter>((ref) {
               ),
               GoRoute(
                 path: ':id',
-                builder: (_, state) => InvoiceDetailScreen(invoiceId: state.pathParameters['id'] ?? ''),
+                builder: (_, state) =>
+                    InvoiceDetailScreen(invoiceId: state.pathParameters['id'] ?? ''),
                 routes: [
                   GoRoute(
                     path: 'edit',
-                    builder: (_, state) => InvoiceEditorScreen(invoiceId: state.pathParameters['id']),
+                    builder: (_, state) =>
+                        InvoiceEditorScreen(invoiceId: state.pathParameters['id']),
                   ),
                 ],
               ),
@@ -105,7 +107,8 @@ final routerProvider = Provider<GoRouter>((ref) {
                 routes: [
                   GoRoute(
                     path: 'edit',
-                    builder: (_, state) => QuotationEditorScreen(quotationId: state.pathParameters['id']),
+                    builder: (_, state) =>
+                        QuotationEditorScreen(quotationId: state.pathParameters['id']),
                   ),
                 ],
               ),
@@ -117,7 +120,8 @@ final routerProvider = Provider<GoRouter>((ref) {
             routes: [
               GoRoute(
                 path: ':id',
-                builder: (_, state) => CustomerDetailScreen(customerId: state.pathParameters['id'] ?? ''),
+                builder: (_, state) =>
+                    CustomerDetailScreen(customerId: state.pathParameters['id'] ?? ''),
               ),
             ],
           ),
@@ -148,7 +152,8 @@ GoRoute _tab(
 }) {
   return GoRoute(
     path: path,
-    pageBuilder: (context, state) => NoTransitionPage<void>(key: state.pageKey, child: builder(state)),
+    pageBuilder: (context, state) =>
+        NoTransitionPage<void>(key: state.pageKey, child: builder(state)),
     routes: routes,
   );
 }

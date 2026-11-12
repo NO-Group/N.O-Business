@@ -38,9 +38,11 @@ class AuthRepository {
   AuthSession? get currentSession => _map(_auth.currentSession);
 
   /// Emits whenever the user signs in, signs out or the token is refreshed.
-  Stream<AuthSession?> sessionChanges() => _auth.onAuthStateChange.map((state) => _map(state.session));
+  Stream<AuthSession?> sessionChanges() =>
+      _auth.onAuthStateChange.map((state) => _map(state.session));
 
-  Future<void> signIn({required String email, required String password}) => guard('auth.sign_in', () async {
+  Future<void> signIn({required String email, required String password}) =>
+      guard('auth.sign_in', () async {
         await _auth.signInWithPassword(email: email.trim(), password: password);
       });
 
@@ -48,27 +50,27 @@ class AuthRepository {
     required String fullName,
     required String email,
     required String password,
-  }) =>
-      guard('auth.sign_up', () async {
-        final response = await _auth.signUp(
-          email: email.trim(),
-          password: password,
-          data: {'full_name': fullName.trim()},
-        );
-        return response.session == null ? SignUpOutcome.confirmationRequired : SignUpOutcome.signedIn;
-      });
+  }) => guard('auth.sign_up', () async {
+    final response = await _auth.signUp(
+      email: email.trim(),
+      password: password,
+      data: {'full_name': fullName.trim()},
+    );
+    return response.session == null ? SignUpOutcome.confirmationRequired : SignUpOutcome.signedIn;
+  });
 
-  Future<void> confirmEmail({required String email, required String code}) => guard('auth.confirm', () async {
+  Future<void> confirmEmail({required String email, required String code}) =>
+      guard('auth.confirm', () async {
         await _auth.verifyOTP(email: email.trim(), token: code.trim(), type: OtpType.signup);
       });
 
   Future<void> resendConfirmation(String email) => guard('auth.resend', () async {
-        await _auth.resend(type: OtpType.signup, email: email.trim());
-      });
+    await _auth.resend(type: OtpType.signup, email: email.trim());
+  });
 
   Future<void> requestPasswordReset(String email) => guard('auth.reset_request', () async {
-        await _auth.resetPasswordForEmail(email.trim());
-      });
+    await _auth.resetPasswordForEmail(email.trim());
+  });
 
   /// Verifies the emailed recovery code (which signs the user in) and sets
   /// the new password.
@@ -76,15 +78,14 @@ class AuthRepository {
     required String email,
     required String code,
     required String newPassword,
-  }) =>
-      guard('auth.reset_complete', () async {
-        await _auth.verifyOTP(email: email.trim(), token: code.trim(), type: OtpType.recovery);
-        await _auth.updateUser(UserAttributes(password: newPassword));
-      });
+  }) => guard('auth.reset_complete', () async {
+    await _auth.verifyOTP(email: email.trim(), token: code.trim(), type: OtpType.recovery);
+    await _auth.updateUser(UserAttributes(password: newPassword));
+  });
 
   Future<void> changePassword(String newPassword) => guard('auth.change_password', () async {
-        await _auth.updateUser(UserAttributes(password: newPassword));
-      });
+    await _auth.updateUser(UserAttributes(password: newPassword));
+  });
 
   Future<void> signOut() => guard('auth.sign_out', () => _auth.signOut());
 

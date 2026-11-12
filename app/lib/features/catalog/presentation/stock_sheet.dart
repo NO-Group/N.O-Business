@@ -60,7 +60,9 @@ class _StockSheetState extends ConsumerState<StockSheet> {
       _error = null;
     });
     try {
-      final quantity = await ref.read(catalogRepositoryProvider).adjustStock(
+      final quantity = await ref
+          .read(catalogRepositoryProvider)
+          .adjustStock(
             workspaceId: workspaceId,
             productId: widget.product.id,
             quantityDelta: delta,
@@ -151,8 +153,8 @@ class _StockSheetState extends ConsumerState<StockSheet> {
                       helperText: _signed
                           ? 'Use a negative number to reduce stock.'
                           : _removes
-                              ? 'This quantity is taken off the stock on hand.'
-                              : 'This quantity is added to the stock on hand.',
+                          ? 'This quantity is taken off the stock on hand.'
+                          : 'This quantity is added to the stock on hand.',
                     ),
                     validator: (value) {
                       final number = double.tryParse((value ?? '').trim());
@@ -165,7 +167,10 @@ class _StockSheetState extends ConsumerState<StockSheet> {
                   TextFormField(
                     controller: _note,
                     maxLength: 500,
-                    decoration: const InputDecoration(labelText: 'Note (optional)', counterText: ''),
+                    decoration: const InputDecoration(
+                      labelText: 'Note (optional)',
+                      counterText: '',
+                    ),
                   ),
                 ],
               ),
@@ -178,7 +183,13 @@ class _StockSheetState extends ConsumerState<StockSheet> {
           movements.when(
             loading: () => const Padding(
               padding: EdgeInsets.all(NobSpace.lg),
-              child: Center(child: SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))),
+              child: Center(
+                child: SizedBox(
+                  width: 20,
+                  height: 20,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                ),
+              ),
             ),
             error: (error, _) => FormMessage(AppFailure.from(error).message),
             data: (items) => items.isEmpty
@@ -200,7 +211,8 @@ class _StockSheetState extends ConsumerState<StockSheet> {
                                     Text(_reasonLabel(movement.reason), style: NobText.body),
                                     Text(
                                       [
-                                        if (movement.createdAt != null) formatDateTime(movement.createdAt!),
+                                        if (movement.createdAt != null)
+                                          formatDateTime(movement.createdAt!),
                                         ?movement.note,
                                       ].join(' · '),
                                       style: NobText.label.copyWith(color: NobColors.textSecondary),
@@ -211,7 +223,9 @@ class _StockSheetState extends ConsumerState<StockSheet> {
                               Text(
                                 '${movement.quantityDelta > 0 ? '+' : ''}${formatQuantity(movement.quantityDelta)}',
                                 style: NobText.numeric.copyWith(
-                                  color: movement.quantityDelta > 0 ? NobColors.success : NobColors.danger,
+                                  color: movement.quantityDelta > 0
+                                      ? NobColors.success
+                                      : NobColors.danger,
                                 ),
                               ),
                             ],
@@ -227,14 +241,14 @@ class _StockSheetState extends ConsumerState<StockSheet> {
 }
 
 String _reasonLabel(String reason) => switch (reason) {
-      'opening' => 'Opening stock',
-      'purchase' => 'Stock received',
-      'adjustment' => 'Count correction',
-      'damage' => 'Damaged or lost',
-      'return' => 'Customer return',
-      'sale' => 'Sale',
-      'sale_void' => 'Sale voided',
-      'invoice' => 'Invoice issued',
-      'invoice_void' => 'Invoice voided',
-      _ => humanize(reason),
-    };
+  'opening' => 'Opening stock',
+  'purchase' => 'Stock received',
+  'adjustment' => 'Count correction',
+  'damage' => 'Damaged or lost',
+  'return' => 'Customer return',
+  'sale' => 'Sale',
+  'sale_void' => 'Sale voided',
+  'invoice' => 'Invoice issued',
+  'invoice_void' => 'Invoice voided',
+  _ => humanize(reason),
+};

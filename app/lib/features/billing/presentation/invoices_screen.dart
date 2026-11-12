@@ -27,12 +27,12 @@ enum InvoiceFilter {
   final String label;
 
   bool matches(Invoice invoice, DateTime today) => switch (this) {
-        InvoiceFilter.all => true,
-        InvoiceFilter.draft => invoice.isDraft,
-        InvoiceFilter.open => invoice.isOpen,
-        InvoiceFilter.overdue => invoice.isOverdue(today),
-        InvoiceFilter.paid => invoice.status == 'paid',
-      };
+    InvoiceFilter.all => true,
+    InvoiceFilter.draft => invoice.isDraft,
+    InvoiceFilter.open => invoice.isOpen,
+    InvoiceFilter.overdue => invoice.isOverdue(today),
+    InvoiceFilter.paid => invoice.status == 'paid',
+  };
 
   static InvoiceFilter fromName(String? name) =>
       InvoiceFilter.values.where((filter) => filter.name == name).firstOrNull ?? InvoiceFilter.all;
@@ -71,7 +71,9 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
 
     return PageScaffold(
       title: 'Invoices',
-      subtitle: workspace == null ? 'Bill customers and track what is owed.' : 'Billed from ${workspace.name}.',
+      subtitle: workspace == null
+          ? 'Bill customers and track what is owed.'
+          : 'Billed from ${workspace.name}.',
       scrollable: false,
       actions: [
         if (canWrite)
@@ -115,7 +117,7 @@ class _InvoicesScreenState extends ConsumerState<InvoicesScreen> {
                     message: filtered
                         ? 'No invoice matches "${_filter.label}".'
                         : 'Create an invoice to bill a customer. Issue it to assign a number, then '
-                            'record payments as they arrive.',
+                              'record payments as they arrive.',
                     action: !filtered && canWrite
                         ? FilledButton(
                             onPressed: () => context.go('${Routes.invoices}/new'),

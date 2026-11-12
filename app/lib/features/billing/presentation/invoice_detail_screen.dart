@@ -85,37 +85,33 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
     final confirmed = await confirmAction(
       context,
       title: 'Issue this invoice?',
-      message: 'It gets its number and today\'s date, tracked stock is taken, and it can no longer '
+      message:
+          'It gets its number and today\'s date, tracked stock is taken, and it can no longer '
           'be edited. Use this when the invoice is ready to send.',
       confirmLabel: 'Issue invoice',
     );
     if (!confirmed) return;
-    await _run(
-      () async {
-        await ref.read(billingRepositoryProvider).issueInvoice(_invoice.id);
-        ref.invalidate(productsProvider);
-      },
-      done: 'Invoice issued.',
-    );
+    await _run(() async {
+      await ref.read(billingRepositoryProvider).issueInvoice(_invoice.id);
+      ref.invalidate(productsProvider);
+    }, done: 'Invoice issued.');
   }
 
   Future<void> _void() async {
     final confirmed = await confirmAction(
       context,
       title: 'Void ${_invoice.displayNumber}?',
-      message: 'The invoice stays on record as void, nothing is owed on it and its stock is put '
+      message:
+          'The invoice stays on record as void, nothing is owed on it and its stock is put '
           'back. This cannot be undone.',
       confirmLabel: 'Void invoice',
       destructive: true,
     );
     if (!confirmed) return;
-    await _run(
-      () async {
-        await ref.read(billingRepositoryProvider).voidInvoice(_invoice.id);
-        ref.invalidate(productsProvider);
-      },
-      done: 'Invoice voided.',
-    );
+    await _run(() async {
+      await ref.read(billingRepositoryProvider).voidInvoice(_invoice.id);
+      ref.invalidate(productsProvider);
+    }, done: 'Invoice voided.');
   }
 
   Future<void> _delete() async {
@@ -152,7 +148,10 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
     final invoice = _invoice;
     final organization = ref.watch(activeOrganizationProvider);
     final workspaces = ref.watch(workspacesProvider).value ?? const [];
-    final workspaceName = workspaces.where((w) => w.id == invoice.workspaceId).map((w) => w.name).firstOrNull;
+    final workspaceName = workspaces
+        .where((w) => w.id == invoice.workspaceId)
+        .map((w) => w.name)
+        .firstOrNull;
     final customer = ref.watch(customerProvider(invoice.customerId)).value;
     final canWrite = ref.watch(canProvider(Permissions.invoicesWrite));
     final canVoid = ref.watch(canProvider(Permissions.invoicesVoid));
@@ -163,41 +162,41 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
     final notes = invoice.notes;
 
     CommercialPdfData pdf() => CommercialPdfData(
-          title: 'INVOICE',
-          number: invoice.number,
-          seller: organization == null
-              ? const PdfParty(name: 'N.O Business')
-              : sellerParty(organization, workspaceName: workspaceName),
-          buyer: PdfParty(
-            name: invoice.customerName,
-            lines: [
-              ?customer?.address,
-              ?customer?.phone,
-              ?customer?.email,
-              if (customer?.taxId != null) 'Tax ID: ${customer?.taxId}',
-            ],
-          ),
-          meta: [
-            if (issueDate != null) ('Issued', formatDate(issueDate)),
-            if (dueDate != null) ('Due', formatDate(dueDate)),
-          ],
-          items: invoice.items,
-          totals: invoice.totals,
-          currencyCode: currency,
-          afterTotal: [
-            if (invoice.amountPaidMinor > 0) ('Paid', invoice.amountPaidMinor),
-            if (!invoice.isDraft && invoice.status != 'void') ('Balance due', invoice.balanceMinor),
-          ],
-          notes: notes,
-          footer: organization?.documentFooter,
-          brandColorHex: organization?.brandColor,
-          stamp: switch (invoice.status) {
-            'draft' => 'DRAFT',
-            'void' => 'VOID',
-            'paid' => 'PAID',
-            _ => null,
-          },
-        );
+      title: 'INVOICE',
+      number: invoice.number,
+      seller: organization == null
+          ? const PdfParty(name: 'N.O Business')
+          : sellerParty(organization, workspaceName: workspaceName),
+      buyer: PdfParty(
+        name: invoice.customerName,
+        lines: [
+          ?customer?.address,
+          ?customer?.phone,
+          ?customer?.email,
+          if (customer?.taxId != null) 'Tax ID: ${customer?.taxId}',
+        ],
+      ),
+      meta: [
+        if (issueDate != null) ('Issued', formatDate(issueDate)),
+        if (dueDate != null) ('Due', formatDate(dueDate)),
+      ],
+      items: invoice.items,
+      totals: invoice.totals,
+      currencyCode: currency,
+      afterTotal: [
+        if (invoice.amountPaidMinor > 0) ('Paid', invoice.amountPaidMinor),
+        if (!invoice.isDraft && invoice.status != 'void') ('Balance due', invoice.balanceMinor),
+      ],
+      notes: notes,
+      footer: organization?.documentFooter,
+      brandColorHex: organization?.brandColor,
+      stamp: switch (invoice.status) {
+        'draft' => 'DRAFT',
+        'void' => 'VOID',
+        'paid' => 'PAID',
+        _ => null,
+      },
+    );
 
     return PageScaffold(
       title: invoice.displayNumber,
@@ -211,10 +210,20 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
             icon: const Icon(Icons.edit_outlined, size: 18),
             label: const Text('Edit'),
           ),
-          PrimaryButton(label: 'Issue invoice', icon: Icons.send_rounded, onPressed: _issue, loading: _busy),
+          PrimaryButton(
+            label: 'Issue invoice',
+            icon: Icons.send_rounded,
+            onPressed: _issue,
+            loading: _busy,
+          ),
         ],
         if (invoice.isOpen && canPay)
-          PrimaryButton(label: 'Record payment', icon: Icons.payments_outlined, onPressed: _pay, loading: _busy),
+          PrimaryButton(
+            label: 'Record payment',
+            icon: Icons.payments_outlined,
+            onPressed: _pay,
+            loading: _busy,
+          ),
       ],
       child: TwoPane(
         primary: Column(
@@ -249,7 +258,9 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
                                       if (payment.paidAt != null) formatDateTime(payment.paidAt!),
                                       ?payment.reference,
                                     ].join(' · '),
-                                    style: NobText.bodySmall.copyWith(color: NobColors.textSecondary),
+                                    style: NobText.bodySmall.copyWith(
+                                      color: NobColors.textSecondary,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -274,7 +285,10 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Align(alignment: Alignment.centerLeft, child: InvoiceStatusBadge(invoice: invoice)),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: InvoiceStatusBadge(invoice: invoice),
+                  ),
                   const SizedBox(height: NobSpace.lg),
                   LabeledValue(label: 'Customer', value: invoice.customerName),
                   if (issueDate != null) ...[
@@ -282,7 +296,10 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
                     LabeledValue(label: 'Issued', value: formatDate(issueDate)),
                   ],
                   const SizedBox(height: NobSpace.md),
-                  LabeledValue(label: 'Due', value: dueDate == null ? 'No due date' : formatDate(dueDate)),
+                  LabeledValue(
+                    label: 'Due',
+                    value: dueDate == null ? 'No due date' : formatDate(dueDate),
+                  ),
                   if (workspaceName != null) ...[
                     const SizedBox(height: NobSpace.md),
                     LabeledValue(label: 'Workspace', value: workspaceName),
@@ -297,7 +314,8 @@ class _InvoiceViewState extends ConsumerState<_InvoiceView> {
                     currencyCode: currency,
                     extra: [
                       if (invoice.amountPaidMinor > 0) ('Paid', invoice.amountPaidMinor),
-                      if (invoice.isOpen || invoice.status == 'paid') ('Balance due', invoice.balanceMinor),
+                      if (invoice.isOpen || invoice.status == 'paid')
+                        ('Balance due', invoice.balanceMinor),
                     ],
                   ),
                 ],

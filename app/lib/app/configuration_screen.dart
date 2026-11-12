@@ -47,7 +47,11 @@ class ConfigurationScreen extends StatelessWidget {
                     ),
                     child: const SelectableText(
                       '--dart-define=SUPABASE_URL=…\n--dart-define=SUPABASE_ANON_KEY=…',
-                      style: TextStyle(fontFamily: 'monospace', fontSize: 13, color: NobColors.textPrimary),
+                      style: TextStyle(
+                        fontFamily: 'monospace',
+                        fontSize: 13,
+                        color: NobColors.textPrimary,
+                      ),
                     ),
                   ),
                 ],

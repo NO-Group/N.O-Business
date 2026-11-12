@@ -46,7 +46,9 @@ void main() {
 
   group('ids', () {
     test('newUuid is a version 4 UUID and does not repeat', () {
-      final pattern = RegExp(r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$');
+      final pattern = RegExp(
+        r'^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$',
+      );
       final seen = <String>{};
       for (var i = 0; i < 200; i++) {
         final id = newUuid();

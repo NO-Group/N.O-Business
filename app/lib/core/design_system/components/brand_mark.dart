@@ -52,8 +52,17 @@ class BrandLockup extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (showParent)
-              Text('N.O GROUP', style: NobText.overline.copyWith(color: NobColors.textMuted, fontSize: 9.5)),
-            Text('N.O Business', style: NobText.subtitle.copyWith(color: NobColors.textPrimary, fontWeight: FontWeight.w800)),
+              Text(
+                'N.O GROUP',
+                style: NobText.overline.copyWith(color: NobColors.textMuted, fontSize: 9.5),
+              ),
+            Text(
+              'N.O Business',
+              style: NobText.subtitle.copyWith(
+                color: NobColors.textPrimary,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
           ],
         ),
       ],
@@ -63,7 +72,12 @@ class BrandLockup extends StatelessWidget {
 
 /// Text painted with the brand gradient. For a single hero word or figure.
 class GradientText extends StatelessWidget {
-  const GradientText(this.text, {super.key, required this.style, this.gradient = NobGradients.brand});
+  const GradientText(
+    this.text, {
+    super.key,
+    required this.style,
+    this.gradient = NobGradients.brand,
+  });
 
   final String text;
   final TextStyle style;

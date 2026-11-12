@@ -21,7 +21,12 @@ class WorkspaceSettings extends ConsumerWidget {
   /// False when the active role lacks `workspaces.manage`.
   final bool editable;
 
-  Future<void> _act(BuildContext context, WidgetRef ref, Future<void> Function() action, String done) async {
+  Future<void> _act(
+    BuildContext context,
+    WidgetRef ref,
+    Future<void> Function() action,
+    String done,
+  ) async {
     try {
       await action();
       ref.invalidate(workspacesProvider);
@@ -38,7 +43,8 @@ class WorkspaceSettings extends ConsumerWidget {
 
     return SectionCard(
       title: 'Workspaces',
-      subtitle: 'Branches or locations. Each keeps its own stock, sales, quotations and invoices; '
+      subtitle:
+          'Branches or locations. Each keeps its own stock, sales, quotations and invoices; '
           'customers and the catalogue are shared.',
       flush: true,
       trailing: editable
@@ -51,7 +57,13 @@ class WorkspaceSettings extends ConsumerWidget {
       child: workspaces.when(
         loading: () => const Padding(
           padding: EdgeInsets.all(NobSpace.xl),
-          child: Center(child: SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2))),
+          child: Center(
+            child: SizedBox(
+              width: 22,
+              height: 22,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            ),
+          ),
         ),
         error: (error, _) => Padding(
           padding: const EdgeInsets.all(NobSpace.xl),
@@ -70,15 +82,19 @@ class WorkspaceSettings extends ConsumerWidget {
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    if (workspace.isDefault) const StatusBadge(label: 'Default', tone: BadgeTone.info),
-                    if (workspace.isArchived) const StatusBadge(label: 'Archived', tone: BadgeTone.warning),
+                    if (workspace.isDefault)
+                      const StatusBadge(label: 'Default', tone: BadgeTone.info),
+                    if (workspace.isArchived)
+                      const StatusBadge(label: 'Archived', tone: BadgeTone.warning),
                     if (editable)
                       MenuAnchor(
                         menuChildren: [
                           MenuItemButton(
                             leadingIcon: const Icon(Icons.edit_outlined, size: 18),
-                            onPressed: () =>
-                                showNobSheet<void>(context, child: _WorkspaceSheet(workspace: workspace)),
+                            onPressed: () => showNobSheet<void>(
+                              context,
+                              child: _WorkspaceSheet(workspace: workspace),
+                            ),
                             child: const Text('Rename'),
                           ),
                           if (!workspace.isDefault && !workspace.isArchived)
@@ -97,7 +113,9 @@ class WorkspaceSettings extends ConsumerWidget {
                           if (!workspace.isDefault)
                             MenuItemButton(
                               leadingIcon: Icon(
-                                workspace.isArchived ? Icons.unarchive_outlined : Icons.archive_outlined,
+                                workspace.isArchived
+                                    ? Icons.unarchive_outlined
+                                    : Icons.archive_outlined,
                                 size: 18,
                               ),
                               onPressed: () => _act(
@@ -107,7 +125,9 @@ class WorkspaceSettings extends ConsumerWidget {
                                   workspace.id,
                                   archived: !workspace.isArchived,
                                 ),
-                                workspace.isArchived ? 'Workspace restored.' : 'Workspace archived.',
+                                workspace.isArchived
+                                    ? 'Workspace restored.'
+                                    : 'Workspace archived.',
                               ),
                               child: Text(workspace.isArchived ? 'Restore' : 'Archive'),
                             ),
@@ -115,7 +135,8 @@ class WorkspaceSettings extends ConsumerWidget {
                         builder: (context, controller, _) => IconButton(
                           tooltip: 'Actions for ${workspace.name}',
                           icon: const Icon(Icons.more_vert_rounded),
-                          onPressed: () => controller.isOpen ? controller.close() : controller.open(),
+                          onPressed: () =>
+                              controller.isOpen ? controller.close() : controller.open(),
                         ),
                       ),
                   ],
@@ -169,7 +190,11 @@ class _WorkspaceSheetState extends ConsumerState<_WorkspaceSheet> {
           address: nullIfBlank(_address.text),
         );
       } else {
-        await repository.editWorkspace(existing.id, name: _name.text.trim(), address: nullIfBlank(_address.text));
+        await repository.editWorkspace(
+          existing.id,
+          name: _name.text.trim(),
+          address: nullIfBlank(_address.text),
+        );
       }
       ref.invalidate(workspacesProvider);
       if (!mounted) return;
@@ -190,7 +215,10 @@ class _WorkspaceSheetState extends ConsumerState<_WorkspaceSheet> {
     return SheetScaffold(
       title: widget.workspace == null ? 'New workspace' : 'Edit workspace',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Save workspace', onPressed: _save, loading: _saving),
       ],
       child: Form(
@@ -202,7 +230,10 @@ class _WorkspaceSheetState extends ConsumerState<_WorkspaceSheet> {
               controller: _name,
               autofocus: true,
               textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(labelText: 'Name', helperText: 'For example "Main branch" or "Warehouse".'),
+              decoration: const InputDecoration(
+                labelText: 'Name',
+                helperText: 'For example "Main branch" or "Warehouse".',
+              ),
               validator: (value) => Validators.length(value, min: 2, max: 80, label: 'Name'),
             ),
             const SizedBox(height: NobSpace.lg),

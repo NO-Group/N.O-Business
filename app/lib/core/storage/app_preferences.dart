@@ -11,9 +11,7 @@ class AppPreferences {
   AppPreferences._(this._storage, this._values);
 
   /// In-memory only; used by tests and when the secure store is unavailable.
-  AppPreferences.memory([Map<String, String>? initial])
-      : _storage = null,
-        _values = {...?initial};
+  AppPreferences.memory([Map<String, String>? initial]) : _storage = null, _values = {...?initial};
 
   static const _log = AppLogger('preferences');
   static const _organizationKey = 'nob.pref.organization';

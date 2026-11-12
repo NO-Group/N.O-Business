@@ -54,7 +54,8 @@ class AppFailure implements Exception {
       case '42501':
         // Our functions raise readable sentences; Postgres' own 42501 texts
         // ("permission denied for table ...", RLS violations) are not for users.
-        final ours = !message.startsWith('permission denied') &&
+        final ours =
+            !message.startsWith('permission denied') &&
             !message.contains('row-level security') &&
             !message.startsWith('Permission denied:');
         return AppFailure(ours ? message : _forbidden, kind: FailureKind.forbidden, code: code);
@@ -69,8 +70,11 @@ class AppFailure implements Exception {
       case '23514':
       case '22P02':
       case '22003':
-        return AppFailure('Some of the values entered are not allowed.',
-            kind: FailureKind.validation, code: code);
+        return AppFailure(
+          'Some of the values entered are not allowed.',
+          kind: FailureKind.validation,
+          code: code,
+        );
       case 'PGRST116':
         return AppFailure('That record no longer exists.', kind: FailureKind.notFound, code: code);
       case 'PGRST301':
@@ -86,14 +90,20 @@ class AppFailure implements Exception {
     }
     final status = error.statusCode;
     if (status == '429') {
-      return const AppFailure('Too many attempts. Please wait a moment and try again.',
-          kind: FailureKind.validation, code: '429');
+      return const AppFailure(
+        'Too many attempts. Please wait a moment and try again.',
+        kind: FailureKind.validation,
+        code: '429',
+      );
     }
     // GoTrue messages ("Invalid login credentials", "Email not confirmed",
     // "Password should be at least 8 characters") are written for end users.
     final message = error.message.trim();
-    return AppFailure(message.isEmpty ? _generic : message,
-        kind: FailureKind.unauthenticated, code: status);
+    return AppFailure(
+      message.isEmpty ? _generic : message,
+      kind: FailureKind.unauthenticated,
+      code: status,
+    );
   }
 
   static AppFailure _fromStorage(StorageException error) {
@@ -102,13 +112,29 @@ class AppFailure implements Exception {
       case '401':
         return AppFailure(_forbidden, kind: FailureKind.forbidden, code: error.statusCode);
       case '404':
-        return const AppFailure('That file no longer exists.', kind: FailureKind.notFound, code: '404');
+        return const AppFailure(
+          'That file no longer exists.',
+          kind: FailureKind.notFound,
+          code: '404',
+        );
       case '409':
-        return const AppFailure('A file with that name already exists.', kind: FailureKind.conflict, code: '409');
+        return const AppFailure(
+          'A file with that name already exists.',
+          kind: FailureKind.conflict,
+          code: '409',
+        );
       case '413':
-        return const AppFailure('That file is too large.', kind: FailureKind.validation, code: '413');
+        return const AppFailure(
+          'That file is too large.',
+          kind: FailureKind.validation,
+          code: '413',
+        );
       case '415':
-        return const AppFailure('That file type is not supported.', kind: FailureKind.validation, code: '415');
+        return const AppFailure(
+          'That file type is not supported.',
+          kind: FailureKind.validation,
+          code: '415',
+        );
     }
     return AppFailure(_generic, code: error.statusCode);
   }

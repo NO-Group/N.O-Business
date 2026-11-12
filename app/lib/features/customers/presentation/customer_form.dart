@@ -92,7 +92,10 @@ class _CustomerFormState extends ConsumerState<CustomerForm> {
     return SheetScaffold(
       title: widget.customer == null ? 'New customer' : 'Edit customer',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Save customer', onPressed: _save, loading: _saving),
       ],
       child: Form(
@@ -102,8 +105,16 @@ class _CustomerFormState extends ConsumerState<CustomerForm> {
           children: [
             SegmentedButton<String>(
               segments: const [
-                ButtonSegment(value: 'individual', label: Text('Individual'), icon: Icon(Icons.person_outline)),
-                ButtonSegment(value: 'company', label: Text('Company'), icon: Icon(Icons.apartment_outlined)),
+                ButtonSegment(
+                  value: 'individual',
+                  label: Text('Individual'),
+                  icon: Icon(Icons.person_outline),
+                ),
+                ButtonSegment(
+                  value: 'company',
+                  label: Text('Company'),
+                  icon: Icon(Icons.apartment_outlined),
+                ),
               ],
               selected: {_kind},
               onSelectionChanged: (selection) => setState(() => _kind = selection.first),
@@ -114,7 +125,9 @@ class _CustomerFormState extends ConsumerState<CustomerForm> {
               autofocus: widget.customer == null,
               textCapitalization: TextCapitalization.words,
               textInputAction: TextInputAction.next,
-              decoration: InputDecoration(labelText: _kind == 'company' ? 'Company name' : 'Full name'),
+              decoration: InputDecoration(
+                labelText: _kind == 'company' ? 'Company name' : 'Full name',
+              ),
               validator: (value) => Validators.length(value, min: 1, max: 160, label: 'Name'),
             ),
             const SizedBox(height: NobSpace.lg),

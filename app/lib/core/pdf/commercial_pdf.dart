@@ -110,21 +110,24 @@ Future<Uint8List> buildCommercialPdf(CommercialPdfData data, {required PdfFonts 
   final strong = base.copyWith(fontWeight: pw.FontWeight.bold);
 
   pw.Widget party(String heading, PdfParty value) => pw.Column(
-        crossAxisAlignment: pw.CrossAxisAlignment.start,
-        children: [
-          pw.Text(heading.toUpperCase(), style: small.copyWith(letterSpacing: 0.8)),
-          pw.SizedBox(height: 3),
-          pw.Text(value.name, style: strong.copyWith(fontSize: 11)),
-          for (final line in value.lines) pw.Text(line, style: base),
-        ],
-      );
+    crossAxisAlignment: pw.CrossAxisAlignment.start,
+    children: [
+      pw.Text(heading.toUpperCase(), style: small.copyWith(letterSpacing: 0.8)),
+      pw.SizedBox(height: 3),
+      pw.Text(value.name, style: strong.copyWith(fontSize: 11)),
+      for (final line in value.lines) pw.Text(line, style: base),
+    ],
+  );
 
-  pw.Widget cell(String text, {pw.TextStyle? style, pw.Alignment alignment = pw.Alignment.centerLeft}) =>
-      pw.Container(
-        alignment: alignment,
-        padding: const pw.EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-        child: pw.Text(text, style: style ?? base),
-      );
+  pw.Widget cell(
+    String text, {
+    pw.TextStyle? style,
+    pw.Alignment alignment = pw.Alignment.centerLeft,
+  }) => pw.Container(
+    alignment: alignment,
+    padding: const pw.EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+    child: pw.Text(text, style: style ?? base),
+  );
 
   final header = strong.copyWith(fontSize: 8.5, color: PdfColors.white);
   const right = pw.Alignment.centerRight;
@@ -164,16 +167,16 @@ Future<Uint8List> buildCommercialPdf(CommercialPdfData data, {required PdfFonts 
   );
 
   pw.Widget totalRow(String label, String value, {bool emphasised = false}) => pw.Container(
-        color: emphasised ? _band : null,
-        padding: const pw.EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-        child: pw.Row(
-          mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
-          children: [
-            pw.Text(label, style: emphasised ? strong.copyWith(fontSize: 11) : base),
-            pw.Text(value, style: emphasised ? strong.copyWith(fontSize: 11) : base),
-          ],
-        ),
-      );
+    color: emphasised ? _band : null,
+    padding: const pw.EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+    child: pw.Row(
+      mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+      children: [
+        pw.Text(label, style: emphasised ? strong.copyWith(fontSize: 11) : base),
+        pw.Text(value, style: emphasised ? strong.copyWith(fontSize: 11) : base),
+      ],
+    ),
+  );
 
   final totals = data.totals;
   final notes = data.notes;
@@ -182,7 +185,11 @@ Future<Uint8List> buildCommercialPdf(CommercialPdfData data, {required PdfFonts 
   final number = data.number;
   final stamp = data.stamp;
 
-  final document = pw.Document(title: number ?? data.title, author: data.seller.name, creator: 'N.O Business');
+  final document = pw.Document(
+    title: number ?? data.title,
+    author: data.seller.name,
+    creator: 'N.O Business',
+  );
   document.addPage(
     pw.MultiPage(
       pageTheme: pw.PageTheme(
@@ -192,23 +199,25 @@ Future<Uint8List> buildCommercialPdf(CommercialPdfData data, {required PdfFonts 
         buildBackground: stamp == null
             ? null
             : (context) => pw.Center(
-                  child: pw.Transform.rotate(
-                    angle: 0.5,
-                    child: pw.Text(
-                      stamp,
-                      style: pw.TextStyle(
-                        font: fonts.bold,
-                        fontSize: 110,
-                        color: const PdfColor.fromInt(0x14000000),
-                      ),
+                child: pw.Transform.rotate(
+                  angle: 0.5,
+                  child: pw.Text(
+                    stamp,
+                    style: pw.TextStyle(
+                      font: fonts.bold,
+                      fontSize: 110,
+                      color: const PdfColor.fromInt(0x14000000),
                     ),
                   ),
                 ),
+              ),
       ),
       footer: (context) => pw.Container(
         margin: const pw.EdgeInsets.only(top: 12),
         padding: const pw.EdgeInsets.only(top: 6),
-        decoration: const pw.BoxDecoration(border: pw.Border(top: pw.BorderSide(color: _rule, width: 0.5))),
+        decoration: const pw.BoxDecoration(
+          border: pw.Border(top: pw.BorderSide(color: _rule, width: 0.5)),
+        ),
         child: pw.Row(
           mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
           children: [
@@ -226,7 +235,10 @@ Future<Uint8List> buildCommercialPdf(CommercialPdfData data, {required PdfFonts 
             pw.Column(
               crossAxisAlignment: pw.CrossAxisAlignment.end,
               children: [
-                pw.Text(data.title, style: strong.copyWith(fontSize: 22, color: accent, letterSpacing: 1.5)),
+                pw.Text(
+                  data.title,
+                  style: strong.copyWith(fontSize: 22, color: accent, letterSpacing: 1.5),
+                ),
                 if (number != null) pw.Text(number, style: strong.copyWith(fontSize: 11)),
               ],
             ),
@@ -285,7 +297,8 @@ Future<Uint8List> buildCommercialPdf(CommercialPdfData data, {required PdfFonts 
                 crossAxisAlignment: pw.CrossAxisAlignment.stretch,
                 children: [
                   totalRow('Subtotal', money(totals.subtotalMinor)),
-                  if (totals.discountMinor > 0) totalRow('Discount', '- ${money(totals.discountMinor)}'),
+                  if (totals.discountMinor > 0)
+                    totalRow('Discount', '- ${money(totals.discountMinor)}'),
                   if (totals.taxMinor > 0) totalRow('Tax', money(totals.taxMinor)),
                   pw.SizedBox(height: 2),
                   totalRow('Total', money(totals.totalMinor), emphasised: true),

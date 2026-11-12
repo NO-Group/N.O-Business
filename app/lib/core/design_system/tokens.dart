@@ -103,8 +103,8 @@ abstract final class NobShadows {
 
   /// Controlled glow. Use on at most one element per view.
   static List<BoxShadow> glow(Color color, {double strength = 0.35}) => [
-        BoxShadow(color: color.withValues(alpha: strength), blurRadius: 28, spreadRadius: -6),
-      ];
+    BoxShadow(color: color.withValues(alpha: strength), blurRadius: 28, spreadRadius: -6),
+  ];
 }
 
 abstract final class NobMotion {
@@ -129,28 +129,71 @@ abstract final class NobText {
   static const List<FontFeature> tabular = [FontFeature.tabularFigures()];
 
   static const TextStyle display = TextStyle(
-      fontFamily: family, fontSize: 32, height: 1.15, fontWeight: FontWeight.w800, letterSpacing: -0.6);
+    fontFamily: family,
+    fontSize: 32,
+    height: 1.15,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -0.6,
+  );
   static const TextStyle headline = TextStyle(
-      fontFamily: family, fontSize: 24, height: 1.2, fontWeight: FontWeight.w700, letterSpacing: -0.3);
+    fontFamily: family,
+    fontSize: 24,
+    height: 1.2,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.3,
+  );
   static const TextStyle title = TextStyle(
-      fontFamily: family, fontSize: 18, height: 1.3, fontWeight: FontWeight.w700, letterSpacing: -0.1);
-  static const TextStyle subtitle =
-      TextStyle(fontFamily: family, fontSize: 15, height: 1.35, fontWeight: FontWeight.w600);
-  static const TextStyle body =
-      TextStyle(fontFamily: family, fontSize: 14, height: 1.45, fontWeight: FontWeight.w500);
-  static const TextStyle bodySmall =
-      TextStyle(fontFamily: family, fontSize: 13, height: 1.4, fontWeight: FontWeight.w500);
+    fontFamily: family,
+    fontSize: 18,
+    height: 1.3,
+    fontWeight: FontWeight.w700,
+    letterSpacing: -0.1,
+  );
+  static const TextStyle subtitle = TextStyle(
+    fontFamily: family,
+    fontSize: 15,
+    height: 1.35,
+    fontWeight: FontWeight.w600,
+  );
+  static const TextStyle body = TextStyle(
+    fontFamily: family,
+    fontSize: 14,
+    height: 1.45,
+    fontWeight: FontWeight.w500,
+  );
+  static const TextStyle bodySmall = TextStyle(
+    fontFamily: family,
+    fontSize: 13,
+    height: 1.4,
+    fontWeight: FontWeight.w500,
+  );
   static const TextStyle label = TextStyle(
-      fontFamily: family, fontSize: 12, height: 1.3, fontWeight: FontWeight.w600, letterSpacing: 0.2);
+    fontFamily: family,
+    fontSize: 12,
+    height: 1.3,
+    fontWeight: FontWeight.w600,
+    letterSpacing: 0.2,
+  );
   static const TextStyle overline = TextStyle(
-      fontFamily: family, fontSize: 11, height: 1.3, fontWeight: FontWeight.w700, letterSpacing: 1.1);
+    fontFamily: family,
+    fontSize: 11,
+    height: 1.3,
+    fontWeight: FontWeight.w700,
+    letterSpacing: 1.1,
+  );
   static const TextStyle metric = TextStyle(
-      fontFamily: family,
-      fontSize: 26,
-      height: 1.15,
-      fontWeight: FontWeight.w800,
-      letterSpacing: -0.5,
-      fontFeatures: tabular);
+    fontFamily: family,
+    fontSize: 26,
+    height: 1.15,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -0.5,
+    fontFeatures: tabular,
+  );
   static const TextStyle numeric = TextStyle(
-      fontFamily: family, fontSize: 14, height: 1.4, fontWeight: FontWeight.w600, fontFeatures: tabular);
+    fontFamily: family,
+    fontSize: 14,
+    height: 1.4,
+    fontWeight: FontWeight.w600,
+    fontFeatures: tabular,
+  );
 }

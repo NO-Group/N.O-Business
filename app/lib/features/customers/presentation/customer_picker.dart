@@ -58,7 +58,10 @@ class _CustomerPickerState extends ConsumerState<_CustomerPicker> {
               ],
             ),
             const SizedBox(height: NobSpace.md),
-            SearchField(hint: 'Search customers', onChanged: (value) => setState(() => _query = value)),
+            SearchField(
+              hint: 'Search customers',
+              onChanged: (value) => setState(() => _query = value),
+            ),
             const SizedBox(height: NobSpace.md),
             Expanded(
               child: AsyncView(
@@ -79,10 +82,12 @@ class _CustomerPickerState extends ConsumerState<_CustomerPicker> {
                           final customer = items[index];
                           return ListRow(
                             dense: true,
-                        inset: NobSpace.sm,
+                            inset: NobSpace.sm,
                             inset: NobSpace.sm,
                             leading: RowIcon(
-                              customer.isCompany ? Icons.apartment_outlined : Icons.person_outline_rounded,
+                              customer.isCompany
+                                  ? Icons.apartment_outlined
+                                  : Icons.person_outline_rounded,
                             ),
                             title: customer.name,
                             subtitle: customer.contactLine,

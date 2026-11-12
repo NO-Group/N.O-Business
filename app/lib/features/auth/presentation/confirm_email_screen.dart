@@ -90,23 +90,29 @@ class _ConfirmEmailScreenState extends ConsumerState<ConfirmEmailScreen> {
               controller: _code,
               keyboardType: TextInputType.number,
               autofillHints: const [AutofillHints.oneTimeCode],
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(8)],
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+                LengthLimitingTextInputFormatter(8),
+              ],
               textInputAction: TextInputAction.done,
               onFieldSubmitted: (_) => _submit(),
-              validator: (value) => (value ?? '').trim().length < 6 ? 'Enter the code from the email' : null,
+              validator: (value) =>
+                  (value ?? '').trim().length < 6 ? 'Enter the code from the email' : null,
               style: NobText.title.copyWith(letterSpacing: 6),
               decoration: const InputDecoration(labelText: 'Confirmation code'),
             ),
             const SizedBox(height: NobSpace.lg),
-            if (error != null) ...[
-              FormMessage(error),
-              const SizedBox(height: NobSpace.lg),
-            ],
+            if (error != null) ...[FormMessage(error), const SizedBox(height: NobSpace.lg)],
             if (notice != null) ...[
               FormMessage(notice, isError: false),
               const SizedBox(height: NobSpace.lg),
             ],
-            PrimaryButton(label: 'Confirm', onPressed: _submit, loading: _submitting, expanded: true),
+            PrimaryButton(
+              label: 'Confirm',
+              onPressed: _submit,
+              loading: _submitting,
+              expanded: true,
+            ),
             const SizedBox(height: NobSpace.sm),
             TextButton(
               onPressed: _resending || _submitting ? null : _resend,

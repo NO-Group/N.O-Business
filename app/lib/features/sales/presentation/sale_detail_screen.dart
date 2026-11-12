@@ -32,7 +32,8 @@ class SaleDetailScreen extends ConsumerWidget {
     final confirmed = await confirmAction(
       context,
       title: 'Void ${sale.number}?',
-      message: 'The sale stays on record as voided, its amount leaves your totals and any stock '
+      message:
+          'The sale stays on record as voided, its amount leaves your totals and any stock '
           'it took is put back. This cannot be undone.',
       confirmLabel: 'Void sale',
       destructive: true,
@@ -58,7 +59,8 @@ class SaleDetailScreen extends ConsumerWidget {
       title: 'Sale',
       onBack: back,
       onRetry: () => ref.invalidate(saleProvider(saleId)),
-      builder: (sale) => _SaleView(sale: sale, onBack: back, onVoid: () => _void(context, ref, sale)),
+      builder: (sale) =>
+          _SaleView(sale: sale, onBack: back, onVoid: () => _void(context, ref, sale)),
     );
   }
 }
@@ -74,30 +76,33 @@ class _SaleView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final organization = ref.watch(activeOrganizationProvider);
     final workspaces = ref.watch(workspacesProvider).value ?? const [];
-    final workspaceName = workspaces.where((w) => w.id == sale.workspaceId).map((w) => w.name).firstOrNull;
+    final workspaceName = workspaces
+        .where((w) => w.id == sale.workspaceId)
+        .map((w) => w.name)
+        .firstOrNull;
     final canVoid = ref.watch(canProvider(Permissions.salesVoid)) && !sale.isVoided;
     final soldAt = sale.soldAt;
     final note = sale.note;
 
     CommercialPdfData receipt() => CommercialPdfData(
-          title: 'RECEIPT',
-          number: sale.number,
-          seller: organization == null
-              ? const PdfParty(name: 'N.O Business')
-              : sellerParty(organization, workspaceName: workspaceName),
-          buyer: sale.customerName == null ? null : PdfParty(name: sale.customerName!),
-          meta: [
-            if (soldAt != null) ('Date', formatDateTime(soldAt)),
-            ('Paid by', humanize(sale.paymentMethod)),
-          ],
-          items: sale.items,
-          totals: sale.totals,
-          currencyCode: sale.currencyCode,
-          notes: note,
-          footer: organization?.documentFooter,
-          brandColorHex: organization?.brandColor,
-          stamp: sale.isVoided ? 'VOID' : null,
-        );
+      title: 'RECEIPT',
+      number: sale.number,
+      seller: organization == null
+          ? const PdfParty(name: 'N.O Business')
+          : sellerParty(organization, workspaceName: workspaceName),
+      buyer: sale.customerName == null ? null : PdfParty(name: sale.customerName!),
+      meta: [
+        if (soldAt != null) ('Date', formatDateTime(soldAt)),
+        ('Paid by', humanize(sale.paymentMethod)),
+      ],
+      items: sale.items,
+      totals: sale.totals,
+      currencyCode: sale.currencyCode,
+      notes: note,
+      footer: organization?.documentFooter,
+      brandColorHex: organization?.brandColor,
+      stamp: sale.isVoided ? 'VOID' : null,
+    );
 
     return PageScaffold(
       title: sale.number,
@@ -115,7 +120,8 @@ class _SaleView extends ConsumerWidget {
           title: 'Items',
           child: RowGroup(
             children: [
-              for (final item in sale.items) LineItemRow(item: item, currencyCode: sale.currencyCode),
+              for (final item in sale.items)
+                LineItemRow(item: item, currencyCode: sale.currencyCode),
             ],
           ),
         ),

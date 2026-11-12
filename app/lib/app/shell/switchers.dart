@@ -40,14 +40,19 @@ class OrganizationSwitcher extends ConsumerWidget {
                   ? Icons.radio_button_checked_rounded
                   : Icons.radio_button_unchecked_rounded,
               size: 18,
-              color: membership.organization.id == active.organization.id ? NobColors.cyan : NobColors.textMuted,
+              color: membership.organization.id == active.organization.id
+                  ? NobColors.cyan
+                  : NobColors.textMuted,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(membership.organization.name, style: NobText.subtitle),
-                Text(membership.role.name, style: NobText.label.copyWith(color: NobColors.textSecondary)),
+                Text(
+                  membership.role.name,
+                  style: NobText.label.copyWith(color: NobColors.textSecondary),
+                ),
               ],
             ),
           ),

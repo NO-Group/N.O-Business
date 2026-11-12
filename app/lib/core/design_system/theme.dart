@@ -55,9 +55,9 @@ ThemeData buildNobTheme() {
   ).apply(bodyColor: NobColors.textPrimary, displayColor: NobColors.textPrimary);
 
   OutlineInputBorder inputBorder(Color color, [double width = 1]) => OutlineInputBorder(
-        borderRadius: NobRadius.medium,
-        borderSide: BorderSide(color: color, width: width),
-      );
+    borderRadius: NobRadius.medium,
+    borderSide: BorderSide(color: color, width: width),
+  );
 
   const buttonShape = RoundedRectangleBorder(borderRadius: NobRadius.medium);
   const buttonPadding = EdgeInsets.symmetric(horizontal: NobSpace.xl, vertical: NobSpace.lg);
@@ -236,7 +236,9 @@ ThemeData buildNobTheme() {
       height: 68,
       labelTextStyle: WidgetStateProperty.resolveWith(
         (states) => NobText.label.copyWith(
-          color: states.contains(WidgetState.selected) ? NobColors.textPrimary : NobColors.textSecondary,
+          color: states.contains(WidgetState.selected)
+              ? NobColors.textPrimary
+              : NobColors.textSecondary,
         ),
       ),
       iconTheme: WidgetStateProperty.resolveWith(
@@ -256,10 +258,12 @@ ThemeData buildNobTheme() {
     ),
     switchTheme: SwitchThemeData(
       thumbColor: WidgetStateProperty.resolveWith(
-        (states) => states.contains(WidgetState.selected) ? NobColors.onAccent : NobColors.textSecondary,
+        (states) =>
+            states.contains(WidgetState.selected) ? NobColors.onAccent : NobColors.textSecondary,
       ),
       trackColor: WidgetStateProperty.resolveWith(
-        (states) => states.contains(WidgetState.selected) ? NobColors.cobalt : NobColors.surfaceHigh,
+        (states) =>
+            states.contains(WidgetState.selected) ? NobColors.cobalt : NobColors.surfaceHigh,
       ),
       trackOutlineColor: const WidgetStatePropertyAll(NobColors.borderStrong),
     ),
@@ -267,7 +271,9 @@ ThemeData buildNobTheme() {
       style: ButtonStyle(
         textStyle: const WidgetStatePropertyAll(NobText.label),
         foregroundColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected) ? NobColors.textPrimary : NobColors.textSecondary,
+          (states) => states.contains(WidgetState.selected)
+              ? NobColors.textPrimary
+              : NobColors.textSecondary,
         ),
         backgroundColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)

@@ -79,7 +79,12 @@ class _MembersTab extends ConsumerWidget {
 
   final bool canManage;
 
-  Future<void> _act(BuildContext context, WidgetRef ref, Future<void> Function() action, String done) async {
+  Future<void> _act(
+    BuildContext context,
+    WidgetRef ref,
+    Future<void> Function() action,
+    String done,
+  ) async {
     try {
       await action();
       ref.invalidate(membersProvider);
@@ -137,7 +142,10 @@ class _MembersTab extends ConsumerWidget {
                     padding: EdgeInsets.only(right: NobSpace.sm),
                     child: StatusBadge(label: 'Suspended', tone: BadgeTone.warning),
                   ),
-                StatusBadge(label: member.roleName, tone: member.isOwner ? BadgeTone.accent : BadgeTone.info),
+                StatusBadge(
+                  label: member.roleName,
+                  tone: member.isOwner ? BadgeTone.accent : BadgeTone.info,
+                ),
                 // Nobody manages their own membership; the database enforces
                 // the same rule.
                 if (canManage && !isMe)
@@ -150,13 +158,17 @@ class _MembersTab extends ConsumerWidget {
                       ),
                       MenuItemButton(
                         leadingIcon: Icon(
-                          member.isSuspended ? Icons.play_circle_outline : Icons.pause_circle_outline,
+                          member.isSuspended
+                              ? Icons.play_circle_outline
+                              : Icons.pause_circle_outline,
                           size: 18,
                         ),
                         onPressed: () => _act(
                           context,
                           ref,
-                          () => ref.read(teamRepositoryProvider).setMemberStatus(
+                          () => ref
+                              .read(teamRepositoryProvider)
+                              .setMemberStatus(
                                 member.membershipId,
                                 member.isSuspended ? 'active' : 'suspended',
                               ),
@@ -212,10 +224,14 @@ class _InvitationsTab extends ConsumerWidget {
           return EmptyState(
             icon: Icons.mark_email_unread_outlined,
             title: 'No pending invitations',
-            message: 'Invite someone by email and choose their role. They see the invitation '
+            message:
+                'Invite someone by email and choose their role. They see the invitation '
                 'when they sign in to N.O Business with that address.',
             action: canManage
-                ? FilledButton(onPressed: () => showInviteSheet(context), child: const Text('Invite someone'))
+                ? FilledButton(
+                    onPressed: () => showInviteSheet(context),
+                    child: const Text('Invite someone'),
+                  )
                 : null,
           );
         }
@@ -230,7 +246,8 @@ class _InvitationsTab extends ConsumerWidget {
               title: invitation.email,
               subtitle: [
                 invitation.roleName,
-                if (expires != null) expired ? 'Expired ${formatDate(expires)}' : 'Expires ${formatDate(expires)}',
+                if (expires != null)
+                  expired ? 'Expired ${formatDate(expires)}' : 'Expires ${formatDate(expires)}',
               ].join(' · '),
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -313,7 +330,9 @@ class _ActivityTab extends ConsumerWidget {
         }
         return ListPanel(
           itemCount: items.length,
-          footer: const Text('The 100 most recent entries. The audit trail cannot be edited or deleted.'),
+          footer: const Text(
+            'The 100 most recent entries. The audit trail cannot be edited or deleted.',
+          ),
           itemBuilder: (context, index) {
             final entry = items[index];
             final at = entry.createdAt;

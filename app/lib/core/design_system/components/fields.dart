@@ -84,7 +84,9 @@ class FormMessage extends StatelessWidget {
               color: color,
             ),
             const SizedBox(width: NobSpace.sm),
-            Expanded(child: Text(message, style: NobText.bodySmall.copyWith(color: NobColors.textPrimary))),
+            Expanded(
+              child: Text(message, style: NobText.bodySmall.copyWith(color: NobColors.textPrimary)),
+            ),
           ],
         ),
       ),
@@ -94,7 +96,12 @@ class FormMessage extends StatelessWidget {
 
 /// Search box used at the top of list screens.
 class SearchField extends StatefulWidget {
-  const SearchField({super.key, required this.hint, required this.onChanged, this.initialValue = ''});
+  const SearchField({
+    super.key,
+    required this.hint,
+    required this.onChanged,
+    this.initialValue = '',
+  });
 
   final String hint;
   final String initialValue;

@@ -26,7 +26,10 @@ final quotationsProvider = FutureProvider.autoDispose<List<Quotation>>((ref) asy
       .listQuotations(organizationId: organizationId, workspaceId: workspaceId);
 });
 
-final quotationProvider = FutureProvider.autoDispose.family<Quotation?, String>((ref, quotationId) async {
+final quotationProvider = FutureProvider.autoDispose.family<Quotation?, String>((
+  ref,
+  quotationId,
+) async {
   final organizationId = ref.watch(activeOrganizationIdProvider);
   if (organizationId == null) return null;
   return ref.watch(billingRepositoryProvider).findQuotation(organizationId, quotationId);
@@ -50,8 +53,10 @@ final invoiceProvider = FutureProvider.autoDispose.family<Invoice?, String>((ref
 });
 
 /// Invoices raised for one customer, across workspaces.
-final customerInvoicesProvider =
-    FutureProvider.autoDispose.family<List<Invoice>, String>((ref, customerId) async {
+final customerInvoicesProvider = FutureProvider.autoDispose.family<List<Invoice>, String>((
+  ref,
+  customerId,
+) async {
   final organizationId = ref.watch(activeOrganizationIdProvider);
   if (organizationId == null) return const [];
   return ref
@@ -60,8 +65,10 @@ final customerInvoicesProvider =
 });
 
 /// Quotations prepared for one customer, across workspaces.
-final customerQuotationsProvider =
-    FutureProvider.autoDispose.family<List<Quotation>, String>((ref, customerId) async {
+final customerQuotationsProvider = FutureProvider.autoDispose.family<List<Quotation>, String>((
+  ref,
+  customerId,
+) async {
   final organizationId = ref.watch(activeOrganizationIdProvider);
   if (organizationId == null) return const [];
   return ref

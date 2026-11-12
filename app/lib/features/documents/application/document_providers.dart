@@ -12,8 +12,10 @@ final documentRepositoryProvider = Provider<DocumentRepository>(
 typedef DocumentQuery = ({String query, String? category});
 
 /// Documents of the active organization matching a search and category.
-final documentsProvider =
-    FutureProvider.autoDispose.family<List<DocumentFile>, DocumentQuery>((ref, filter) async {
+final documentsProvider = FutureProvider.autoDispose.family<List<DocumentFile>, DocumentQuery>((
+  ref,
+  filter,
+) async {
   final organizationId = ref.watch(activeOrganizationIdProvider);
   if (organizationId == null) return const [];
   return ref

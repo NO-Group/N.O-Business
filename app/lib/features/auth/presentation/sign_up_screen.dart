@@ -112,11 +112,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               onSubmitted: (_) => _submit(),
             ),
             const SizedBox(height: NobSpace.xl),
-            if (error != null) ...[
-              FormMessage(error),
-              const SizedBox(height: NobSpace.lg),
-            ],
-            PrimaryButton(label: 'Create account', onPressed: _submit, loading: _submitting, expanded: true),
+            if (error != null) ...[FormMessage(error), const SizedBox(height: NobSpace.lg)],
+            PrimaryButton(
+              label: 'Create account',
+              onPressed: _submit,
+              loading: _submitting,
+              expanded: true,
+            ),
           ],
         ),
       ),

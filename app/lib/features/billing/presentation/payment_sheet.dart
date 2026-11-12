@@ -60,7 +60,9 @@ class _PaymentSheetState extends ConsumerState<_PaymentSheet> {
       _error = null;
     });
     try {
-      await ref.read(billingRepositoryProvider).recordPayment(
+      await ref
+          .read(billingRepositoryProvider)
+          .recordPayment(
             invoiceId: widget.invoice.id,
             amountMinor: Money.parse(_amount.text, widget.invoice.currencyCode) ?? 0,
             method: _method,
@@ -82,10 +84,14 @@ class _PaymentSheetState extends ConsumerState<_PaymentSheet> {
     final error = _error;
     return SheetScaffold(
       title: 'Record payment',
-      subtitle: '${invoice.displayNumber} · '
+      subtitle:
+          '${invoice.displayNumber} · '
           '${Money.format(invoice.balanceMinor, invoice.currencyCode)} outstanding',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(false), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(false),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Record payment', onPressed: _save, loading: _saving),
       ],
       child: Form(

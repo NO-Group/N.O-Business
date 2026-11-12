@@ -43,7 +43,9 @@ class _ProductFormState extends ConsumerState<ProductForm> {
     text: widget.product?.taxRate == null ? '' : formatQuantity(widget.product!.taxRate!),
   );
   late final _reorder = TextEditingController(
-    text: widget.product == null ? '0' : formatQuantity(widget.product!.reorderLevel).replaceAll(',', ''),
+    text: widget.product == null
+        ? '0'
+        : formatQuantity(widget.product!.reorderLevel).replaceAll(',', ''),
   );
   late String _kind = widget.product?.kind ?? 'product';
   late bool _track = widget.product?.trackInventory ?? true;
@@ -114,7 +116,10 @@ class _ProductFormState extends ConsumerState<ProductForm> {
       title: widget.product == null ? 'New item' : 'Edit item',
       subtitle: 'Prices are in $_currency.',
       actions: [
-        TextButton(onPressed: _saving ? null : () => Navigator.of(context).pop(false), child: const Text('Cancel')),
+        TextButton(
+          onPressed: _saving ? null : () => Navigator.of(context).pop(false),
+          child: const Text('Cancel'),
+        ),
         PrimaryButton(label: 'Save item', onPressed: _save, loading: _saving),
       ],
       child: Form(
@@ -124,8 +129,16 @@ class _ProductFormState extends ConsumerState<ProductForm> {
           children: [
             SegmentedButton<String>(
               segments: const [
-                ButtonSegment(value: 'product', label: Text('Product'), icon: Icon(Icons.inventory_2_outlined)),
-                ButtonSegment(value: 'service', label: Text('Service'), icon: Icon(Icons.handyman_outlined)),
+                ButtonSegment(
+                  value: 'product',
+                  label: Text('Product'),
+                  icon: Icon(Icons.inventory_2_outlined),
+                ),
+                ButtonSegment(
+                  value: 'service',
+                  label: Text('Service'),
+                  icon: Icon(Icons.handyman_outlined),
+                ),
               ],
               selected: {_kind},
               onSelectionChanged: (selection) => setState(() => _kind = selection.first),
@@ -201,7 +214,8 @@ class _ProductFormState extends ConsumerState<ProductForm> {
                 labelText: 'Tax rate % (optional)',
                 helperText: 'Leave empty to use the organization default.',
               ),
-              validator: (value) => (value ?? '').trim().isEmpty ? null : Validators.percentage(value),
+              validator: (value) =>
+                  (value ?? '').trim().isEmpty ? null : Validators.percentage(value),
             ),
             const SizedBox(height: NobSpace.lg),
             TextFormField(
@@ -209,7 +223,10 @@ class _ProductFormState extends ConsumerState<ProductForm> {
               minLines: 2,
               maxLines: 4,
               maxLength: 2000,
-              decoration: const InputDecoration(labelText: 'Description (optional)', counterText: ''),
+              decoration: const InputDecoration(
+                labelText: 'Description (optional)',
+                counterText: '',
+              ),
             ),
             if (isProduct) ...[
               const SizedBox(height: NobSpace.sm),

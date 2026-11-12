@@ -2,11 +2,11 @@ import '../../../core/commerce/line_item.dart';
 import '../../../core/utils/json.dart';
 
 DocumentTotals _totals(JsonMap json) => DocumentTotals(
-      subtotalMinor: asInt(json['subtotal_minor']),
-      discountMinor: asInt(json['discount_minor']),
-      taxMinor: asInt(json['tax_minor']),
-      totalMinor: asInt(json['total_minor']),
-    );
+  subtotalMinor: asInt(json['subtotal_minor']),
+  discountMinor: asInt(json['discount_minor']),
+  taxMinor: asInt(json['tax_minor']),
+  totalMinor: asInt(json['total_minor']),
+);
 
 class Quotation {
   const Quotation({
@@ -26,20 +26,20 @@ class Quotation {
   });
 
   factory Quotation.fromJson(JsonMap json) => Quotation(
-        id: asString(json['id']),
-        number: asString(json['number']),
-        workspaceId: asString(json['workspace_id']),
-        customerId: asString(json['customer_id']),
-        customerName: asString(asJsonMap(json['customer'])['name'], 'Customer'),
-        status: asString(json['status'], 'draft'),
-        issueDate: asDateTime(json['issue_date']),
-        validUntil: asDateTime(json['valid_until']),
-        currencyCode: asString(json['currency_code'], 'USD'),
-        totals: _totals(json),
-        notes: asStringOrNull(json['notes']),
-        convertedInvoiceId: asStringOrNull(json['converted_invoice_id']),
-        items: LineItem.listFromJson(json['items']),
-      );
+    id: asString(json['id']),
+    number: asString(json['number']),
+    workspaceId: asString(json['workspace_id']),
+    customerId: asString(json['customer_id']),
+    customerName: asString(asJsonMap(json['customer'])['name'], 'Customer'),
+    status: asString(json['status'], 'draft'),
+    issueDate: asDateTime(json['issue_date']),
+    validUntil: asDateTime(json['valid_until']),
+    currencyCode: asString(json['currency_code'], 'USD'),
+    totals: _totals(json),
+    notes: asStringOrNull(json['notes']),
+    convertedInvoiceId: asStringOrNull(json['converted_invoice_id']),
+    items: LineItem.listFromJson(json['items']),
+  );
 
   final String id;
   final String number;
@@ -65,20 +65,28 @@ class Quotation {
   /// Sent but past its validity date.
   bool isExpired(DateTime today) {
     final until = validUntil;
-    return status == 'sent' && until != null && until.isBefore(DateTime(today.year, today.month, today.day));
+    return status == 'sent' &&
+        until != null &&
+        until.isBefore(DateTime(today.year, today.month, today.day));
   }
 }
 
 class Payment {
-  const Payment({required this.id, required this.amountMinor, required this.method, this.reference, this.paidAt});
+  const Payment({
+    required this.id,
+    required this.amountMinor,
+    required this.method,
+    this.reference,
+    this.paidAt,
+  });
 
   factory Payment.fromJson(JsonMap json) => Payment(
-        id: asString(json['id']),
-        amountMinor: asInt(json['amount_minor']),
-        method: asString(json['method'], 'other'),
-        reference: asStringOrNull(json['reference']),
-        paidAt: asDateTime(json['paid_at']),
-      );
+    id: asString(json['id']),
+    amountMinor: asInt(json['amount_minor']),
+    method: asString(json['method'], 'other'),
+    reference: asStringOrNull(json['reference']),
+    paidAt: asDateTime(json['paid_at']),
+  );
 
   final String id;
   final int amountMinor;

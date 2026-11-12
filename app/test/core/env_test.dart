@@ -38,8 +38,14 @@ void main() {
       expect(Env.isPrivilegedKey('sb_secret_abc'), isTrue);
       expect(Env.isPrivilegedKey(anon), isFalse);
       expect(Env.isPrivilegedKey('sb_publishable_abc'), isFalse);
-      expect(Env.validate(url: 'https://example.supabase.co', key: serviceRole), contains('privileged'));
-      expect(Env.validate(url: 'https://example.supabase.co', key: 'sb_secret_abc'), contains('privileged'));
+      expect(
+        Env.validate(url: 'https://example.supabase.co', key: serviceRole),
+        contains('privileged'),
+      );
+      expect(
+        Env.validate(url: 'https://example.supabase.co', key: 'sb_secret_abc'),
+        contains('privileged'),
+      );
     });
 
     test('treats an undecodable token as non-privileged rather than crashing', () {

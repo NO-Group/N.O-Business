@@ -48,7 +48,11 @@ class NobCard extends StatelessWidget {
                   height: 2,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [accentColor.withValues(alpha: 0), accentColor, accentColor.withValues(alpha: 0)],
+                      colors: [
+                        accentColor.withValues(alpha: 0),
+                        accentColor,
+                        accentColor.withValues(alpha: 0),
+                      ],
                     ),
                   ),
                 ),
@@ -110,22 +114,22 @@ class SectionCard extends StatelessWidget {
 
   Widget _header(String? sub, Widget? end) {
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: NobText.title),
-                    if (sub != null) ...[
-                      const SizedBox(height: NobSpace.xs),
-                      Text(sub, style: NobText.bodySmall.copyWith(color: NobColors.textSecondary)),
-                    ],
-                  ],
-                ),
-              ),
-              ?end,
+              Text(title, style: NobText.title),
+              if (sub != null) ...[
+                const SizedBox(height: NobSpace.xs),
+                Text(sub, style: NobText.bodySmall.copyWith(color: NobColors.textSecondary)),
+              ],
             ],
-          );
+          ),
+        ),
+        ?end,
+      ],
+    );
   }
 }

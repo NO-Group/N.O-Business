@@ -5,11 +5,11 @@ class UserProfile {
   const UserProfile({required this.id, required this.email, required this.fullName, this.phone});
 
   factory UserProfile.fromJson(JsonMap json) => UserProfile(
-        id: asString(json['id']),
-        email: asString(json['email']),
-        fullName: asString(json['full_name']),
-        phone: asStringOrNull(json['phone']),
-      );
+    id: asString(json['id']),
+    email: asString(json['email']),
+    fullName: asString(json['full_name']),
+    phone: asStringOrNull(json['phone']),
+  );
 
   final String id;
   final String email;
@@ -41,22 +41,22 @@ class Organization {
   });
 
   factory Organization.fromJson(JsonMap json) => Organization(
-        id: asString(json['id']),
-        name: asString(json['name']),
-        slug: asString(json['slug']),
-        legalName: asStringOrNull(json['legal_name']),
-        email: asStringOrNull(json['email']),
-        phone: asStringOrNull(json['phone']),
-        address: asStringOrNull(json['address']),
-        countryCode: asStringOrNull(json['country_code']),
-        currencyCode: asString(json['currency_code'], 'USD'),
-        timezone: asString(json['timezone'], 'UTC'),
-        taxId: asStringOrNull(json['tax_id']),
-        defaultTaxRate: asDouble(json['default_tax_rate']),
-        brandColor: asStringOrNull(json['brand_color']),
-        logoPath: asStringOrNull(json['logo_path']),
-        documentFooter: asStringOrNull(json['document_footer']),
-      );
+    id: asString(json['id']),
+    name: asString(json['name']),
+    slug: asString(json['slug']),
+    legalName: asStringOrNull(json['legal_name']),
+    email: asStringOrNull(json['email']),
+    phone: asStringOrNull(json['phone']),
+    address: asStringOrNull(json['address']),
+    countryCode: asStringOrNull(json['country_code']),
+    currencyCode: asString(json['currency_code'], 'USD'),
+    timezone: asString(json['timezone'], 'UTC'),
+    taxId: asStringOrNull(json['tax_id']),
+    defaultTaxRate: asDouble(json['default_tax_rate']),
+    brandColor: asStringOrNull(json['brand_color']),
+    logoPath: asStringOrNull(json['logo_path']),
+    documentFooter: asStringOrNull(json['document_footer']),
+  );
 
   final String id;
   final String name;
@@ -79,10 +79,10 @@ class RoleRef {
   const RoleRef({required this.id, required this.name, this.isOwner = false});
 
   factory RoleRef.fromJson(JsonMap json) => RoleRef(
-        id: asString(json['id']),
-        name: asString(json['name']),
-        isOwner: asBool(json['is_owner']),
-      );
+    id: asString(json['id']),
+    name: asString(json['name']),
+    isOwner: asBool(json['is_owner']),
+  );
 
   final String id;
   final String name;
@@ -99,11 +99,11 @@ class OrgMembership {
   });
 
   factory OrgMembership.fromJson(JsonMap json) => OrgMembership(
-        membershipId: asString(json['membership_id']),
-        organization: Organization.fromJson(asJsonMap(json['organization'])),
-        role: RoleRef.fromJson(asJsonMap(json['role'])),
-        permissions: asStringList(json['permissions']).toSet(),
-      );
+    membershipId: asString(json['membership_id']),
+    organization: Organization.fromJson(asJsonMap(json['organization'])),
+    role: RoleRef.fromJson(asJsonMap(json['role'])),
+    permissions: asStringList(json['permissions']).toSet(),
+  );
 
   final String membershipId;
   final Organization organization;
@@ -123,11 +123,11 @@ class PendingInvitation {
   });
 
   factory PendingInvitation.fromJson(JsonMap json) => PendingInvitation(
-        id: asString(json['id']),
-        organizationName: asString(json['organization_name']),
-        roleName: asString(json['role_name']),
-        expiresAt: asDateTime(json['expires_at']),
-      );
+    id: asString(json['id']),
+    organizationName: asString(json['organization_name']),
+    roleName: asString(json['role_name']),
+    expiresAt: asDateTime(json['expires_at']),
+  );
 
   final String id;
   final String organizationName;
@@ -140,10 +140,10 @@ class MyContext {
   const MyContext({required this.profile, required this.memberships, required this.invitations});
 
   factory MyContext.fromJson(JsonMap json) => MyContext(
-        profile: UserProfile.fromJson(asJsonMap(json['profile'])),
-        memberships: asJsonList(json['memberships']).map(OrgMembership.fromJson).toList(),
-        invitations: asJsonList(json['invitations']).map(PendingInvitation.fromJson).toList(),
-      );
+    profile: UserProfile.fromJson(asJsonMap(json['profile'])),
+    memberships: asJsonList(json['memberships']).map(OrgMembership.fromJson).toList(),
+    invitations: asJsonList(json['invitations']).map(PendingInvitation.fromJson).toList(),
+  );
 
   final UserProfile profile;
   final List<OrgMembership> memberships;
@@ -163,13 +163,13 @@ class Workspace {
   });
 
   factory Workspace.fromJson(JsonMap json) => Workspace(
-        id: asString(json['id']),
-        organizationId: asString(json['organization_id']),
-        name: asString(json['name']),
-        address: asStringOrNull(json['address']),
-        isDefault: asBool(json['is_default']),
-        isArchived: asBool(json['is_archived']),
-      );
+    id: asString(json['id']),
+    organizationId: asString(json['organization_id']),
+    name: asString(json['name']),
+    address: asStringOrNull(json['address']),
+    isDefault: asBool(json['is_default']),
+    isArchived: asBool(json['is_archived']),
+  );
 
   final String id;
   final String organizationId;

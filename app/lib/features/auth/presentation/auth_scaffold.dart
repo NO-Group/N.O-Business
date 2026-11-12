@@ -54,10 +54,7 @@ class AuthScaffold extends StatelessWidget {
                   ),
                 ),
               ),
-              if (bottom != null) ...[
-                const SizedBox(height: NobSpace.lg),
-                Center(child: bottom),
-              ],
+              if (bottom != null) ...[const SizedBox(height: NobSpace.lg), Center(child: bottom)],
             ],
           ),
         ),
@@ -86,9 +83,21 @@ class _BrandPanel extends StatelessWidget {
   const _BrandPanel();
 
   static const _points = <(IconData, String, String)>[
-    (Icons.receipt_long_outlined, 'Sell and bill', 'Sales, quotations, invoices and payments in one flow.'),
-    (Icons.hub_outlined, 'One place for the business', 'Customers, catalogue, stock and documents per workspace.'),
-    (Icons.verified_user_outlined, 'Controlled access', 'Roles, granular permissions and an audit trail for every team.'),
+    (
+      Icons.receipt_long_outlined,
+      'Sell and bill',
+      'Sales, quotations, invoices and payments in one flow.',
+    ),
+    (
+      Icons.hub_outlined,
+      'One place for the business',
+      'Customers, catalogue, stock and documents per workspace.',
+    ),
+    (
+      Icons.verified_user_outlined,
+      'Controlled access',
+      'Roles, granular permissions and an audit trail for every team.',
+    ),
   ];
 
   @override
@@ -118,7 +127,10 @@ class _BrandPanel extends StatelessWidget {
                       children: [
                         Text(heading, style: NobText.subtitle),
                         const SizedBox(height: NobSpace.xxs),
-                        Text(body, style: NobText.bodySmall.copyWith(color: NobColors.textSecondary)),
+                        Text(
+                          body,
+                          style: NobText.bodySmall.copyWith(color: NobColors.textSecondary),
+                        ),
                       ],
                     ),
                   ),

@@ -31,7 +31,9 @@ class ProfileSettings extends ConsumerWidget {
             title: 'Invitations',
             subtitle: 'Organizations that have invited you to join.',
             child: Column(
-              children: [for (final invitation in invitations) InvitationTile(invitation: invitation)],
+              children: [
+                for (final invitation in invitations) InvitationTile(invitation: invitation),
+              ],
             ),
           ),
           const SizedBox(height: NobSpace.lg),
@@ -87,7 +89,9 @@ class _ProfileForm extends ConsumerStatefulWidget {
 
 class _ProfileFormState extends ConsumerState<_ProfileForm> {
   final _formKey = GlobalKey<FormState>();
-  late final _name = TextEditingController(text: ref.read(myContextProvider).value?.profile.fullName);
+  late final _name = TextEditingController(
+    text: ref.read(myContextProvider).value?.profile.fullName,
+  );
   late final _phone = TextEditingController(text: ref.read(myContextProvider).value?.profile.phone);
   bool _saving = false;
   String? _error;
@@ -109,7 +113,9 @@ class _ProfileFormState extends ConsumerState<_ProfileForm> {
     });
     final phone = nullIfBlank(_phone.text);
     try {
-      await ref.read(tenancyRepositoryProvider).updateProfile(
+      await ref
+          .read(tenancyRepositoryProvider)
+          .updateProfile(
             userId: userId,
             fullName: _name.text.trim(),
             phone: phone == null ? null : Validators.normalizePhone(phone),

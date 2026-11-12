@@ -54,8 +54,8 @@ class _RevenueChartState extends State<RevenueChart> {
               active == null
                   ? 'Touch or hover a day for its figures'
                   : '${formatShortDay(active.day)}: '
-                      '${Money.format(active.salesMinor, currency)} sales, '
-                      '${Money.format(active.paymentsMinor, currency)} payments',
+                        '${Money.format(active.salesMinor, currency)} sales, '
+                        '${Money.format(active.paymentsMinor, currency)} payments',
               style: NobText.bodySmall.copyWith(
                 color: active == null ? NobColors.textMuted : NobColors.textPrimary,
               ),
@@ -68,7 +68,8 @@ class _RevenueChartState extends State<RevenueChart> {
           child: LayoutBuilder(
             builder: (context, constraints) => Semantics(
               image: true,
-              label: 'Bar chart of money received per day over ${points.length} days, '
+              label:
+                  'Bar chart of money received per day over ${points.length} days, '
                   '${Money.format(total, currency)} in total.',
               child: MouseRegion(
                 onHover: (event) => _select(event.localPosition, constraints.maxWidth),
@@ -76,10 +77,15 @@ class _RevenueChartState extends State<RevenueChart> {
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTapDown: (details) => _select(details.localPosition, constraints.maxWidth),
-                  onHorizontalDragUpdate: (details) => _select(details.localPosition, constraints.maxWidth),
+                  onHorizontalDragUpdate: (details) =>
+                      _select(details.localPosition, constraints.maxWidth),
                   child: CustomPaint(
                     size: Size(constraints.maxWidth, 220),
-                    painter: _RevenuePainter(points: points, currencyCode: currency, active: _active),
+                    painter: _RevenuePainter(
+                      points: points,
+                      currencyCode: currency,
+                      active: _active,
+                    ),
                   ),
                 ),
               ),
@@ -142,7 +148,10 @@ class _RevenuePainter extends CustomPainter {
     Color color = NobColors.textMuted,
   }) {
     final painter = TextPainter(
-      text: TextSpan(text: text, style: NobText.label.copyWith(color: color, fontSize: 10.5)),
+      text: TextSpan(
+        text: text,
+        style: NobText.label.copyWith(color: color, fontSize: 10.5),
+      ),
       textDirection: TextDirection.ltr,
       maxLines: 1,
     )..layout();
@@ -188,7 +197,10 @@ class _RevenuePainter extends CustomPainter {
       final point = points[i];
       final centre = plot.left + slot * (i + 0.5);
       if (i == active) {
-        canvas.drawRect(Rect.fromLTRB(centre - slot / 2, plot.top, centre + slot / 2, plot.bottom), highlight);
+        canvas.drawRect(
+          Rect.fromLTRB(centre - slot / 2, plot.top, centre + slot / 2, plot.bottom),
+          highlight,
+        );
       }
       final salesHeight = plot.height * point.salesMinor / ceiling;
       final paymentsHeight = plot.height * point.paymentsMinor / ceiling;
@@ -206,7 +218,12 @@ class _RevenuePainter extends CustomPainter {
       if (paymentsHeight > 0) {
         canvas.drawRRect(
           RRect.fromRectAndCorners(
-            Rect.fromLTWH(left, plot.bottom - salesHeight - paymentsHeight, barWidth, paymentsHeight),
+            Rect.fromLTWH(
+              left,
+              plot.bottom - salesHeight - paymentsHeight,
+              barWidth,
+              paymentsHeight,
+            ),
             topLeft: radius,
             topRight: radius,
           ),
@@ -226,8 +243,8 @@ class _RevenuePainter extends CustomPainter {
       final align = index == 0
           ? TextAlign.left
           : index == points.length - 1
-              ? TextAlign.right
-              : TextAlign.center;
+          ? TextAlign.right
+          : TextAlign.center;
       final anchorX = switch (align) {
         TextAlign.left => centre - slot / 2,
         TextAlign.right => centre + slot / 2,
@@ -245,7 +262,9 @@ class _RevenuePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_RevenuePainter oldDelegate) =>
-      oldDelegate.points != points || oldDelegate.active != active || oldDelegate.currencyCode != currencyCode;
+      oldDelegate.points != points ||
+      oldDelegate.active != active ||
+      oldDelegate.currencyCode != currencyCode;
 }
 
 /// Horizontal share bars, used for payment methods and top products.
@@ -271,7 +290,12 @@ class ShareBars extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: Text(row.label, style: NobText.body, maxLines: 1, overflow: TextOverflow.ellipsis),
+                      child: Text(
+                        row.label,
+                        style: NobText.body,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     const SizedBox(width: NobSpace.md),
                     Text(row.value, style: NobText.numeric),
