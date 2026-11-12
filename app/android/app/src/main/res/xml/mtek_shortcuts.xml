@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="new_sale"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_new_sale"
+        android:shortcutLongLabel="@string/shortcut_new_sale">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.n_o_group.mfsl_office"
+            android:targetClass="com.n_o_group.mfsl_office.MainActivity">
+            <extra android:name="mtek_screen" android:value="sales" />
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="new_receipt"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_new_receipt"
+        android:shortcutLongLabel="@string/shortcut_new_receipt">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.n_o_group.mfsl_office"
+            android:targetClass="com.n_o_group.mfsl_office.MainActivity">
+            <extra android:name="mtek_screen" android:value="receipts" />
+        </intent>
+    </shortcut>
+
+    <shortcut
+        android:shortcutId="view_stock"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/shortcut_view_stock"
+        android:shortcutLongLabel="@string/shortcut_view_stock">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.n_o_group.mfsl_office"
+            android:targetClass="com.n_o_group.mfsl_office.MainActivity">
+            <extra android:name="mtek_screen" android:value="stock" />
+        </intent>
+    </shortcut>
+</shortcuts>

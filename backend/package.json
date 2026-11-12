@@ -1,0 +1,14 @@
+{
+  "name": "mtek-backend-ops",
+  "version": "1.0.0",
+  "private": true,
+  "description": "M-TEK ops tooling — one-off scripts to seed/verify the real MongoDB Atlas cluster and Supabase Auth. The actual production backend is the Supabase Edge Function at supabase/functions/data-api/index.ts; nothing here is deployed.",
+  "scripts": {
+    "seed": "node scripts/seed-mongo.js",
+    "verify": "node scripts/verify-connections.js",
+    "verify:live": "node scripts/verify-live.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.8.0"
+  }
+}

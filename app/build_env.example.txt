@@ -1,0 +1,10 @@
+# OPTIONAL overrides — make_apk.bat and make_exe.bat work WITHOUT this file.
+# Everything is already baked into the app. Create this file only to point
+# the builds at a different server one day.
+# 1. Copy this file and name the copy:  build_env.txt
+# 2. Fill SUPABASE_ANON_KEY with your "anon public" key from
+#    Supabase → Project Settings → API Keys
+# 3. Double-click make_apk.bat / make_exe.bat — that's all.
+SUPABASE_URL=https://kshuadjcflwlidupnqly.supabase.co
+SUPABASE_ANON_KEY=
+MILS_API_BASE=https://kshuadjcflwlidupnqly.supabase.co/functions/v1/data-api

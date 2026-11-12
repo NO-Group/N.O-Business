@@ -1,0 +1,54 @@
+## M-Tek Inventory — CI: TWO build paths ONLY (APK + Windows EXE)
+##
+## Owner directive 2026-08-30: no web/PWA target exists anymore. Both builds
+## share ONE server (the values below; SUPABASE_ANON_KEY comes from Actions
+## variables). Runs only when dispatched manually — GitHub is not part of
+## the owner's workflow; the same builds run locally via app/make_apk.bat /
+## app/make_exe.bat.
+name: Build App (APK · EXE)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable }
+      - name: Create Android platform (first run only)
+        run: flutter create --platforms=android .
+        working-directory: app
+      - name: Build APK (release, same shared server)
+        working-directory: app
+        run: |
+          flutter build apk --release \
+            --dart-define=SUPABASE_URL="${{ vars.SUPABASE_URL }}" \
+            --dart-define=SUPABASE_ANON_KEY="${{ vars.SUPABASE_ANON_KEY }}" \
+            --dart-define=MILS_API_BASE="${{ vars.MILS_API_BASE }}"
+      - uses: actions/upload-artifact@v4
+        with: { name: mtek-apk, path: app/build/app/outputs/flutter-apk/app-release.apk }
+
+  exe:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable }
+      - name: Create Windows platform (first run only)
+        run: flutter create --platforms=windows .
+        working-directory: app
+      - name: Build Windows EXE (release, same shared server)
+        working-directory: app
+        shell: pwsh
+        run: |
+          flutter build windows --release `
+            --dart-define=SUPABASE_URL="${{ vars.SUPABASE_URL }}" `
+            --dart-define=SUPABASE_ANON_KEY="${{ vars.SUPABASE_ANON_KEY }}" `
+            --dart-define=MILS_API_BASE="${{ vars.MILS_API_BASE }}"
+      - name: Zip the EXE folder
+        shell: pwsh
+        run: Compress-Archive -Path app/build/windows/x64/runner/Release/* -DestinationPath mtek-windows.zip
+      - uses: actions/upload-artifact@v4
+        with: { name: mtek-exe, path: mtek-windows.zip }

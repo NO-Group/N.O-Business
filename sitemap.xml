@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Home -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- About -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/about.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Products -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/products.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Services -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/services.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Gallery -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/gallery.html</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Shop -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/shop.html</loc>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Shop category pages -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/shop.html?category=Fire</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/shop.html?category=Safety</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/shop.html?category=Security</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/shop.html?category=Solar</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/shop.html?category=Home%20Automation%2C%20Alarm%20%26%20Surveillance</loc>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Contact -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/contact.html</loc>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Terms & Conditions -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/terms.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://jasonjeremiah201022-ux.github.io/m-tek_fire_-_safety_ltd.org/privacy.html</loc>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>

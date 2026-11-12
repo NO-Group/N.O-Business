@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MFSL Office</string>
+
+    <!-- Home-screen widget -->
+    <string name="mtek_widget_description">Quick access to M-Tek sales, receipts and stock</string>
+    <string name="widget_tap_hint">M-Tek</string>
+    <string name="widget_sales_label">Today\'s sales</string>
+    <string name="widget_receipts_label">Receipts</string>
+    <string name="widget_invoices_label">Invoices due</string>
+    <string name="widget_btn_sale">New sale</string>
+    <string name="widget_btn_receipts">Receipts</string>
+    <string name="widget_btn_stock">Stock</string>
+
+    <!-- Launcher shortcuts -->
+    <string name="shortcut_new_sale">New sale</string>
+    <string name="shortcut_new_receipt">New receipt</string>
+    <string name="shortcut_view_stock">View stock</string>
+</resources>
